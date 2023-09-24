@@ -1,23 +1,89 @@
-@extends('layouts.app')
+@extends('layouts.app', ['title' => 'Dream Chalets Engineering'])
 
 @section('content')
-<section class="banner-section">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8">
-                <div class="banner-content" data-aos="fade-down">
-                    <h1>Find Your Best Dream House Plan <span>...</span></h1>
-                    <p>We have more than 3000+ house plans for you to choose</p>
+<section class="swiper-slider banner-section">
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <!-- start swiper-slide -->
+            <div class="swiper-slide">
+                <div class="slide-inner slide-bg-image" data-background="{{ asset('assets/img/02.jpg') }}">
+                    <div class="container">
+                        <div class="banner-content">
+                            <h4 class="text-uppercase mb-1" data-swiper-parallax="300">We are here to</h4>
+                            <h1 class="font-weight-bold mb-3" data-swiper-parallax="350">Planning Business</h1>
+                            <p class="text-dark mb-50" data-swiper-parallax="400">Lorem
+                                ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+                                <br> incididunt ut labore et dolore magna aliqua.
+                            </p>
+                            <a href="about.html" class="btn btn-primary text-uppercase" data-swiper-parallax="450">more details</a>
+                        </div>
+                    </div>
                 </div>
             </div>
+            <!-- end swiper-slide -->
+            <!-- start swiper-slide -->
+            <div class="swiper-slide">
+                <div class="slide-inner slide-bg-image" data-background="{{ asset('assets/img/03.jpg') }}">
+                    <div class="container">
+                        <div class="banner-content" data-aos="fade-down">
+                            <h4 class="text-uppercase mb-1" data-swiper-parallax="300">We are here to</h4>
+                            <h1 class="font-weight-bold mb-3" data-swiper-parallax="350">Planning Business</h1>
+                            <p class="text-dark mb-50" data-swiper-parallax="400">Lorem
+                                ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+                                <br> incididunt ut labore et dolore magna aliqua.
+                            </p>
+                            <a href="about.html" class="btn btn-primary text-uppercase" data-swiper-parallax="450">more details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end swiper-slide -->
+            <!-- start swiper-slide -->
+            <div class="swiper-slide">
+                <div class="slide-inner slide-bg-image" data-background="{{ asset('assets/img/banner.jpg') }}">
+                    <div class="container">
+                        <div class="banner-content" data-aos="fade-down">
+                            <h4 class="text-uppercase mb-1" data-swiper-parallax="300">Start your</h4>
+                            <h1 class="font-weight-bold mb-3" data-swiper-parallax="350">Future Plan</h1>
+                            <p class="text-dark mb-50" data-swiper-parallax="400">Lorem
+                                ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+                                <br> incididunt ut labore et dolore magna aliqua.
+                            </p>
+                            <a href="about.html" class="btn btn-primary text-uppercase" data-swiper-parallax="450">more details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end swiper-slide -->
+            <!-- start swiper-slide -->
+            <div class="swiper-slide">
+                <div class="slide-inner slide-bg-image" data-background="{{ asset('assets/img/banner.jpg') }}">
+                    <div class="container">
+                        <div class="banner-content" data-aos="fade-down">
+                            <h4 class="text-uppercase mb-1" data-swiper-parallax="300">We are always</h4>
+                            <h1 class="font-weight-bold mb-3" data-swiper-parallax="350">Be Inspired By Best</h1>
+                            <p class="text-dark mb-50" data-swiper-parallax="400">Lorem
+                                ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+                                <br> incididunt ut labore et dolore magna aliqua.
+                            </p>
+                            <a href="about.html" class="btn btn-outline text-uppercase" data-swiper-parallax="450">more details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end swiper-slide -->
         </div>
+        <!-- swipper controls -->
+        <div class="swiper-pagination"></div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
     </div>
 </section>
 
 <section class="howit-work">
     <div class="container">
         <div class="section-heading text-center">
-            <h2>How It Works</h2>
+            <h2>Why Choose Us</h2>
             <div class="sec-line">
                 <span class="sec-line1"></span>
                 <span class="sec-line2"></span>
@@ -25,7 +91,7 @@
             <p>Follow these 3 steps to book your place</p>
         </div>
         <div class="row justify-content-center">
-            <div class="col-lg-4 col-md-6">
+            <div class="col-lg-3 col-md-6">
                 <div class="howit-work-card" data-aos="fade-down" data-aos-duration="1200" data-aos-delay="100">
                     <div class="work-card-icon">
                         <span>
@@ -36,7 +102,7 @@
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis mollis et sem sed sollicitudin. Donec non odio…</p>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-6">
+            <div class="col-lg-3 col-md-6">
                 <div class="howit-work-card" data-aos="fade-down" data-aos-duration="1200" data-aos-delay="200">
                     <div class="work-card-icon">
                         <span class="bg-red">
@@ -47,7 +113,7 @@
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis mollis et sem sed sollicitudin. Donec non odio…</p>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-6">
+            <div class="col-lg-3 col-md-6">
                 <div class="howit-work-card" data-aos="fade-down" data-aos-duration="1200" data-aos-delay="300">
                     <div class="work-card-icon">
                         <span class="bg-green">
@@ -55,6 +121,17 @@
                         </span>
                     </div>
                     <h4>03. Book Your Property</h4>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis mollis et sem sed sollicitudin. Donec non odio…</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="howit-work-card" data-aos="fade-down" data-aos-duration="1200" data-aos-delay="300">
+                    <div class="work-card-icon">
+                        <span class="bg-secondary">
+                            <img src="assets/img/icons/work-icon-3.svg" alt="icon">
+                        </span>
+                    </div>
+                    <h4>04. Book Your Property</h4>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis mollis et sem sed sollicitudin. Donec non odio…</p>
                 </div>
             </div>
@@ -76,7 +153,7 @@
             <div class="col-md-12">
                 <div class="feature-slider owl-carousel">
                     <div class="slider-col">
-                        <div class="product-custom" data-aos="fade-down" data-aos-duration="1000">
+                        <div class="product-custom">
                             <div class="profile-widget">
                                 <div class="doc-img">
                                     <a href="rent-details.html" class="property-img">
@@ -146,7 +223,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="product-custom" data-aos="fade-down" data-aos-duration="1000">
+                        <div class="product-custom">
                             <div class="profile-widget">
                                 <div class="doc-img">
                                     <a href="rent-details.html" class="property-img">
@@ -215,7 +292,7 @@
                         </div>
                     </div>
                     <div class="slider-col">
-                        <div class="product-custom" data-aos="fade-down" data-aos-duration="1000">
+                        <div class="product-custom">
                             <div class="profile-widget">
                                 <div class="doc-img">
                                     <a href="rent-details.html" class="property-img">
@@ -282,7 +359,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="product-custom" data-aos="fade-down" data-aos-duration="1000">
+                        <div class="product-custom">
                             <div class="profile-widget">
                                 <div class="doc-img">
                                     <a href="rent-detail-viewhtml" class="property-img">
@@ -351,7 +428,7 @@
                         </div>
                     </div>
                     <div class="slider-col">
-                        <div class="product-custom" data-aos="fade-down" data-aos-duration="1000">
+                        <div class="product-custom">
                             <div class="profile-widget">
                                 <div class="doc-img">
                                     <a href="rent-details.html" class="property-img">
@@ -418,7 +495,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="product-custom" data-aos="fade-down" data-aos-duration="1000">
+                        <div class="product-custom">
                             <div class="profile-widget">
                                 <div class="doc-img">
                                     <a href="rent-details.html" class="property-img">
@@ -487,7 +564,7 @@
                         </div>
                     </div>
                     <div class="slider-col">
-                        <div class="product-custom" data-aos="fade-down" data-aos-duration="1000">
+                        <div class="product-custom">
                             <div class="profile-widget">
                                 <div class="doc-img">
                                     <a href="rent-details.html" class="property-img">
@@ -646,12 +723,12 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="section-heading" data-aos="fade-down" data-aos-duration="1000">
-                    <h2>Explore by House Type</h2>
+                    <h2>What are you looking for?</h2>
                     <div class="sec-line">
                         <span class="sec-line1"></span>
                         <span class="sec-line2"></span>
                     </div>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis mollis et sem sed </p>
+                    <p>We provide full service at every step. </p>
                 </div>
                 <div class="owl-navigation">
                     <div class="owl-nav mynav1 nav-control"></div>

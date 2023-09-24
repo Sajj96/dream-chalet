@@ -60,6 +60,10 @@
 
     <link rel="stylesheet" href="{{ asset('assets/plugins/select2/css/select2.min.css') }}">
 
+    <link rel="stylesheet" href="{{ asset('assets/plugins/aos/aos.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('assets/plugins/swiper/swiper.min.css') }}">
+
     @yield('styles')
 
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
@@ -74,6 +78,12 @@
         @include('partials.search_popup')
     </div>
 
+    <div class="progress-wrap active-progress">
+        <svg class="progress-circle svg-content" viewBox="-1 -1 102 102">
+            <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"></path>
+        </svg>
+    </div>
+
     <!-- Scripts -->
     <script src="{{ asset('assets/js/jquery-3.6.4.min.js') }}"></script>
 
@@ -84,6 +94,10 @@
     <script src="{{ asset('assets/js/owl.carousel.min.js') }}"></script>
 
     <script src="{{ asset('assets/plugins/select2/js/select2.min.js') }}"></script>
+
+    <script src="{{ asset('assets/plugins/aos/aos.js') }}"></script>
+
+    <script src="{{ asset('assets/plugins/swiper/swiper.min.js') }}"></script>
 
     <script src="{{ asset('assets/js/waypoints.js') }}"></script>
     <script src="{{ asset('assets/js/jquery.counterup.min.js') }}"></script>

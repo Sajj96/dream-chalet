@@ -1,7 +1,8 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
-<meta charset="utf-8">
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta name="description" content="">
@@ -33,31 +34,39 @@
     <title>{{ config('app.name', 'DCE') }}</title>
 
     <!-- General CSS Files -->
-    <link rel="stylesheet" href="{{ asset('dashboard/assets/css/app.min.css')}}">
+    <link rel="stylesheet" href="{{ asset('assets/dashboard/css/app.min.css')}}">
     @yield('styles')
-    <link rel="stylesheet" href="{{ asset('dashboard/assets/bundles/bootstrap-social/bootstrap-social.css')}}">
+    <link rel="stylesheet" href="{{ asset('assets/dashboard/bundles/bootstrap-social/bootstrap-social.css')}}">
     <!-- Template CSS -->
-    <link rel="stylesheet" href="{{ asset('dashboard/assets/css/style.css')}}">
-    <link rel="stylesheet" href="{{ asset('dashboard/assets/css/components.css')}}">
+    <link rel="stylesheet" href="{{ asset('assets/dashboard/css/style.css')}}">
+    <link rel="stylesheet" href="{{ asset('assets/dashboard/css/components.css')}}">
     <!-- Custom style CSS -->
-    <link rel="stylesheet" href="{{ asset('dashboard/assets/css/custom.css')}}">
+    <link rel="stylesheet" href="{{ asset('assets/dashboard/css/custom.css')}}">
 </head>
-<body>
-    <!-- <div class="loader"></div> -->
+
+<body class="light theme-white dark-sidebar">
     <div id="app">
-        <main class="py-4">
-            @yield('content')
-        </main>
+        <div class="main-wrapper main-wrapper-1">
+            @include('partials.dashboard_header')
+            @include('partials.dashboard_sidebar')
+            <!-- Main Content -->
+            <div class="main-content">
+                @yield('content')
+            </div>
+            @include('partials.dashboard_footer')
+        </div>
     </div>
     <!-- General JS Scripts -->
-    <script src="{{ asset('dashboard/assets/js/app.min.js')}}"></script>
-    <!-- JS Libraries -->
-
+    <script src="{{ asset('assets/dashboard/js/app.min.js')}}"></script>
+    <!-- JS Libraies -->
+    <script src="{{ asset('assets/dashboard/bundles/apexcharts/apexcharts.min.js')}}"></script>
     <!-- Page Specific JS File -->
+    <script src="{{ asset('assets/dashboard/js/page/index.js')}}"></script>
     @yield('scripts')
     <!-- Template JS File -->
-    <script src="{{ asset('dashboard/assets/js/scripts.js')}}"></script>
+    <script src="{{ asset('assets/dashboard/js/scripts.js')}}"></script>
     <!-- Custom JS File -->
-    <script src="{{ asset('dashboard/assets/js/custom.js')}}"></script>
+    <script src="{{ asset('assets/dashboard/js/custom.js')}}"></script>
 </body>
+
 </html>

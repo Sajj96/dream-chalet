@@ -29,7 +29,7 @@
         <div class="container">
 
             <header class="log-header">
-                <a href="#"><img class="img-fluid logo-dark" src="{{ asset('assets/img/dce_logo_2.png') }}" width="150" height="100" alt="Logo"></a>
+                <a href="{{ route('home') }}"><img class="img-fluid logo-dark" src="{{ asset('assets/img/dce_logo_2.png') }}" width="150" height="100" alt="Logo"></a>
             </header>
 
             @yield('content')
