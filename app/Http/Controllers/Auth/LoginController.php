@@ -82,7 +82,7 @@ class LoginController extends Controller
 
         if (Auth::attempt([$login_type => $login_data, 'password' => $request->input('password'), 'status' => User::USER_VERIFIED], $remember)) {
             if(Auth::user()->user_type == User::ADMIN_USER) {
-                return redirect()->route('home');
+                return redirect()->route('dashboard');
             }
             return redirect()->intended($this->redirectTo);
         }

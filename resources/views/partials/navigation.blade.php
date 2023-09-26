@@ -69,6 +69,13 @@
             </ul>
         </div>
         <ul class="nav header-navbar-rht">
+            @if(auth()->check())
+            <li class="new-property-btn">
+                <a href="add-new-property.html" class="active">
+                    <i class="bx bxs-user"></i> {{ auth()->user()->name }}
+                </a>
+            </li>
+            @endif
             <li>
                 <a href="{{ route('register') }}" class="btn btn-primary"><i class="feather-user-plus"></i>Sign Up</a>
             </li>

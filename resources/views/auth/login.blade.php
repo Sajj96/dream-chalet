@@ -40,7 +40,7 @@
                             <span class="checkmark"></span>
                         </label>
                     </div>
-                    <a href="index.html" class="btn btn-outline-light w-100 btn-size">{{ __('Sign In') }}</a>
+                    <button type="submit" class="btn btn-outline-light w-100 btn-size">{{ __('Sign In') }}</button>
 
                     <div class="text-center dont-have">{{ __('Don\'t have an account ?') }} <a href="{{ route('register') }}">{{ __('Sign Up') }}</a></div>
                 </form>

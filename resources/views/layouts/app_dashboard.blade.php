@@ -35,6 +35,7 @@
 
     <!-- General CSS Files -->
     <link rel="stylesheet" href="{{ asset('assets/dashboard/css/app.min.css')}}">
+    <link rel="stylesheet" href="{{ asset('assets/dashboard/bundles/izitoast/css/iziToast.min.css') }}">
     @yield('styles')
     <link rel="stylesheet" href="{{ asset('assets/dashboard/bundles/bootstrap-social/bootstrap-social.css')}}">
     <!-- Template CSS -->
@@ -47,17 +48,18 @@
 <body class="light theme-white dark-sidebar">
     <div id="app">
         <div class="main-wrapper main-wrapper-1">
-            @include('partials.dashboard_header')
-            @include('partials.dashboard_sidebar')
+            @include('partials.dashboard.header')
+            @include('partials.dashboard.sidebar')
             <!-- Main Content -->
             <div class="main-content">
                 @yield('content')
             </div>
-            @include('partials.dashboard_footer')
+            @include('partials.dashboard.footer')
         </div>
     </div>
     <!-- General JS Scripts -->
     <script src="{{ asset('assets/dashboard/js/app.min.js')}}"></script>
+    <script src="{{ asset('assets/dashboard/bundles/izitoast/js/iziToast.min.js') }}"></script>
     <!-- JS Libraies -->
     <script src="{{ asset('assets/dashboard/bundles/apexcharts/apexcharts.min.js')}}"></script>
     <!-- Page Specific JS File -->
