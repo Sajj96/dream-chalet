@@ -69,6 +69,7 @@
     <script src="{{ asset('assets/dashboard/js/scripts.js')}}"></script>
     <!-- Custom JS File -->
     <script src="{{ asset('assets/dashboard/js/custom.js')}}"></script>
+    @include('partials.flash-message')
 </body>
 
 </html>

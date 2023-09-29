@@ -7,13 +7,13 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Add House Type</h4>
+                        <h4>Add Amenities</h4>
                     </div>
                     <div class="card-body">
-                        <form action="{{ url('dashboard/house-types/add') }}" method="post">
+                        <form action="{{ route('dashboard.stage.add') }}" method="post">
                             @csrf
                             <div class="form-group row mb-4">
-                                <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Name</label>
+                                <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Stage Name</label>
                                 <div class="col-sm-12 col-md-7">
                                     <input type="text" name="name" class="form-control">
                                 </div>

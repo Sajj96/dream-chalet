@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class PropertyPhoto extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['property_id', 'photo_path'];
 }

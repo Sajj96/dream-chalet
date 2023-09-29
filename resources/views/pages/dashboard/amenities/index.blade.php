@@ -11,9 +11,9 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4>{{ __('House Types')}}</h4>
+                        <h4>{{ __('Amenities')}}</h4>
                         <div class="card-header-action">
-                            <a href="{{ url('dashboard/house-types/add') }}" class="btn btn-primary p-2"><i data-feather="plus-circle"></i> Add House Type</a>
+                            <a href="{{ url('dashboard/amenities/add') }}" class="btn btn-primary p-2"><i data-feather="plus-circle"></i> Add Amenity</a>
                         </div>
                     </div>
                     <div class="card-body">
@@ -29,16 +29,16 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($house_types as $type)
+                                    @foreach($amenities as $amenity)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $type->name }}</td>
+                                        <td>{{ $amenity->name }}</td>
                                         <td>
-                                        <a href="#" class="btn btn-outline-danger" onclick="event.preventDefault(); document.getElementById('delete-form-{{ $type->id }}').submit();">Delete</a>
-                                        <form id="delete-form-{{ $type->id }}" action="{{ url('/dashboard/house-types/delete') }}" method="POST" style="display: none;">
-                                            {{ csrf_field() }}
-                                            <input type="hidden" name="type_id" value="{{ $type->id }}">
-                                        </form>
+                                            <a href="#" class="btn btn-outline-danger" onclick="event.preventDefault(); document.getElementById('delete-form-{{ $amenity->id }}').submit();">Delete</a>
+                                            <form id="delete-form-{{ $amenity->id }}" action="{{ url('/dashboard/amenities/delete') }}" method="POST" style="display: none;">
+                                                {{ csrf_field() }}
+                                                <input type="hidden" name="amenity_id" value="{{ $amenity->id }}">
+                                            </form>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -52,6 +52,7 @@
     </div>
 </section>
 @endsection
+
 @section('scripts')
 <script src="{{ asset('assets/dashboard/bundles/datatables/datatables.min.js')}}"></script>
 <script>

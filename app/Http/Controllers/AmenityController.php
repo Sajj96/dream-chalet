@@ -2,21 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Amenity;
 use App\Models\HouseType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 class AmenityController extends Controller
 {
     public function index()
     {
-        return view('dashboard.amenities.index');
+        $amenities = Amenity::get();
+        return view('pages.dashboard.amenities.index', ['amenities' => $amenities]);
     }
 
     public function add(Request $request)
     {
         if($request->method() == "GET") {
-            return view('dashboard.amenities.add');
+            return view('pages.dashboard.amenities.add');
         }
 
         $validator = Validator::make($request->all(), [
@@ -28,21 +31,34 @@ class AmenityController extends Controller
         }
 
         try {
-            $house_type = HouseType::find($request->name);
+            $amenity = Amenity::find($request->name);
 
-            if($house_type) {
-                return back()->with('warning', 'House type already exist');
+            if($amenity) {
+                return back()->with('warning', 'Amenity already exist');
             }
 
-            $house_type = HouseType::create([
-                'name' => ucfirst($request->name)
+            $amenity = Amenity::create([
+                'name' => $request->name
             ]);
 
-            if($house_type) {
-                return redirect('/dashboard/house-types')->withSuccess('House type added successfully');
+            if($amenity) {
+                return redirect('/dashboard/amenities')->withSuccess('Amenity added successfully');
             }
         } catch (\Exception $exception) {
-            return back()->withError('An error has occurred failed to add house type');
+            return back()->withError('An error has occurred failed to add amenity');
         }
+    }
+
+    public function delete(Request $request) {
+        try {
+            if ($request->has('amenity_id')) {
+                $amenity = Amenity::find($request->input('amenity_id'));
+                $amenity->delete();
+                return redirect('/dashboard/amenities')->withSuccess('Amenity deleted successfully');
+            }
+        } catch(\Exception $exception) {
+            Log::error($exception->getMessage());
+        }
+        return redirect('/dashboard/amenities')->withError('Amenity could not be deleted');
     }
 }

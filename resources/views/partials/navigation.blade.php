@@ -64,24 +64,42 @@
                         <img src="assets/img/icons/search-icon.svg" alt="img">
                     </a>
                 </li>
+                @if(auth()->check())
+                <li class="login-link"><a href="#">My Profile</a></li>
+                <li class="login-link">
+                    <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form-one').submit();">Logout</a>
+                    <form id="logout-form-one" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
+                </li>
+                @else
                 <li class="login-link"><a href="{{ route('login') }}">Sign Up</a></li>
                 <li class="login-link"><a href="{{ route('register') }}">Sign In</a></li>
+                @endif
             </ul>
         </div>
         <ul class="nav header-navbar-rht">
             @if(auth()->check())
-            <li class="new-property-btn">
-                <a href="add-new-property.html" class="active">
-                    <i class="bx bxs-user"></i> {{ auth()->user()->name }}
-                </a>
+            <li class="new-property-btn dropstart">
+                <a href="javascript:void(0);" class="active dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="bx bxs-user-circle bx-md"></i> {{ auth()->user()->name }}</a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">My Profile</a></li>
+                    <li>
+                        <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
+                    </li>
+                </ul>
             </li>
-            @endif
+            @else
             <li>
                 <a href="{{ route('register') }}" class="btn btn-primary"><i class="feather-user-plus"></i>Sign Up</a>
             </li>
             <li>
                 <a href="{{ route('login') }}" class="btn sign-btn"><i class="feather-unlock"></i>Sign In</a>
             </li>
+            @endif
         </ul>
     </nav>
 </header>

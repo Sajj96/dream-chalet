@@ -21,7 +21,7 @@ return new class extends Migration
             $table->integer('bathrooms')->nullable();
             $table->integer('floors')->nullable();
             $table->integer('square_meter')->nullable();
-            $table->string('photo_path');
+            $table->string('thumbnail');
             $table->text('details')->nullable();
             $table->timestamps();
             $table->softDeletes();

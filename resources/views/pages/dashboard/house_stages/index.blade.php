@@ -11,14 +11,14 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4>{{ __('House Types')}}</h4>
+                        <h4>{{ __('Development Stages')}}</h4>
                         <div class="card-header-action">
-                            <a href="{{ url('dashboard/house-types/add') }}" class="btn btn-primary p-2"><i data-feather="plus-circle"></i> Add House Type</a>
+                            <a href="{{ route('dashboard.stage.add') }}" class="btn btn-primary p-2"><i data-feather="plus-circle"></i> Add stage</a>
                         </div>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-striped" id="table-1">
+                            <table class="table table-striped" id="table1">
                                 <thead>
                                     <tr>
                                         <th class="text-center">
@@ -29,16 +29,16 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($house_types as $type)
+                                    @foreach($stages as $stage)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $type->name }}</td>
+                                        <td>{{ $stage->name }}</td>
                                         <td>
-                                        <a href="#" class="btn btn-outline-danger" onclick="event.preventDefault(); document.getElementById('delete-form-{{ $type->id }}').submit();">Delete</a>
-                                        <form id="delete-form-{{ $type->id }}" action="{{ url('/dashboard/house-types/delete') }}" method="POST" style="display: none;">
-                                            {{ csrf_field() }}
-                                            <input type="hidden" name="type_id" value="{{ $type->id }}">
-                                        </form>
+                                            <a href="#" class="btn btn-outline-danger" onclick="event.preventDefault(); document.getElementById('delete-form-{{ $stage->id }}').submit();">Delete</a>
+                                            <form id="delete-form-{{ $stage->id }}" action="{{ url('/dashboard/development-stages/delete') }}" method="POST" style="display: none;">
+                                                {{ csrf_field() }}
+                                                <input type="hidden" name="stage_id" value="{{ $stage->id }}">
+                                            </form>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -56,7 +56,7 @@
 <script src="{{ asset('assets/dashboard/bundles/datatables/datatables.min.js')}}"></script>
 <script>
     $(document).ready(function() {
-        $("#table-1").dataTable();
+        $("#table1").dataTable();
     });
 </script>
 @endsection
