@@ -94,12 +94,16 @@
         <div class="container">
             <div class="footer-bottom-content">
                 <div class="copyright">
-                    <p>&copy;Copyright <span id="copyright">
-                        <script>
-                            document.getElementById('copyright').appendChild(document.createTextNode(new Date().getFullYear()))
-                        </script></span>
-                        - All rights reserved Dream Chalets Engineering Ltd
+                    <p>&copy; Copyright <span id="copyright">
+                            <script>
+                                document.getElementById('copyright').appendChild(document.createTextNode(new Date().getFullYear()))
+                            </script>
+                        </span>
+                         Dream Chalets Engineering Ltd - All rights reserved
                     </p>
+                </div>
+                <div class="company-logo">
+                    <p>created with <i class="fas fa-heart text-danger"></i> by <a class="text-white" href="https://www.nougattechnologies.co.tz/"> Nougat Technologies</a></p>
                 </div>
             </div>
         </div>

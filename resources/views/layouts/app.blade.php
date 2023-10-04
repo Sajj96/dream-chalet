@@ -67,6 +67,16 @@
     @yield('styles')
 
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+    <style>
+        @media print {
+
+            html,
+            body {
+                display: none;
+                /* hide whole page */
+            }
+        }
+    </style>
 
 </head>
 
@@ -93,6 +103,8 @@
 
     <script src="{{ asset('assets/js/owl.carousel.min.js') }}"></script>
 
+    <script src="{{ asset('assets/plugins/slick/slick.js ') }}  "></script>
+
     <script src="{{ asset('assets/plugins/select2/js/select2.min.js') }}"></script>
 
     <script src="{{ asset('assets/plugins/aos/aos.js') }}"></script>
@@ -105,6 +117,11 @@
     @yield('scripts')
 
     <script src="{{ asset('assets/js/script.js') }}"></script>
+    <script>
+        window.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        }, false);
+    </script>
 </body>
 
 </html>

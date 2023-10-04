@@ -33,11 +33,25 @@ class Property extends Model
 
     public function amenities()
     {
-        return $this->belongsToMany(Amenity::class, 'property_amenities')->withPivot(['id','detail']);
+        return $this->belongsToMany(Amenity::class, 'property_amenities')->withPivot(['id']);
     }
 
     public function stages()
     {
         return $this->belongsToMany(Stage::class, 'property_stages')->withPivot(['id','price']);
+    }
+
+    public function photos()
+    {
+        return $this->hasMany(PropertyPhoto::class);
+    }
+
+    public function getHouseTypeNameAttribute()
+    {
+        if($this->houseType){
+            return $this->houseType->name;
+        } else {
+            return "Unknown";
+        }
     }
 }

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('house_type_id');
             $table->integer('bedrooms')->nullable();
             $table->integer('bathrooms')->nullable();
-            $table->integer('floors')->nullable();
+            $table->integer('floors')->default(0);
             $table->integer('square_meter')->nullable();
             $table->string('thumbnail');
             $table->text('details')->nullable();

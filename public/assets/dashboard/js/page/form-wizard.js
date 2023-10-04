@@ -66,7 +66,7 @@ $(function () {
         },
         onFinished: function (event, currentIndex) {
             event.preventDefault();
-            $('#finish').text('Please wait...');
+            $('a[href="#finish"]').text('Please wait...').css('pointer-events', 'none');
 
             var myform = $("#wizard_with_validation")[0];
             var formData = new FormData(myform);
@@ -91,9 +91,11 @@ $(function () {
                     data: formData,
                     dataType: "json",
                     success: function (response) {
-                        window.location = "{{ url('dashboard/properties') }}";
+                        window.location = propertyUrl;
                     },
-                    error: function (response) {},
+                    error: function (response) {
+                        window.location = propertyUrl;
+                    },
                 });
             }
         },

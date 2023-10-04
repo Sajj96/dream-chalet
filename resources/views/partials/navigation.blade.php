@@ -1,7 +1,7 @@
 <header class="header header-fix">
     <div class="header-top">
         <div class="template-ad">
-            <img src="assets/img/icons/badge-icon.svg" alt="icon">
+            <img src="{{ asset('assets/img/icons/badge-icon.svg')}}" alt="icon">
             <h5>No 1, Realestate Website to Buy / Sell Your Place <span>First Listing Free!!!</span></h5>
         </div>
     </div>
@@ -14,14 +14,14 @@
                     <span></span>
                 </span>
             </a>
-            <a href="index.html" class="navbar-brand logo">
-                <img src="assets/img/dce_logo.png" class="img-fluid" alt="Logo">
+            <a href="{{ route('home') }}" class="navbar-brand logo">
+                <img src="{{ asset('assets/img/dce_logo.png')}}" class="img-fluid" alt="Logo">
             </a>
         </div>
         <div class="main-menu-wrapper">
             <div class="menu-header">
-                <a href="index.html" class="menu-logo">
-                    <img src="assets/img/dce_logo.png" class="img-fluid" alt="Logo">
+                <a href="{{ route('home') }}" class="menu-logo">
+                    <img src="{{ asset('assets/img/dce_logo.png')}}" class="img-fluid" alt="Logo">
                 </a>
                 <a id="menu_close" class="menu-close" href="javascript:void(0);">
                     <i class="fas fa-times"></i>
@@ -29,7 +29,7 @@
             </div>
             <ul class="main-nav">
                 <li class="active">
-                    <a href="index.html">Home</a>
+                    <a href="{{ route('home') }}">Home</a>
                 </li>
                 <li class="has-submenu">
                     <a href="javascript:void(0);">House Plans <i class="fas fa-chevron-down"></i></a>
@@ -56,12 +56,12 @@
                         </li>
                     </ul>
                 </li>
-                <li><a href="contact-us.html">About Us</a></li>
+                <li><a href="{{ route('about') }}">About Us</a></li>
                 <li><a href="contact-us.html">Blog</a></li>
-                <li><a href="contact-us.html">Contact Us</a></li>
+                <li><a href="{{ route('contact') }}">Contact Us</a></li>
                 <li class="searchbar">
                     <a href="javascript:void(0);">
-                        <img src="assets/img/icons/search-icon.svg" alt="img">
+                        <img src="{{ asset('assets/img/icons/search-icon.svg')}}" alt="img">
                     </a>
                 </li>
                 @if(auth()->check())

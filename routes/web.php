@@ -16,6 +16,19 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+Route::prefix('/properties')->group(function () {
+    Route::get('/', [App\Http\Controllers\PropertyController::class, 'index'])->name('property');
+    Route::get('/view/{prop}', [App\Http\Controllers\PropertyController::class, "view"])->name('property.show');
+});
+
+Route::get('/contact-us', function(){
+    return view('pages.contact');
+})->name('contact');
+
+Route::get('/about-us', function(){
+    return view('pages.about');
+})->name('about');
+
 Auth::routes();
 
 Route::middleware(['auth'])->group(function () {
@@ -24,7 +37,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('dashboard');
 
         Route::prefix('/properties')->group(function () {
-            Route::get('/', [App\Http\Controllers\PropertyController::class, 'indexDashboard'])->name('dashboard.property');
+            Route::get('/all', [App\Http\Controllers\PropertyController::class, 'indexDashboard'])->name('dashboard.property');
             Route::match(['get', 'post'], '/add', [App\Http\Controllers\PropertyController::class, "add"])->name('dashboard.property.add');
             Route::post('/delete', [App\Http\Controllers\PropertyController::class, "delete"])->name('dashboard.property.delete');
         });
@@ -47,4 +60,5 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/delete', [App\Http\Controllers\StageController::class, "delete"])->name('dashboard.stage.delete');
         });
     })->middleware('admin');
+
 });

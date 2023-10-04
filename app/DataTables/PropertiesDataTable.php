@@ -23,6 +23,10 @@ class PropertiesDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
         ->addIndexColumn()
+        ->addColumn('title', function ($row) {
+            $prop = strtolower(preg_replace('/[ ,]+/', '-',$row->title.' '.$row->houseType->name.' '.$row->id));
+            return '<a href="'.route('property.show', $prop).'">'.$row->title.'</a>';
+        })
         ->addColumn('price', function ($row) {
             return number_format($row->price);
         })
@@ -49,7 +53,7 @@ class PropertiesDataTable extends DataTable
             $query->orderBy('created_at', 'DESC');
 
         }, true)
-        ->rawColumns(['action'])
+        ->rawColumns(['action', 'title'])
         ->startsWithSearch()
         ->setRowId('id');
     }

@@ -151,21 +151,22 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <div class="feature-slider owl-carousel">
-                    <div class="slider-col">
+                <div class="row">
+                    @foreach($properties as $property)
+                    <div class="col-lg-4">
                         <div class="product-custom">
                             <div class="profile-widget">
                                 <div class="doc-img">
-                                    <a href="rent-details.html" class="property-img">
-                                        <img class="img-fluid" alt="Property Image" src="assets/img/product/product-1.jpg">
+                                    <a href="{{ route('property.show',[strtolower(preg_replace('/[ ,]+/', '-',$property->title.' '.$property->houseType->name.' '.$property->id))])}}" class="property-img">
+                                        <img class="img-fluid" alt="Property Image" src="{{ Thumbnail::src($property->thumbnail)->url() }}">
                                     </a>
                                     <div class="product-amount">
-                                        <span>$41,000</span>
+                                        <span>{{ number_format($property->price)." ".$property->currency }}</span>
                                     </div>
                                     <div class="feature-rating">
                                         <div>
                                             <div class="featured">
-                                                <span>Featured</span>
+                                                <span>{{ $property->houseTypeName }}</span>
                                             </div>
                                             <div class="new-featured">
                                                 <span>New</span>
@@ -177,9 +178,6 @@
                                             </div>
                                         </a>
                                     </div>
-                                    <div class="user-avatar">
-                                        <img src="assets/img/profiles/avatar-01.jpg" alt="User">
-                                    </div>
                                 </div>
                                 <div class="pro-content">
                                     <div class="rating">
@@ -193,515 +191,34 @@
                                         <p class="rating-review"><span>5.0</span>(20 Reviews)</p>
                                     </div>
                                     <h3 class="title">
-                                        <a href="rent-details.html">Place perfect for nature</a>
+                                        <a href="{{ route('property.show',[strtolower(preg_replace('/[ ,]+/', '-',$property->title.' '.$property->houseType->name.' '.$property->id))])}}">{!! $property->title !!}</a>
                                     </h3>
-                                    <p><span><i class="feather-map-pin"></i></span>318-S Oakley Blvd, Chicago, IL 60612, USA</p>
                                     <ul class="d-flex details">
                                         <li>
-                                            <img src="assets/img/icons/bed-icon.svg" alt="bed-icon">
-                                            4 Beds
+                                            <i class="fas fa-bed fa-1x text-secondary mx-1"></i>
+                                            {{ $property->bedrooms ?? 0 }} Beds
                                         </li>
                                         <li>
-                                            <img src="assets/img/icons/bath-icon.svg" alt="bath-icon">
-                                            4 Baths
+                                            <i class="fas fa-bath fa-1x text-secondary mx-1"></i>
+                                            {{ $property->bathrooms ?? 0 }} Baths
                                         </li>
                                         <li>
-                                            <img src="assets/img/icons/building-icon.svg" alt="building-icon">
-                                            35000 Sqft
-                                        </li>
-                                    </ul>
-                                    <ul class="property-category d-flex justify-content-between">
-                                        <li>
-                                            <span class="list">Listed on : </span>
-                                            <span class="date">16 Jan 2023</span>
+                                            <i class="fas fa-square fa-1x text-secondary mx-1"></i>
+                                            {{ $property->square_meter }} Sqft
                                         </li>
                                         <li>
-                                            <span class="category list">Category : </span>
-                                            <span class="category-value date">Apartment</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product-custom">
-                            <div class="profile-widget">
-                                <div class="doc-img">
-                                    <a href="rent-details.html" class="property-img">
-                                        <img class="img-fluid" alt="Property Image" src="assets/img/product/product-2.jpg">
-                                    </a>
-                                    <div class="feature-rating">
-                                        <div>
-                                            <div class="featured">
-                                                <span>Featured</span>
-                                            </div>
-                                        </div>
-                                        <a href="javascript:void(0)">
-                                            <div class="favourite">
-                                                <span><i class="fa-regular fa-heart"></i></span>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="product-amount">
-                                        <span>$78,000</span>
-                                    </div>
-                                    <div class="user-avatar">
-                                        <img src="assets/img/profiles/avatar-02.jpg" alt="User">
-                                    </div>
-                                </div>
-                                <div class="pro-content">
-                                    <div class="rating">
-                                        <span class="rating-count">
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                        </span>
-                                        <p class="rating-review"><span>3.0</span>(10 Reviews)</p>
-                                    </div>
-                                    <h3 class="title">
-                                        <a href="rent-details.html">Beautiful Condo Room</a>
-                                    </h3>
-                                    <p><i class="feather-map-pin"></i>470 Park Ave S, New York, NY 10016</p>
-                                    <ul class="d-flex details">
-                                        <li>
-                                            <img src="assets/img/icons/bed-icon.svg" alt="bed-icon">
-                                            3 Beds
-                                        </li>
-                                        <li>
-                                            <img src="assets/img/icons/bath-icon.svg" alt="bath-icon">
-                                            2 Baths
-                                        </li>
-                                        <li>
-                                            <img src="assets/img/icons/building-icon.svg" alt="building-icon">
-                                            15000 Sqft
-                                        </li>
-                                    </ul>
-                                    <ul class="property-category d-flex justify-content-between">
-                                        <li>
-                                            <span class="list">Listed on : </span>
-                                            <span class="date">17 Jan 2023</span>
-                                        </li>
-                                        <li>
-                                            <span class="category list">Category : </span>
-                                            <span class="category-value date">Condos</span>
+                                            <i class="fas fa-building fa-1x text-secondary mx-1"></i>
+                                            {{ $property->floors }} Storeys
                                         </li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="slider-col">
-                        <div class="product-custom">
-                            <div class="profile-widget">
-                                <div class="doc-img">
-                                    <a href="rent-details.html" class="property-img">
-                                        <img class="img-fluid" alt="Property Image" src="assets/img/product/product-3.jpg">
-                                    </a>
-                                    <div class="product-amount">
-                                        <span>$63,000</span>
-                                    </div>
-                                    <div class="feature-rating">
-                                        <div>
-                                            <div class="featured">
-                                                <span>Featured</span>
-                                            </div>
-                                        </div>
-                                        <a href="javascript:void(0)">
-                                            <div class="favourite">
-                                                <span><i class="fa-regular fa-heart"></i></span>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="user-avatar">
-                                        <img src="assets/img/profiles/avatar-03.jpg" alt="User">
-                                    </div>
-                                </div>
-                                <div class="pro-content">
-                                    <div class="rating">
-                                        <span class="rating-count">
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                        </span>
-                                        <p class="rating-review"><span>4.0</span>(28 Reviews)</p>
-                                    </div>
-                                    <h3 class="title">
-                                        <a href="rent-details.html">Summer house</a>
-                                    </h3>
-                                    <p><i class="feather-map-pin"></i>82-25 Parsons Blvd, Jamaica, NY 11432, USA</p>
-                                    <ul class="d-flex details">
-                                        <li>
-                                            <img src="assets/img/icons/bed-icon.svg" alt="bed-icon">
-                                            2 Beds
-                                        </li>
-                                        <li>
-                                            <img src="assets/img/icons/bath-icon.svg" alt="bath-icon">
-                                            1 Bath
-                                        </li>
-                                        <li>
-                                            <img src="assets/img/icons/building-icon.svg" alt="building-icon">
-                                            5000 Sqft
-                                        </li>
-                                    </ul>
-                                    <ul class="property-category d-flex justify-content-between">
-                                        <li>
-                                            <span class="list">Listed on : </span>
-                                            <span class="date">13 Jan 2023</span>
-                                        </li>
-                                        <li>
-                                            <span class="category list">Category : </span>
-                                            <span class="category-value date">House</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product-custom">
-                            <div class="profile-widget">
-                                <div class="doc-img">
-                                    <a href="rent-detail-viewhtml" class="property-img">
-                                        <img class="img-fluid" alt="Property Image" src="assets/img/product/product-4.jpg">
-                                    </a>
-                                    <div class="product-amount">
-                                        <span>$51,000</span>
-                                    </div>
-                                    <div class="feature-rating">
-                                        <div>
-                                            <div class="featured">
-                                                <span>Featured</span>
-                                            </div>
-                                        </div>
-                                        <a href="javascript:void(0)">
-                                            <div class="favourite">
-                                                <span><i class="fa-regular fa-heart"></i></span>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="user-avatar">
-                                        <img src="assets/img/profiles/avatar-04.jpg" alt="User">
-                                    </div>
-                                </div>
-                                <div class="pro-content">
-                                    <div class="rating">
-                                        <span class="rating-count">
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star checked"></i>
-                                        </span>
-                                        <p class="rating-review"><span>5.0</span>(15 Reviews)</p>
-                                    </div>
-                                    <h3 class="title">
-                                        <a href="rent-details.html">Minimalist and bright flat</a>
-                                    </h3>
-                                    <p><i class="feather-map-pin"></i>518-520 8th Ave, New York, NY 10018, USA</p>
-                                    <ul class="d-flex details">
-                                        <li>
-                                            <img src="assets/img/icons/bed-icon.svg" alt="bed-icon">
-                                            3 Beds
-                                        </li>
-                                        <li>
-                                            <img src="assets/img/icons/bath-icon.svg" alt="bath-icon">
-                                            1 Baths
-                                        </li>
-                                        <li>
-                                            <img src="assets/img/icons/building-icon.svg" alt="building-icon">
-                                            25000 Sqft
-                                        </li>
-                                    </ul>
-                                    <ul class="property-category d-flex justify-content-between">
-                                        <li>
-                                            <span class="list">Listed on : </span>
-                                            <span class="date">18 Jan 2023</span>
-                                        </li>
-                                        <li>
-                                            <span class="category list">Category : </span>
-                                            <span class="category-value date">Flats</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="slider-col">
-                        <div class="product-custom">
-                            <div class="profile-widget">
-                                <div class="doc-img">
-                                    <a href="rent-details.html" class="property-img">
-                                        <img class="img-fluid" alt="Property Image" src="assets/img/product/product-5.jpg">
-                                    </a>
-                                    <div class="product-amount">
-                                        <span>$29,000</span>
-                                    </div>
-                                    <div class="feature-rating">
-                                        <div>
-                                            <div class="featured">
-                                                <span>Featured</span>
-                                            </div>
-                                        </div>
-                                        <a href="javascript:void(0)">
-                                            <div class="favourite">
-                                                <span><i class="fa-regular fa-heart"></i></span>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="user-avatar">
-                                        <img src="assets/img/profiles/avatar-05.jpg" alt="User">
-                                    </div>
-                                </div>
-                                <div class="pro-content">
-                                    <div class="rating">
-                                        <span class="rating-count">
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star checked"></i>
-                                        </span>
-                                        <p class="rating-review"><span>5.0</span>(20 Reviews)</p>
-                                    </div>
-                                    <h3 class="title">
-                                        <a href="rent-details.html">Two storey modern flat</a>
-                                    </h3>
-                                    <p><i class="feather-map-pin"></i>470 Park Ave S, New York, NY 10016</p>
-                                    <ul class="d-flex details">
-                                        <li>
-                                            <img src="assets/img/icons/bed-icon.svg" alt="bed-icon">
-                                            2 Beds
-                                        </li>
-                                        <li>
-                                            <img src="assets/img/icons/bath-icon.svg" alt="bath-icon">
-                                            2 Baths
-                                        </li>
-                                        <li>
-                                            <img src="assets/img/icons/building-icon.svg" alt="building-icon">
-                                            31000 Sqft
-                                        </li>
-                                    </ul>
-                                    <ul class="property-category d-flex justify-content-between">
-                                        <li>
-                                            <span class="list">Listed on : </span>
-                                            <span class="date">19 Jan 2023</span>
-                                        </li>
-                                        <li>
-                                            <span class="category list">Category : </span>
-                                            <span class="category-value date">Flat</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product-custom">
-                            <div class="profile-widget">
-                                <div class="doc-img">
-                                    <a href="rent-details.html" class="property-img">
-                                        <img class="img-fluid" alt="Property Image" src="assets/img/product/product-2.jpg">
-                                    </a>
-                                    <div class="product-amount">
-                                        <span>$80,000</span>
-                                    </div>
-                                    <div class="feature-rating">
-                                        <div>
-                                            <div class="featured">
-                                                <span>Featured</span>
-                                            </div>
-                                        </div>
-                                        <a href="javascript:void(0)">
-                                            <div class="favourite">
-                                                <span><i class="fa-regular fa-heart"></i></span>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="user-avatar">
-                                        <img src="assets/img/profiles/avatar-06.jpg" alt="User">
-                                    </div>
-                                </div>
-                                <div class="pro-content">
-                                    <div class="rating">
-                                        <span class="rating-count">
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                        </span>
-                                        <p class="rating-review"><span>4.0</span>(12 Reviews)</p>
-                                    </div>
-                                    <h3 class="title">
-                                        <a href="rent-details.html">Modern apartment</a>
-                                    </h3>
-                                    <p><i class="feather-map-pin"></i>122 N Morgan St, Chicago, IL 60607, USA</p>
-                                    <ul class="d-flex details">
-                                        <li>
-                                            <img src="assets/img/icons/bed-icon.svg" alt="bed-icon">
-                                            3 Beds
-                                        </li>
-                                        <li>
-                                            <img src="assets/img/icons/bath-icon.svg" alt="bath-icon">
-                                            3 Baths
-                                        </li>
-                                        <li>
-                                            <img src="assets/img/icons/building-icon.svg" alt="building-icon">
-                                            12000 Sqft
-                                        </li>
-                                    </ul>
-                                    <ul class="property-category d-flex justify-content-between">
-                                        <li>
-                                            <span class="list">Listed on : </span>
-                                            <span class="date">20 Jan 2023</span>
-                                        </li>
-                                        <li>
-                                            <span class="category list">Category : </span>
-                                            <span class="category-value date">Apartment</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="slider-col">
-                        <div class="product-custom">
-                            <div class="profile-widget">
-                                <div class="doc-img">
-                                    <a href="rent-details.html" class="property-img">
-                                        <img class="img-fluid" alt="Property Image" src="assets/img/product/product-4.jpg">
-                                    </a>
-                                    <div class="product-amount">
-                                        <span>$51,000</span>
-                                    </div>
-                                    <div class="feature-rating">
-                                        <div>
-                                            <div class="featured">
-                                                <span>Featured</span>
-                                            </div>
-                                        </div>
-                                        <a href="javascript:void(0)">
-                                            <div class="favourite">
-                                                <span><i class="fa-regular fa-heart"></i></span>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="user-avatar">
-                                        <img src="assets/img/profiles/avatar-07.jpg" alt="User">
-                                    </div>
-                                </div>
-                                <div class="pro-content">
-                                    <div class="rating">
-                                        <span class="rating-count">
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star checked"></i>
-                                        </span>
-                                        <span class="rating-review">5.0 (60 Reviews)</span>
-                                    </div>
-                                    <h3 class="title">
-                                        <a href="rent-details.html">Minimalist and bright flat</a>
-                                    </h3>
-                                    <p><i class="feather-map-pin"></i>518-520 8th Ave, New York, NY 10018, USA</p>
-                                    <ul class="d-flex details">
-                                        <li>
-                                            <img src="assets/img/icons/bed-icon.svg" alt="bed-icon">
-                                            4 Beds
-                                        </li>
-                                        <li>
-                                            <img src="assets/img/icons/bath-icon.svg" alt="bath-icon">
-                                            2 Baths
-                                        </li>
-                                        <li>
-                                            <img src="assets/img/icons/building-icon.svg" alt="building-icon">
-                                            23000 Sqft
-                                        </li>
-                                    </ul>
-                                    <ul class="property-category d-flex justify-content-between">
-                                        <li>
-                                            <span class="list">Listed on : </span>
-                                            <span class="date">21 Jan 2023</span>
-                                        </li>
-                                        <li>
-                                            <span class="category list">Category : </span>
-                                            <span class="category-value date">Flats</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product-custom" data-aos="fade-down" data-aos-duration="1000">
-                            <div class="profile-widget">
-                                <div class="doc-img">
-                                    <a href="rent-details.html" class="property-img">
-                                        <img class="img-fluid" alt="Property Image" src="assets/img/product/product-3.jpg">
-                                    </a>
-                                    <div class="product-amount">
-                                        <span>$41000</span>
-                                    </div>
-                                    <div class="feature-rating">
-                                        <div>
-                                            <div class="featured">
-                                                <span>Featured</span>
-                                            </div>
-                                        </div>
-                                        <a href="javascript:void(0)">
-                                            <div class="favourite">
-                                                <span><i class="fa-regular fa-heart"></i></span>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="user-avatar">
-                                        <img src="assets/img/profiles/avatar-05.jpg" alt="User">
-                                    </div>
-                                </div>
-                                <div class="pro-content">
-                                    <div class="rating">
-                                        <span class="rating-count">
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star checked"></i>
-                                        </span>
-                                        <span class="rating-review">5.0 (50 Reviews)</span>
-                                    </div>
-                                    <h3 class="title">
-                                        <a href="rent-details.html">Place perfect for nature</a>
-                                    </h3>
-                                    <p><i class="feather-map-pin"></i>318-S Oakley Blvd, Chicago, IL 60612, USA</p>
-                                    <ul class="d-flex details">
-                                        <li>
-                                            <img src="assets/img/icons/bed-icon.svg" alt="bed-icon">
-                                            2 Beds
-                                        </li>
-                                        <li>
-                                            <img src="assets/img/icons/bath-icon.svg" alt="bath-icon">
-                                            4 Baths
-                                        </li>
-                                        <li>
-                                            <img src="assets/img/icons/building-icon.svg" alt="building-icon">
-                                            15000 Sqft
-                                        </li>
-                                    </ul>
-                                    <ul class="property-category d-flex justify-content-between">
-                                        <li>
-                                            <span class="list">Listed on : </span>
-                                            <span class="date">16 Jan 2023</span>
-                                        </li>
-                                        <li>
-                                            <span class="category list">Category : </span>
-                                            <span class="category-value date">Apartment</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
                 <div class="view-property-btn d-flex justify-content-center" data-aos="fade-down" data-aos-duration="1000">
-                    <a href="rent-property-grid.html" class="btn-primary">View All Properties</a>
+                    <a href="{{ route('property') }}" class="btn-primary">View All Properties</a>
                 </div>
             </div>
         </div>
@@ -1141,27 +658,6 @@
                         </div>
                     </div>
 
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="news-letter-sec">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-md-6">
-                <div class="news-heading" data-aos="fade-down" data-aos-duration="2000">
-                    <h2>Sign Up for Our Newsletter</h2>
-                    <p>Lorem ipsum dolor sit amet, consecte tur cing elit. Suspe ndisse suscipit sagittis</p>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="email-form" data-aos="fade-down" data-aos-duration="2000">
-                    <form action="#">
-                        <input type="email" class="form-control" placeholder="Enter Email Address">
-                        <button class="btn-primary">Subscribe</button>
-                    </form>
                 </div>
             </div>
         </div>

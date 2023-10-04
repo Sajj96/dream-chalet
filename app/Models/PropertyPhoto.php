@@ -10,4 +10,9 @@ class PropertyPhoto extends Model
     use HasFactory;
 
     protected $fillable = ['property_id', 'photo_path'];
+
+    public function property()
+    {
+        return $this->belongsTo(Property::class);
+    }
 }

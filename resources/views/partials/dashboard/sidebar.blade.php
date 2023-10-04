@@ -18,8 +18,8 @@
             <li class="dropdown @if(\Request::is('dashboard/development-stages') || \Request::is('dashboard/development-stages/*') ) active @endif">
                 <a href="{{ url('/dashboard/development-stages') }}" class="nav-link"><i data-feather="layers"></i><span>Development Stages</span></a>
             </li>
-            <li class="dropdown @if(\Request::is('dashboard/properties') || \Request::is('dashboard/properties/*') ) active @endif">
-                <a href="{{ url('/dashboard/properties') }}" class="nav-link"><i data-feather="home"></i><span>Properties</span></a>
+            <li class="dropdown @if(\Request::is('dashboard/properties/all') || \Request::is('dashboard/properties/*') ) active @endif">
+                <a href="{{ url('/dashboard/properties/all') }}" class="nav-link"><i data-feather="home"></i><span>Properties</span></a>
             </li>
         </ul>
     </aside>

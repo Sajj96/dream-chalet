@@ -21,7 +21,10 @@ class PropertyController extends Controller
 {
     public function index()
     {
-
+        $properties = Property::all();
+        return view('pages.properties.index', [
+            'properties' => $properties
+        ]);
     }
 
     public function indexDashboard(PropertiesDataTable $datatable)
@@ -85,7 +88,7 @@ class PropertyController extends Controller
 
                 $thumbnail = sprintf("%s_%s_THUMBNAIL.%s", uniqid(),date("YmdHis"), $thumbnailExtension);
                 $thumbnailImg = Image::make($request->file('main_image')->getRealPath());
-                $thumbnailImg->resize(417, 293);
+                $thumbnailImg->resize(817, 446);
 
                 $thumbnailImg->save(storage_path('/app/public/properties/thumbnails/' . $thumbnail),90);
 
@@ -116,7 +119,7 @@ class PropertyController extends Controller
 
                 $floorImg = Image::make($request->file('floor_image')->getRealPath());
                 $floorImg->resize(817, 446);
-                $floorImg->blur(20);
+                $floorImg->blur(100);
 
                 $premiumImg = Image::make($request->file('floor_image')->getRealPath());
                 $premiumImg->resize(817, 446);
@@ -204,5 +207,48 @@ class PropertyController extends Controller
             Session::flash('error', 'An error has occurred failed to add new property'); 
             return response()->json(['error' => 'ok']);
         }
+    }
+
+    public function view(Request $request, $prop = null)
+    {
+        $prop = explode("-", $prop);
+        $id = (int) end($prop);
+
+        if (empty($id)) {
+            return back()->withWarning("You must provide Property's ID");
+        }
+
+        $property = Property::find($id);
+        if (!$property) {
+            return back()->withError('Property not found');
+        }
+
+        $amenities = $property->amenities;
+        $stages = $property->stages;
+        $photos = $property->photos;
+
+        return view('pages.properties.view', [
+            'property' => $property,
+            'amenities' => $amenities,
+            'stages'   => $stages,
+            'photos' => $photos
+        ]);
+    }
+
+    public function delete(Request $request) {
+        try {
+            if ($request->has('property_id')) {
+                $property = Property::find($request->input('property_id'));
+                if ($property){
+                    $property->delete();
+                    return redirect('/dashboard/properties')->withSuccess('Property Deleted');
+                } else {
+                    return back()->withError('Property not found');
+                }
+            }
+        } catch(\Exception $exception) {
+            Log::error($exception->getMessage());
+        }
+        return redirect('/dashboard/properties')->withError('Property could not be deleted');
     }
 }
