@@ -22,7 +22,7 @@ class HouseTypeController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'name' => 'required'
+            'type' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -31,18 +31,23 @@ class HouseTypeController extends Controller
 
         try {
 
-            $amenities = $request->type;
-            if (!is_array($amenities)) {
-                $amenities = [$request->type];
+            $types = $request->type;
+            if (!is_array($types)) {
+                $types = [$request->type];
             }
 
-            $house_type = HouseType::create([
-                'name' => $request->name
-            ]);
-
-            if($house_type) {
-                return redirect('/dashboard/house-types')->withSuccess('House type added successfully');
+            foreach($types as $type) {
+                HouseType::updateOrCreate(
+                    [
+                        'name' => $type
+                    ],
+                    [
+                        'name' => $type
+                    ]
+                );
             }
+
+            return redirect('/dashboard/house-types')->withSuccess('House type added successfully');
         } catch (\Exception $exception) {
             return back()->withError('An error has occurred failed to add house type');
         }

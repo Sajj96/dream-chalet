@@ -22,7 +22,7 @@ class StageController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string'
+            'stage' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -30,19 +30,24 @@ class StageController extends Controller
         }
 
         try {
-            $stage = Stage::find($request->name);
 
-            if($stage) {
-                return back()->with('warning', 'Development stage already exist');
+            $stages = $request->stage;
+            if (!is_array($stages)) {
+                $stages = [$request->stage];
             }
 
-            $stage = Stage::create([
-                'name' => $request->name
-            ]);
-
-            if($stage) {
-                return redirect('/dashboard/development-stages')->withSuccess('Development stage added successfully');
+            foreach($stages as $stage) {
+                Stage::updateOrCreate(
+                    [
+                        'name' => $stage
+                    ], 
+                    [
+                        'name' => $stage
+                    ]
+                );
             }
+
+            return redirect('/dashboard/development-stages')->withSuccess('Development stage added successfully');
         } catch (\Exception $exception) {
             return back()->withError('An error has occurred failed to add development stage');
         }

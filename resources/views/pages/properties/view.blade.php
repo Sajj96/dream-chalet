@@ -1,4 +1,5 @@
 @extends('layouts.app', ['title' => 'Property | DCE | '.ucwords(str_replace('-',' ',request()->segment(count(request()->segments()))))." | " ])
+@php use Illuminate\Support\Facades\URL; $currentUrl = URL::current(); @endphp
 
 @section('styles')
 <link rel="stylesheet" href="{{ asset('assets/plugins/fancybox/jquery.fancybox.min.css')}}">
@@ -139,12 +140,10 @@
                         </div>
                         <div class="social-links">
                             <ul class="sidebar-social-links">
-                                <li><a href="javascript:void(0);" class="fb-icon"><i class="fa-brands fa-facebook-f hi-icon"></i></a></li>
-                                <li><a href="javascript:void(0);" class="ins-icon"><i class="fa-brands fa-instagram hi-icon"></i></a></li>
-                                <li><a href="javascript:void(0);"><i class="fa-brands fa-behance hi-icon"></i></a></li>
-                                <li><a href="javascript:void(0);" class="twitter-icon"><i class="fa-brands fa-twitter hi-icon"></i></a></li>
-                                <li><a href="javascript:void(0);" class="ins-icon"><i class="fa-brands fa-pinterest-p hi-icon"></i></a></li>
+                                <li><a href="https://www.facebook.com/sharer/sharer.php?u={{ $currentUrl }}" class="fb-icon"><i class="fa-brands fa-facebook-f hi-icon"></i></a></li>
+                                <li><a href="https://twitter.com/intent/tweet?url={{ $currentUrl }}&text={{ $property->title }}" class="twitter-icon"><i class="fa-brands fa-twitter hi-icon"></i></a></li>
                                 <li><a href="javascript:void(0);"><i class="fa-brands fa-linkedin hi-icon"></i></a></li>
+                                <li><a href="whatsapp://send?text={{ $currentUrl }}"><i class="fa-brands fa-whatsapp hi-icon"></i></a></li>
                             </ul>
                         </div>
                     </div>
