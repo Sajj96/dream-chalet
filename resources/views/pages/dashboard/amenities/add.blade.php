@@ -12,10 +12,17 @@
                     <div class="card-body">
                         <form action="{{ url('dashboard/amenities/add') }}" method="post">
                             @csrf
-                            <div class="form-group row mb-4">
-                                <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Amenity Name</label>
-                                <div class="col-sm-12 col-md-7">
-                                    <input type="text" name="name" class="form-control">
+                            <div class="group">
+                                <div class="form-group row clone mb-4">
+                                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Amenity Name</label>
+                                    <div class="col-sm-12 col-md-7">
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control" name="amenity[]" placeholder="" aria-label="">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-primary" id="add-btn" type="button">Add Another</button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group row mb-4">
@@ -31,4 +38,32 @@
         </div>
     </div>
 </section>
+@endsection
+
+@section('scripts')
+<script>
+    $(document).on('click', '#add-btn', function() {
+
+        var html = `
+            <div class="form-group row clone mb-4">
+                <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Amenity Name</label>
+                <div class="col-sm-12 col-md-7">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" name="amenity[]" placeholder="" aria-label="">
+                        <div class="input-group-append">
+                            <button class="btn btn-danger remove" type="button">Remove</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        $(".group").append(html);
+
+    });
+
+    $("body").on("click", ".remove", function() {
+        $(this).parents(".clone").remove();
+    });
+</script>
 @endsection

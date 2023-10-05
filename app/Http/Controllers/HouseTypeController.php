@@ -22,7 +22,7 @@ class HouseTypeController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string'
+            'name' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -30,10 +30,10 @@ class HouseTypeController extends Controller
         }
 
         try {
-            $house_type = HouseType::find($request->name);
 
-            if($house_type) {
-                return back()->with('warning', 'House type already exist');
+            $amenities = $request->type;
+            if (!is_array($amenities)) {
+                $amenities = [$request->type];
             }
 
             $house_type = HouseType::create([

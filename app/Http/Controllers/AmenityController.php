@@ -23,7 +23,7 @@ class AmenityController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string'
+            'amenity' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -31,19 +31,24 @@ class AmenityController extends Controller
         }
 
         try {
-            $amenity = Amenity::find($request->name);
-
-            if($amenity) {
-                return back()->with('warning', 'Amenity already exist');
+            
+            $amenities = $request->amenity;
+            if (!is_array($amenities)) {
+                $amenities = [$request->amenity];
             }
 
-            $amenity = Amenity::create([
-                'name' => $request->name
-            ]);
-
-            if($amenity) {
-                return redirect('/dashboard/amenities')->withSuccess('Amenity added successfully');
+            foreach($amenities as $amenity) {
+                Amenity::updateOrCreate(
+                    [
+                        'name' => $amenity
+                    ],
+                    [
+                        'name' => $amenity
+                    ]
+                );
             }
+
+            return redirect('/dashboard/amenities')->withSuccess('Amenities added successfully');
         } catch (\Exception $exception) {
             return back()->withError('An error has occurred failed to add amenity');
         }

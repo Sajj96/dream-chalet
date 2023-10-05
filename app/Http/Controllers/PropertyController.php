@@ -177,7 +177,7 @@ class PropertyController extends Controller
 
                 $floorImg = Image::make($request->file('floor_image')->getRealPath());
                 $floorImg->resize(817, 446);
-                $floorImg->blur(100);
+                $floorImg->pixelate(12)->blur(100);
 
                 $premiumImg = Image::make($request->file('floor_image')->getRealPath());
                 $premiumImg->resize(817, 446);

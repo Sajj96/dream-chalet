@@ -1,3 +1,6 @@
+@php use App\Models\HouseType;
+    $house_types = HouseType::get();
+@endphp
 <header class="header header-fix">
     <div class="header-top">
         <div class="template-ad">
@@ -37,21 +40,19 @@
                         <li class="has-submenu">
                             <a href="javascript:void(0);">House Sizes</a>
                             <ul class="submenu">
-                                <li><a href="{{ route('property', ['bedroom' => 1]) }}">1 Bedroom</a></li>
-                                <li><a href="{{ route('property', ['bedroom' => 2]) }}buy-property-list.html">2 Bedrooms</a></li>
-                                <li><a href="buy-property-grid-sidebar.html">3 Bedrooms</a></li>
-                                <li><a href="buy-property-list-sidebar.html">4 Bedrooms</a></li>
-                                <li><a href="buy-grid-map.html">5+ Bedrooms</a></li>
+                                <li><a href="{{ route('property', 'bedroom=1') }}">1 Bedroom</a></li>
+                                <li><a href="{{ route('property', 'bedroom=2') }}">2 Bedrooms</a></li>
+                                <li><a href="{{ route('property', 'bedroom=3') }}">3 Bedrooms</a></li>
+                                <li><a href="{{ route('property', 'bedroom=4') }}">4 Bedrooms</a></li>
+                                <li><a href="{{ route('property', 'bedroom=5') }}">5+ Bedrooms</a></li>
                             </ul>
                         </li>
                         <li class="has-submenu">
                             <a href="javascript:void(0);">House Types</a>
                             <ul class="submenu">
-                                <li><a href="rent-property-grid.html">Apartments</a></li>
-                                <li><a href="rent-property-list.html">Workspaces</a></li>
-                                <li><a href="rent-property-grid-sidebar.html">Commercial Building</a></li>
-                                <li><a href="rent-property-list-sidebar.html">Hotels and Lodges</a></li>
-                                <li><a href="rent-grid-map.html">Modern House Plans</a></li>
+                                @foreach($house_types as $house_type)
+                                <li><a href="{{ route('property', 'bedroom=2') }}">{{ $house_type->name }}</a></li>
+                                @endforeach
                             </ul>
                         </li>
                     </ul>
