@@ -106,6 +106,9 @@
 .arrival-div .prices-two li{
   width: 50%;
 }
+.arrival-div .files li{
+  width: 100%;
+}
 @media (max-width: 575.98px){
   .premium{
     width: 300px !important;

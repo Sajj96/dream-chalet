@@ -12,7 +12,7 @@
             <div class="row align-items-center">
                 <div class="col-lg-3">
                     <div class="result-show">
-                        <h5>Showing result of <span>{{ count($properties) }}</span> {{ ucwords(request()->segment(count(request()->segments()))) }}</h5>
+                        <h5>Showing <span>{{ count($properties) }}</span> result of  {{ substr(ucwords(request()->segment(count(request()->segments()))), 0, strpos(ucwords(request()->segment(count(request()->segments()))), "=")) }}</h5>
                     </div>
                 </div>
                 <div class="col-lg-9">
@@ -22,9 +22,9 @@
                                 <p>Price Range</p>
                             </div>
                             <div class="review-form">
-                                <select class="select">
-                                    <option>Low to High</option>
-                                    <option>High to Low</option>
+                                <select class="select" name="sort_price">
+                                    <option value="low_price">Low to High</option>
+                                    <option value="high_price">High to Low</option>
                                 </select>
                             </div>
                         </div>

@@ -3,17 +3,17 @@
     <div class="footer-top">
         <div class="container">
             <div class="row">
-                <div class="col-lg-4 col-md-6 col-sm-8">
+                <div class="col-lg-6 col-md-6 col-sm-8">
                     <div class="footer-widget footer-about">
                         <div class="footer-app-content">
                             <div class="footer-content-heading">
-                                <img src="{{ asset('assets/img/dce_logo.png') }}" alt="image">
+                                <img src="{{ asset('assets/img/dce_logo.png') }}" width="300" alt="image">
                                 <h4>Get Our App </h4>
                                 <p>Download the app and book your property</p>
                             </div>
                             <div class="download-app">
-                                <a href="javascript:void(0);"><img src="assets/img/google-pay.png" alt="google play"></a>
-                                <a href="javascript:void(0);"><img src="assets/img/app-store.png" alt="app store"></a>
+                                <a href="javascript:void(0);"><img src="{{ asset('assets/img/google-pay.png')}}" alt="google play"></a>
+                                <a href="javascript:void(0);"><img src="{{ asset('assets/img/app-store.png')}}" alt="app store"></a>
                             </div>
                             <div class="social-links">
                                 <h4>Connect with us</h4>
@@ -54,20 +54,6 @@
                             <li><a href="javascript:void(0);">Office</a></li>
                             <li><a href="javascript:void(0);">Villas</a></li>
                             <li><a href="javascript:void(0);">Flat</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-md-4 col-sm-4">
-                    <div class="footer-widget-list">
-                        <div class="footer-content-heading">
-                            <h4>Locations</h4>
-                        </div>
-                        <ul>
-                            <li><a href="javascript:void(0);">United States</a></li>
-                            <li><a href="javascript:void(0);">Canada</a></li>
-                            <li><a href="javascript:void(0);">India</a></li>
-                            <li><a href="javascript:void(0);">UK</a></li>
-                            <li><a href="javascript:void(0);">Australia</a></li>
                         </ul>
                     </div>
                 </div>

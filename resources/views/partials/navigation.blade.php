@@ -5,7 +5,7 @@
     <div class="header-top">
         <div class="template-ad">
             <img src="{{ asset('assets/img/icons/badge-icon.svg')}}" alt="icon">
-            <h5>No 1, Realestate Website to Buy / Sell Your Place <span>First Listing Free!!!</span></h5>
+            <h5>No 1, Construction Website to Buy Your House Plan</h5>
         </div>
     </div>
     <nav class="navbar navbar-expand-lg header-nav">
@@ -50,8 +50,8 @@
                         <li class="has-submenu">
                             <a href="javascript:void(0);">House Types</a>
                             <ul class="submenu">
-                                @foreach($house_types as $house_type)
-                                <li><a href="{{ route('property', 'bedroom=2') }}">{{ $house_type->name }}</a></li>
+                                @foreach($house_types as $type)
+                                <li><a href="{{ route('property', $type->name.'='.$type->id) }}">{{ $type->name }}</a></li>
                                 @endforeach
                             </ul>
                         </li>

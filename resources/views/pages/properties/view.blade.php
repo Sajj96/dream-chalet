@@ -14,7 +14,7 @@
                     <span class="appartment">{{ $property->houseTypeName }}</span>
                 </div>
                 <div class="page-title">
-                    <h3>{!! $property->title !!}<span><img src="{{ asset('assets/img/icons/location-icon.svg')}}" alt="Image"></span></h3>
+                    <h3>{!! $property->bedrooms .' Bedrooms - '. $property->title !!}<span><img src="{{ asset('assets/img/icons/location-icon.svg')}}" alt="Image"></span></h3>
                     <p>Last Updated on : {{ date('d M Y', strtotime($property->created_at)) }}</p>
                 </div>
             </div>
@@ -22,7 +22,6 @@
                 <div class="latest-update">
                     <p>{{ number_format($property->price)." ".$property->currency }}</p>
                     <ul class="other-pages">
-                        <li><a href="javascript:void(0);"><i class="feather-share-2"></i>Share</a></li>
                         <li><a href="compare.html"><i class="feather-git-pull-request"></i>Add to Compare</a>
                         </li>
                         <li><a href="javascript:void(0);"><i class="feather-heart"></i>Wishlist</a></li>
@@ -109,15 +108,15 @@
                                 <div class="arrival-div">
                                     <ul class="prices">
                                         <li>
-                                            <input type="radio" id="radio1" name="Arrival">
+                                            <input type="radio" id="radio1" name="price">
                                             <label for="radio1">Per Week<span>$10</span>Standard</label>
                                         </li>
                                         <li>
-                                            <input type="radio" id="radio2" name="Arrival" checked>
+                                            <input type="radio" id="radio2" name="price" checked>
                                             <label for="radio2">Per Month<span>$25</span>Professional</label>
                                         </li>
                                         <li>
-                                            <input type="radio" id="radio3" name="Arrival">
+                                            <input type="radio" id="radio3" name="price">
                                             <label for="radio3">Per Year<span>$100</span>Enterprice</label>
                                         </li>
                                     </ul>
@@ -152,39 +151,85 @@
                         <div class="sidebar-card-title">
                             <p>Choose Service</p>
                         </div>
-                        <div class="arrival-div arrival-dept">
-                            <ul class="prices-two">
-                                <li>
-                                    <input type="radio" id="radio4" name="Arrival">
-                                    <label for="radio4">Purchase this house plan</label>
-                                </li>
-                                <li>
-                                    <input type="radio" id="radio5" name="Arrival" checked>
-                                    <label for="radio5">Customize this house plan</label>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="sidebar-card-title">
-                            <p>Your Information</p>
-                        </div>
-                        <div class="review-form">
-                            <input type="text" class="form-control" placeholder="Your Name">
-                        </div>
-                        <div class="review-form">
-                            <input type="email" class="form-control" placeholder="Your Email">
-                        </div>
-                        <div class="review-form">
-                            <input type="text" class="form-control" placeholder="Your Phone Number">
-                        </div>
-                        <div class="review-form">
-                            <textarea rows="5" placeholder="Yes, I'm Interested"></textarea>
-                        </div>
-                        <div class="review-form submit-btn">
-                            <button type="submit" class="btn-primary">Proceed to Payment</button>
-                        </div>
+                        <form action="" method="post" enctype="multipart/form-data">
+                            <div class="arrival-div arrival-dept">
+                                <ul class="prices-two">
+                                    <li>
+                                        <input type="radio" id="purchase-radio" name="service" value="purchase" checked>
+                                        <label for="purchase-radio">Purchase this house plan</label>
+                                    </li>
+                                    <li>
+                                        <input type="radio" id="customize-radio" name="service" value="custom">
+                                        <label for="customize-radio">Customize this house plan</label>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="sidebar-card-title">
+                                <p>Your Information</p>
+                            </div>
+                            <div class="review-form">
+                                <input type="text" class="form-control" placeholder="Owner Full Name" required>
+                            </div>
+                            <div class="review-form">
+                                <input type="email" class="form-control" placeholder="Your Email">
+                            </div>
+                            <div class="review-form">
+                                <input type="text" class="form-control" placeholder="Your Phone Number" required>
+                            </div>
+                            <div class="review-form">
+                                <input type="text" class="form-control" placeholder="Street/Village" required>
+                            </div>
+                            <div class="review-form">
+                                <input type="text" class="form-control" placeholder="Ward" required>
+                            </div>
+                            <div class="review-form">
+                                <input type="text" class="form-control" placeholder="Town / City" required>
+                            </div>
+                            <div class="review-form">
+                                <input type="text" class="form-control" placeholder="Country" required>
+                            </div>
+                            <div class="review-form">
+                                <input type="text" class="form-control" placeholder="Town / City" required>
+                            </div>
+                            <div class="review-form">
+                                <input type="text" class="form-control" placeholder="Country" required>
+                            </div>
+                            <div class="customize-block">
+                                <div class="sidebar-card-title">
+                                    <p>Customization Information</p>
+                                </div>
+                                <div class="review-form">
+                                    <label>Decriptions</label>
+                                    <textarea rows="5" placeholder="How would you like the plan to be?"></textarea>
+                                </div>
+                                <div class="review-form">
+                                    <label>Supporting Image</label>
+                                    <input type="file" class="form-control">
+                                </div>
+                            </div>
+                            <div class="sidebar-card-title">
+                                <p>Delivery Method</p>
+                            </div>
+                            <div class="arrival-div arrival-dept">
+                                <ul class="files">
+                                    <li>
+                                        <input type="radio" id="radio6" name="delivery_method" value="print_1">
+                                        <label for="radio6"><span>$10</span>Print 1 file and send in WhatsApp or Email</label>
+                                    </li>
+                                    <li>
+                                        <input type="radio" id="radio7" name="delivery_method" value="print_4">
+                                        <label for="radio7"><span>$65</span>Print 4 files, apply Architect stamp and send in WhatsApp or Email</label>
+                                    </li>
+                                </ul>
+                            </div>
+                            <h5>Total Amount: <span class="text-success total">{{ number_format($property->price) }}</span><span>{{ " ".$property->currency }}</span></h5>
+                            <div class="review-form submit-btn">
+                                <button type="submit" class="btn-primary">Proceed to Payment</button>
+                            </div>
+                        </form>
                         <ul class="connect-us">
                             <li><a href="javascript:void(0);"><i class="feather-phone"></i>Clear</a></li>
-                            <li><a href="javascript:void(0);"><i class="fa-brands fa-whatsapp"></i>Whatsapp</a>
+                            <li><a href="https://api.whatsapp.com/send/?phone=+255762807944&text={{ urlencode('Hi! I would like to know more about '.$property->title) }}&link={{ $currentUrl }}&type=phone_number&app_absent=0"><i class="fa-brands fa-whatsapp"></i>Whatsapp</a>
                             </li>
                         </ul>
                     </div>
@@ -200,7 +245,7 @@
                     </div>
                     <ul class="list-details">
                         @foreach($stages as $stage)
-                        <li>{{ $stage->name }} <span>{{ $stage->pivot->price }}</span></li>
+                        <li>{{ $stage->name }} <span>{{ number_format($stage->pivot->price)." ".$property->currency }}</span></li>
                         @endforeach
                     </ul>
                 </div>
@@ -226,66 +271,10 @@
 
                 <div class="collapse-card sidebar-card">
                     <h4 class="card-title">
-                        <a class="collapsed" data-bs-toggle="collapse" href="#review" aria-expanded="false">Reviews (25)</a>
+                        <a class="collapsed" data-bs-toggle="collapse" href="#review" aria-expanded="false">Reviews (0)</a>
                     </h4>
                     <div id="review" class="card-collapse collapse show  collapse-view">
                         <div class="review-card">
-                            <div class="customer-review">
-                                <div class="customer-info">
-                                    <div class="customer-name">
-                                        <a href="javascript:void(0);"><img src="assets/img/profiles/avatar-01.jpg" alt="User"></a>
-                                        <div>
-                                            <h5><a href="javascript:void(0);">Johnson</a></h5>
-                                            <p>02 Jan 2023</p>
-                                        </div>
-                                    </div>
-                                    <div class="rating">
-                                        <span class="rating-count">
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                        </span>
-                                        <p class="rating-review"><span>4.0</span>(20 Reviews)</p>
-                                    </div>
-                                </div>
-                                <div class="review-para">
-                                    <p>It was popularised in the 1960s with the release of Letraset sheets
-                                        containing Lorem Ipsum passages, and more recently with desktop
-                                        publishing software like Aldus PageMaker including versions of Lorem
-                                        Ipsum.It was popularised in the 1960s </p>
-                                </div>
-                            </div>
-                            <div class="customer-review">
-                                <div class="customer-info">
-                                    <div class="customer-name">
-                                        <a href="javascript:void(0);"><img src="assets/img/profiles/avatar-02.jpg" alt="User"></a>
-                                        <div>
-                                            <h5><a href="javascript:void(0);">Casandra</a></h5>
-                                            <p>01 Jan 2023</p>
-                                        </div>
-                                    </div>
-                                    <div class="rating">
-                                        <span class="rating-count">
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star checked"></i>
-                                        </span>
-                                        <p class="rating-review"><span>5.0</span>(20 Reviews)</p>
-                                    </div>
-                                </div>
-                                <div class="review-para">
-                                    <p>It was popularised in the 1960s with the release of Letraset sheets
-                                        containing Lorem Ipsum passages, and more recently with desktop
-                                        publishing software like Aldus PageMaker including versions of Lorem
-                                        Ipsum.It was popularised in the 1960s with the elease of Letraset sheets
-                                        containing Lorem Ipsum passages, and more recently with desktop
-                                        publishing software like Aldus Page Maker including versions.</p>
-                                </div>
-                            </div>
                             <div class="property-review">
                                 <h5 class="card-title">Property Reviews</h5>
                                 <form action="#">
@@ -750,4 +739,41 @@
 <script src="{{ asset('assets/plugins/theia-sticky-sidebar/ResizeSensor.js') }}"></script>
 <script src="{{ asset('assets/plugins/theia-sticky-sidebar/theia-sticky-sidebar.js')}}"></script>
 <script src="{{ asset('assets/plugins/fancybox/jquery.fancybox.min.js')}}"></script>
+<script>
+    var price = "{{ $property->price }}";
+
+    $(document).ready(function() {
+        $('.customize-block').css('display', 'none');
+    });
+
+    $('input:radio[name=service]').on('change', function() {
+        var service = $('input:radio[name=service]:checked').val();
+        if (service == "purchase") {
+            price = "{{ $property->price }}";
+
+            $('.total').text(price);
+            $('.purchase-block').css('display', 'block');
+            $('.customize-block').css('display', 'none');
+        } else {
+            price = parseInt(price) / 2;
+
+            $('.total').text(price);
+            $('.purchase-block').css('display', 'none');
+            $('.customize-block').css('display', 'block');
+        }
+    });
+
+    $('input:radio[name=delivery_method]').on('change', function() {
+        var delivery_method = $('input:radio[name=delivery_method]:checked').val();
+        if (delivery_method == "print_1") {
+            var amount = parseInt(price) + (10 * 2500);
+
+            $('.total').text(amount);
+        } else {
+            var amount = parseInt(price) + (65 * 2500);
+
+            $('.total').text(amount);
+        }
+    });
+</script>
 @endsection

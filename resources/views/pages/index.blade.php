@@ -168,15 +168,7 @@
                                             <div class="featured">
                                                 <span>{{ $property->houseTypeName }}</span>
                                             </div>
-                                            <div class="new-featured">
-                                                <span>New</span>
-                                            </div>
                                         </div>
-                                        <a href="javascript:void(0)">
-                                            <div class="favourite selected">
-                                                <span><i class="fa-regular fa-heart"></i></span>
-                                            </div>
-                                        </a>
                                     </div>
                                 </div>
                                 <div class="pro-content">

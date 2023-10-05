@@ -21,5 +21,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Schema::defaultStringLength(191);
+
+        if($this->app->environment('production')) {
+            resolve(\Illuminate\Routing\UrlGenerator::class)->forceScheme('https');
+        }
     }
 }
