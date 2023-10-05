@@ -158,7 +158,7 @@
                             <div class="profile-widget">
                                 <div class="doc-img">
                                     <a href="{{ route('property.show',[strtolower(preg_replace('/[ ,]+/', '-',$property->title.' '.$property->houseType->name.' '.$property->id))])}}" class="property-img">
-                                        <img class="img-fluid" alt="Property Image" src="{{ Thumbnail::src($property->thumbnail)->url() }}">
+                                        <img class="img-fluid" alt="Property Image" src="{{ $property->thumbnail }}">
                                     </a>
                                     <div class="product-amount">
                                         <span>{{ number_format($property->price)." ".$property->currency }}</span>

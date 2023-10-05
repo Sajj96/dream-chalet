@@ -37,8 +37,8 @@
                         <li class="has-submenu">
                             <a href="javascript:void(0);">House Sizes</a>
                             <ul class="submenu">
-                                <li><a href="buy-property-grid.html">1 Bedroom</a></li>
-                                <li><a href="buy-property-list.html">2 Bedrooms</a></li>
+                                <li><a href="{{ route('property', ['bedroom' => 1]) }}">1 Bedroom</a></li>
+                                <li><a href="{{ route('property', ['bedroom' => 2]) }}buy-property-list.html">2 Bedrooms</a></li>
                                 <li><a href="buy-property-grid-sidebar.html">3 Bedrooms</a></li>
                                 <li><a href="buy-property-list-sidebar.html">4 Bedrooms</a></li>
                                 <li><a href="buy-grid-map.html">5+ Bedrooms</a></li>

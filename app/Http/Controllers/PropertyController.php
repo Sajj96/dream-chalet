@@ -19,9 +19,34 @@ use Intervention\Image\Facades\Image;
 
 class PropertyController extends Controller
 {
-    public function index()
+    public function index(Request $request, $prop = null )
     {
-        $properties = Property::all();
+        $properties = Property::where('deleted_at', NULL)->orderByDesc('id');
+
+        if(!empty($prop)) {
+            $properties = $properties->where('house_type_id', end($prop_type));
+        }
+
+        if (!empty($request->bedroom)) {
+            $properties = $properties->where('bedrooms' , intval($request->bedroom));
+        }
+
+        if (!empty($request->bathroom)) {
+            $properties = $properties->where('bathrooms', intval($request->bathroom));
+        }
+
+        if (!empty($request->sort_price)) {
+            if ($request->sort_price == "high_price") {
+                $properties = $properties->orderBy('price', 'DESC');
+            }
+
+            if ($request->sort_price == "low_price") {
+                $properties = $properties->orderBy('price', 'ASC');
+            }
+        }
+
+        $properties = $properties->lazy();
+        
         return view('pages.properties.index', [
             'properties' => $properties
         ]);
@@ -30,6 +55,39 @@ class PropertyController extends Controller
     public function indexDashboard(PropertiesDataTable $datatable)
     {
         return $datatable->render('pages.dashboard.properties.index');
+    }
+
+    public function getAll(Request $request, $prop = null)
+    {
+        $properties = Property::where('deleted_at', NULL)->orderByDesc('id');
+
+        if(!empty($prop)) {
+            $properties = $properties->where('house_type_id', end($prop_type));
+        }
+
+        if (!empty($request->bedroom)) {
+            $properties = $properties->where('bedrooms' , intval($request->bedroom));
+        }
+
+        if (!empty($request->bathroom)) {
+            $properties = $properties->where('bathrooms', intval($request->bathroom));
+        }
+
+        if (!empty($request->sort_price)) {
+            if ($request->sort_price == "high_price") {
+                $properties = $properties->orderBy('price', 'DESC');
+            }
+
+            if ($request->sort_price == "low_price") {
+                $properties = $properties->orderBy('price', 'ASC');
+            }
+        }
+
+        $properties = $properties->lazy();
+
+        return view('pages.properties.index', [
+            'properties' => $properties
+        ]);
     }
 
     public function add(Request $request)

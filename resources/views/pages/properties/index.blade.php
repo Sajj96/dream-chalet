@@ -8,26 +8,15 @@
 <div class="content inner-content">
     <div class="container">
 
-        <div class="showing-result-head fixed bg-primary-dark">
+        <div class="showing-result-head fixed bg-ink-blue">
             <div class="row align-items-center">
                 <div class="col-lg-3">
                     <div class="result-show">
-                        <h5>Showing result <span>06</span> of <span>125</span></h5>
+                        <h5>Showing result of <span>{{ count($properties) }}</span> {{ ucwords(request()->segment(count(request()->segments()))) }}</h5>
                     </div>
                 </div>
                 <div class="col-lg-9">
                     <div class="sort-result">
-                        <div class="sort-by grid-head">
-                            <div>
-                                <p>Sort By</p>
-                            </div>
-                            <div class="review-form">
-                                <select class="select">
-                                    <option value="0">Default</option>
-                                    <option value="1">A-Z</option>
-                                </select>
-                            </div>
-                        </div>
                         <div class="price-range grid-head">
                             <div>
                                 <p>Price Range</p>
@@ -41,8 +30,7 @@
                         </div>
                         <div class="grid-list-view">
                             <ul>
-                                <li><a href="buy-property-list-sidebar.html"><i class="bx bx-filter-alt"></i></a>
-                                </li>
+                                <li><a href="buy-property-list-sidebar.html" data-bs-toggle="modal" data-bs-target="#success"><i class="bx bx-filter-alt"></i></a></li>
                             </ul>
                         </div>
                     </div>
@@ -53,11 +41,11 @@
         <div class="row">
 
             <div class="col-lg-12">
-                <div class=" for-rent p-0">
-                    <div class="row">
+                <div class="for-rent p-0">
+                    <div class="row loadMore">
 
                         @foreach($properties as $property)
-                        <div class="col-lg-3">
+                        <div class="col-lg-3 item">
                             <div class="product-custom">
                                 <div class="profile-widget">
                                     <div class="doc-img">
@@ -72,15 +60,7 @@
                                                 <div class="featured">
                                                     <span>{{ $property->houseTypeName }}</span>
                                                 </div>
-                                                <div class="new-featured">
-                                                    <span>New</span>
-                                                </div>
                                             </div>
-                                            <a href="javascript:void(0)">
-                                                <div class="favourite selected">
-                                                    <span><i class="fa-regular fa-heart"></i></span>
-                                                </div>
-                                            </a>
                                         </div>
                                     </div>
                                     <div class="pro-content">
@@ -123,29 +103,88 @@
 
                     </div>
 
-                    <div class="grid-pagination">
-                        <ul class="pagination justify-content-center">
-                            <li class="page-item prev">
-                                <a class="page-link" href="#"><i class="fa-solid fa-arrow-left"></i> Prev</a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">1</a>
-                            </li>
-                            <li class="page-item active">
-                                <a class="page-link" href="#">2</a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">3</a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">4</a>
-                            </li>
-                            <li class="page-item next">
-                                <a class="page-link" href="#">Next <i class="fa-solid fa-arrow-right"></i></a>
-                            </li>
-                        </ul>
-                    </div>
+                </div>
+            </div>
+        </div>
 
+        <div class="modal fade modal-succeess" id="success" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-lg  modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="advanced-search">
+                            <h3>Advanced Search</h3>
+                            <div class="row">
+                                <div class="col-lg-3 col-sm-6 col-12">
+                                    <div class="review-form form-wrap ">
+                                        <select class="select form-control">
+                                            <option>Categories</option>
+                                            <option>Apartments</option>
+                                            <option>Condos </option>
+                                            <option>Houses </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-sm-6 col-12">
+                                    <div class="review-form form-wrap ">
+                                        <select class="select form-control">
+                                            <option>Bedrooms</option>
+                                            <option>4 Bedrooms</option>
+                                            <option>2 Bedrooms </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-sm-6 col-12">
+                                    <div class="review-form form-wrap ">
+                                        <select class="select form-control">
+                                            <option>Bathrooms</option>
+                                            <option>1 Bathrooms</option>
+                                            <option>2 Bathrooms </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-sm-6 col-12">
+                                    <div class="review-form form-wrap ">
+                                        <input type="text" class="form-control" placeholder="Min Sqft">
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-sm-6 col-12">
+                                    <div class="review-form form-wrap ">
+                                        <input type="text" class="form-control" placeholder="Min Price">
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-sm-6 col-12">
+                                    <div class="review-form form-wrap ">
+                                        <input type="text" class="form-control" placeholder="Max Price">
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-sm-6 col-12">
+                                    <div class="review-form form-wrap ">
+                                        <select class="select form-control">
+                                            <option>Reviews</option>
+                                            <option>1 Review</option>
+                                            <option>2 Review</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-sm-6 col-12">
+                                    <div class="review-form form-wrap ">
+                                        <input type="text" class="form-control" placeholder="Amenities">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="review-form-btn">
+                                        <a href="javascript:void(0);" class="btn btn-primary">Apply Filter</a>
+                                        <a href="javascript:void(0);" data-dismiss="modal"  class="reset-btn">Close</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -157,4 +196,14 @@
 <script src="{{ asset('assets/plugins/theia-sticky-sidebar/ResizeSensor.js') }}"></script>
 <script src="{{ asset('assets/plugins/theia-sticky-sidebar/theia-sticky-sidebar.js')}}"></script>
 <script src="{{ asset('assets/plugins/select2/js/select2.min.js')}}"></script>
+<script src="{{ asset('assets/js/jquery.simpleLoadMore.js')}}"></script>
+<script>
+    $('.loadMore').simpleLoadMore({
+        item: '.item',
+        count: 4,
+        itemsToLoad: 4,
+        showCounter: true,
+        btnHTML: '<div class="d-flex justify-content-center" data-aos="fade-down" data-aos-duration="1000"><a href="#" class="btn btn-primary bg-warning">Load More</a></div>'
+    });
+</script>
 @endsection
