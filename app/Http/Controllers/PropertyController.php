@@ -219,11 +219,13 @@ class PropertyController extends Controller
             if(!empty($request->stages)) {
                 foreach($request->stages as $key => $stages) {
                     foreach($stages as $stage) {
-                        PropertyStage::create([
-                            'property_id' => $property->id,
-                            'stage_id' => $key,
-                            'price' => $stage
-                        ]);
+                        if($stage != "") {
+                            PropertyStage::create([
+                                'property_id' => $property->id,
+                                'stage_id' => $key,
+                                'price' => $stage
+                            ]);
+                        }
                     }
                 }
             }

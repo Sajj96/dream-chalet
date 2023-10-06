@@ -50,7 +50,7 @@ class PropertiesDataTable extends DataTable
         })
         ->filter(function ($query) {
 
-            $query->orderBy('created_at', 'DESC');
+            $query->where('deleted_at', NULL)->orderBy('created_at', 'DESC');
 
         }, true)
         ->rawColumns(['action', 'title'])

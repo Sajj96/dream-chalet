@@ -9,7 +9,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $properties = Property::latest()->take(6)->get();
+        $properties = Property::where('deleted_at', NULL)->latest()->take(6)->get();
         return view('pages.index',[
             'properties' => $properties
         ]);

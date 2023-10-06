@@ -161,7 +161,7 @@
                                         <img class="img-fluid" alt="Property Image" src="{{ $property->thumbnail }}">
                                     </a>
                                     <div class="product-amount">
-                                        <span>{{ number_format($property->price)." ".$property->currency }}</span>
+                                        <span>${{ number_format($property->price) }}</span>
                                     </div>
                                     <div class="feature-rating">
                                         <div>
@@ -191,16 +191,16 @@
                                             {{ $property->bedrooms ?? 0 }} Beds
                                         </li>
                                         <li>
-                                            <i class="fas fa-bath fa-1x text-secondary mx-1"></i>
-                                            {{ $property->bathrooms ?? 0 }} Baths
+                                            <i class="fas fa-trowel-bricks fa-1x text-secondary mx-1"></i>
+                                            {{ $property->bathrooms ?? 0 }} Blocks
                                         </li>
                                         <li>
-                                            <i class="fas fa-square fa-1x text-secondary mx-1"></i>
-                                            {{ $property->square_meter }} Sqft
+                                            <i class="fas fa-sheet-plastic fa-1x text-secondary mx-1"></i>
+                                            {{ $property->floors }} Roof
                                         </li>
                                         <li>
-                                            <i class="fas fa-building fa-1x text-secondary mx-1"></i>
-                                            {{ $property->floors }} Storeys
+                                            <i class="fas fa-ruler-horizontal fa-1x text-secondary mx-1"></i>
+                                            {{ $property->square_meter }} Sqm
                                         </li>
                                     </ul>
                                 </div>
@@ -319,9 +319,6 @@
                                     <div class="featured">
                                         <span>Featured</span>
                                     </div>
-                                    <div class="new-featured">
-                                        <span>New</span>
-                                    </div>
                                     <a href="javascript:void(0)">
                                         <div class="favourite selected">
                                             <span><i class="fa-regular fa-heart"></i></span>
@@ -366,16 +363,6 @@
                                         <li>
                                             <img src="assets/img/icons/building-icon.svg" alt="building-icon" />
                                             10000 Sqft
-                                        </li>
-                                    </ul>
-                                    <ul class="property-category d-flex justify-content-between">
-                                        <li>
-                                            <span class="list">Listed on : </span>
-                                            <span class="date">17 Jan 2023</span>
-                                        </li>
-                                        <li>
-                                            <span class="category list">Category : </span>
-                                            <span class="category-value date">Condos</span>
                                         </li>
                                     </ul>
                                 </div>
@@ -392,9 +379,6 @@
                                     <div class="featured">
                                         <span>Featured</span>
                                     </div>
-                                    <div class="new-featured">
-                                        <span>New</span>
-                                    </div>
                                     <a href="javascript:void(0)">
                                         <div class="favourite selected">
                                             <span><i class="fa-regular fa-heart"></i></span>
@@ -439,16 +423,6 @@
                                         <li>
                                             <img src="assets/img/icons/building-icon.svg" alt="building-icon" />
                                             10000 Sqft
-                                        </li>
-                                    </ul>
-                                    <ul class="property-category d-flex justify-content-between">
-                                        <li>
-                                            <span class="list">Listed on : </span>
-                                            <span class="date">17 Jan 2023</span>
-                                        </li>
-                                        <li>
-                                            <span class="category list">Category : </span>
-                                            <span class="category-value date">Condos</span>
                                         </li>
                                     </ul>
                                 </div>

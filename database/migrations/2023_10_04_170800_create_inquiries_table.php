@@ -28,6 +28,7 @@ return new class extends Migration
             $table->string('delivery_method')->nullable();
             $table->double('amount');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

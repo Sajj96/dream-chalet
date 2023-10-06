@@ -20,7 +20,7 @@
             </div>
             <div class="col-lg-4">
                 <div class="latest-update">
-                    <p>{{ number_format($property->price)." ".$property->currency }}</p>
+                    <p>${{ number_format($property->price) }}</p>
                     <ul class="other-pages">
                         <li><a href="compare.html"><i class="feather-git-pull-request"></i>Add to Compare</a>
                         </li>
@@ -31,22 +31,31 @@
         </div>
     </div>
     <div class="container">
+        @include('partials.session-message')
         <div class="row">
             <div class="col-lg-8">
 
                 <div class="buy-details-col">
                     <div class="rental-card">
                         <div class="slider rental-slider">
-                            @foreach($photos as $photo)
+                            @forelse($photos as $photo)
                             <div class="product-img">
                                 <img src="{{ $photo->photo_path }}" alt="Slider">
                             </div>
-                            @endforeach
+                            @empty
+                            <div class="product-img">
+                                <img src="{{ $property->thumbnail }}" alt="Slider">
+                            </div>
+                            @endforelse
                         </div>
                         <div class="slider slider-nav-thumbnails">
-                            @foreach($photos as $photo)
+                            @forelse($photos as $photo)
                             <div><img src="{{ $photo->photo_path }}" alt="product image"></div>
-                            @endforeach
+                            @empty
+                            <div class="product-img">
+                                <img src="{{ $property->thumbnail }}" alt="Slider">
+                            </div>
+                            @endforelse
                         </div>
                     </div>
                 </div>
@@ -59,20 +68,20 @@
                     <div id="overview" class="card-collapse collapse show">
                         <ul class="property-overview  collapse-view overview">
                             <li>
-                                <i class="fas fa-bed fa-1x text-primary"></i>
+                                <img src="{{ asset('assets/img/bed.png')}}" width="40" alt="Image">
                                 <p>{{ $property->bedrooms }} Beds</p>
                             </li>
                             <li>
-                                <i class="fas fa-bath fa-1x text-primary"></i>
-                                <p>{{ $property->bathrooms }} Baths</p>
+                                <img src="{{ asset('assets/img/block.png')}}" width="40" alt="Image">
+                                <p>{{ $property->bathrooms }} Blocks</p>
                             </li>
                             <li>
-                                <i class="fas fa-square fa-1x text-primary"></i>
-                                <p>{{ $property->square_meter }} Sqft</p>
+                                <img src="{{ asset('assets/img/roof.png')}}" width="40" alt="Image">
+                                <p>{{ $property->floors }} Roofing Sheets</p>
                             </li>
                             <li>
-                                <i class="fas fa-building fa-1x text-primary"></i>
-                                <p>{{ $property->floors }} Storeys</p>
+                                <img src="{{ asset('assets/img/plot.png')}}" width="40" alt="Image">
+                                <p>{{ $property->square_meter }} Sq meter</p>
                             </li>
                         </ul>
                     </div>
@@ -103,7 +112,7 @@
                                 </div>
                                 <div class="price-title">
                                     <h3>Upgrade To Premium</h3>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.</p>
+                                    <p>Subscribe to see clear floor plan before purchasing this drawings.</p>
                                 </div>
                                 <div class="arrival-div">
                                     <ul class="prices">
@@ -117,12 +126,12 @@
                                         </li>
                                         <li>
                                             <input type="radio" id="radio3" name="price">
-                                            <label for="radio3">Per Year<span>$100</span>Enterprice</label>
+                                            <label for="radio3">Per Year<span>$100</span>Enterprise</label>
                                         </li>
                                     </ul>
                                 </div>
                                 <div class="price-btn">
-                                    <a href="javascript:void(0);" class="btn-primary">Get Quote</a>
+                                    <a href="javascript:void(0);" class="btn-primary">Pay Now</a>
                                 </div>
                             </div>
                         </div>
@@ -151,7 +160,9 @@
                         <div class="sidebar-card-title">
                             <p>Choose Service</p>
                         </div>
-                        <form action="" method="post" enctype="multipart/form-data">
+                        <form action="{{ url('/inquiries/add') }}" method="post" enctype="multipart/form-data">
+                            @csrf
+                            <input type="hidden" name="property_id" value="{{ $property->id }}">
                             <div class="arrival-div arrival-dept">
                                 <ul class="prices-two">
                                     <li>
@@ -168,31 +179,29 @@
                                 <p>Your Information</p>
                             </div>
                             <div class="review-form">
-                                <input type="text" class="form-control" placeholder="Owner Full Name" required>
+                                <input type="text" class="form-control" name="full_name" placeholder="Owner Full Name" required>
                             </div>
                             <div class="review-form">
-                                <input type="email" class="form-control" placeholder="Your Email">
+                                <input type="email" class="form-control" name="email" placeholder="Your Email" required>
                             </div>
                             <div class="review-form">
-                                <input type="text" class="form-control" placeholder="Your Phone Number" required>
+                                <input type="text" class="form-control" name="mobile" placeholder="Your Phone Number" required>
                             </div>
                             <div class="review-form">
-                                <input type="text" class="form-control" placeholder="Street/Village" required>
+                                <input type="text" class="form-control" name="street" placeholder="Street/Village" required>
                             </div>
                             <div class="review-form">
-                                <input type="text" class="form-control" placeholder="Ward" required>
+                                <input type="text" class="form-control" name="ward" placeholder="Ward" required>
                             </div>
                             <div class="review-form">
-                                <input type="text" class="form-control" placeholder="Town / City" required>
+                                <input type="text" class="form-control" name="city" placeholder="Town / City" required>
                             </div>
                             <div class="review-form">
-                                <input type="text" class="form-control" placeholder="Country" required>
-                            </div>
-                            <div class="review-form">
-                                <input type="text" class="form-control" placeholder="Town / City" required>
-                            </div>
-                            <div class="review-form">
-                                <input type="text" class="form-control" placeholder="Country" required>
+                                <select class="select" name="country" required>
+                                    <option value="Tanzania" selected>Tanzania</option>
+                                    <option value="Kenya">Kenya</option>
+                                    <option value="Uganda">Uganda</option>
+                                </select>
                             </div>
                             <div class="customize-block">
                                 <div class="sidebar-card-title">
@@ -200,11 +209,11 @@
                                 </div>
                                 <div class="review-form">
                                     <label>Decriptions</label>
-                                    <textarea rows="5" placeholder="How would you like the plan to be?"></textarea>
+                                    <textarea rows="5" placeholder="How would you like the plan to be?" name="description"></textarea>
                                 </div>
                                 <div class="review-form">
                                     <label>Supporting Image</label>
-                                    <input type="file" class="form-control">
+                                    <input type="file" name="support_image" class="form-control">
                                 </div>
                             </div>
                             <div class="sidebar-card-title">
@@ -213,16 +222,21 @@
                             <div class="arrival-div arrival-dept">
                                 <ul class="files">
                                     <li>
+                                        <input type="radio" id="radio8" name="delivery_method" value="free" checked>
+                                        <label for="radio8"><span>Free</span>Send in WhatsApp or Email</label>
+                                    </li>
+                                    <li>
                                         <input type="radio" id="radio6" name="delivery_method" value="print_1">
-                                        <label for="radio6"><span>$10</span>Print 1 file and send in WhatsApp or Email</label>
+                                        <label for="radio6"><span>$10</span>Print 1 file and send to my location</label>
                                     </li>
                                     <li>
                                         <input type="radio" id="radio7" name="delivery_method" value="print_4">
-                                        <label for="radio7"><span>$65</span>Print 4 files, apply Architect stamp and send in WhatsApp or Email</label>
+                                        <label for="radio7"><span>$65</span>Print 4 files, apply Architect stamp and send to my location</label>
                                     </li>
                                 </ul>
                             </div>
-                            <h5>Total Amount: <span class="text-success total">{{ number_format($property->price) }}</span><span>{{ " ".$property->currency }}</span></h5>
+                            <h5>Total Amount: $<span class="text-success total">{{ number_format($property->price) }}</span></h5>
+                            <input type="hidden" value="{{ number_format($property->price) }}" name="amount" id="amount">
                             <div class="review-form submit-btn">
                                 <button type="submit" class="btn-primary">Proceed to Payment</button>
                             </div>
@@ -239,6 +253,7 @@
 
         <div class="row mt-5 mb-5">
             <div class="col-lg-8">
+                @if(count($stages) > 0)
                 <div class="sidebar-card">
                     <div class="sidebar-card-title">
                         <h5>Cost Estimate Per Stage</h5>
@@ -249,7 +264,9 @@
                         @endforeach
                     </ul>
                 </div>
+                @endif
 
+                @if(count($amenities) > 0)
                 <div class="collapse-card">
                     <h4 class="card-title">
                         <a class="collapsed" data-bs-toggle="collapse" href="#amenities" aria-expanded="false">Amenities</a>
@@ -268,6 +285,7 @@
                         </div>
                     </div>
                 </div>
+                @endif
 
                 <div class="collapse-card sidebar-card">
                     <h4 class="card-title">
@@ -751,29 +769,29 @@
         if (service == "purchase") {
             price = "{{ $property->price }}";
 
-            $('.total').text(price);
             $('.purchase-block').css('display', 'block');
             $('.customize-block').css('display', 'none');
         } else {
             price = parseInt(price) / 2;
 
-            $('.total').text(price);
             $('.purchase-block').css('display', 'none');
             $('.customize-block').css('display', 'block');
         }
+
+        $('.total').text(price);
+        $('#amount').val(price);
     });
 
     $('input:radio[name=delivery_method]').on('change', function() {
         var delivery_method = $('input:radio[name=delivery_method]:checked').val();
         if (delivery_method == "print_1") {
-            var amount = parseInt(price) + (10 * 2500);
-
-            $('.total').text(amount);
+            var amount = parseInt(price) + 10;
         } else {
-            var amount = parseInt(price) + (65 * 2500);
-
-            $('.total').text(amount);
+            var amount = parseInt(price) + 65;
         }
+
+        $('.total').text(amount);
+        $('#amount').val(amount);
     });
 </script>
 @endsection

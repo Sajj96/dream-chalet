@@ -46,7 +46,6 @@
                                         <div class="form-line">
                                             <label>Currency</label>
                                             <select class="form-control" name="currency" required>
-                                                <option value="TZS">Tanzania Shillings</option>
                                                 <option value="USD">US Dollar</option>
                                             </select>
                                         </div>
@@ -63,6 +62,20 @@
                                         <div class="form-line">
                                             <label class="form-label">No. of Bathrooms</label>
                                             <input type="number" class="form-control" name="bathroom" value="{{ old('bathroom') }}" placeholder="Enter number of bathroom(s)">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group form-float col-6">
+                                        <div class="form-line">
+                                            <label class="form-label">No. of Roofing Sheets</label>
+                                            <input type="number" class="form-control" name="roof" value="{{ old('roof') }}" placeholder="Enter number of bedroom(s)">
+                                        </div>
+                                    </div>
+                                    <div class="form-group form-float col-6">
+                                        <div class="form-line">
+                                            <label class="form-label">No. of Blocks</label>
+                                            <input type="number" class="form-control" name="block" value="{{ old('block') }}" placeholder="Enter number of bathroom(s)">
                                         </div>
                                     </div>
                                 </div>

@@ -3,17 +3,12 @@
     <div class="footer-top">
         <div class="container">
             <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-8">
+                <div class="col-lg-4 col-md-6 col-sm-8">
                     <div class="footer-widget footer-about">
                         <div class="footer-app-content">
                             <div class="footer-content-heading">
-                                <img src="{{ asset('assets/img/dce_logo.png') }}" width="300" alt="image">
-                                <h4>Get Our App </h4>
-                                <p>Download the app and book your property</p>
-                            </div>
-                            <div class="download-app">
-                                <a href="javascript:void(0);"><img src="{{ asset('assets/img/google-pay.png')}}" alt="google play"></a>
-                                <a href="javascript:void(0);"><img src="{{ asset('assets/img/app-store.png')}}" alt="app store"></a>
+                                <img src="{{ asset('assets/img/dce_small_logo.png') }}" width="100" alt="image">
+                                <h4>Dream Chalets Engineering </h4>
                             </div>
                             <div class="social-links">
                                 <h4>Connect with us</h4>
@@ -29,21 +24,20 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-2 col-md-3 col-sm-4">
+                <div class="col-lg-3 col-md-3 col-sm-4">
                     <div class="footer-widget-list">
                         <div class="footer-content-heading">
                             <h4>Explore</h4>
                         </div>
                         <ul>
-                            <li><a href="rent-property-list.html">Listings</a></li>
-                            <li><a href="register.html">Register</a></li>
-                            <li><a href="login.html">Login</a></li>
+                            <li><a href="{{ route('property') }}">Properties</a></li>
+                            <li><a href="{{ route('register') }}">Register</a></li>
+                            <li><a href="{{ route('login') }}">Login</a></li>
                             <li><a href="blog-grid.html">Blogs</a></li>
-                            <li><a href="agency-grid.html">Agency</a></li>
                         </ul>
                     </div>
                 </div>
-                <div class="col-lg-2 col-md-3 col-sm-4">
+                <div class="col-lg-3 col-md-3 col-sm-4">
                     <div class="footer-widget-list">
                         <div class="footer-content-heading">
                             <h4>Categories</h4>
@@ -87,9 +81,6 @@
                         </span>
                          Dream Chalets Engineering Ltd - All rights reserved
                     </p>
-                </div>
-                <div class="company-logo">
-                    <p>created with <i class="fas fa-heart text-danger"></i> by <a class="text-white" href="https://www.nougattechnologies.co.tz/"> Nougat Technologies</a></p>
                 </div>
             </div>
         </div>

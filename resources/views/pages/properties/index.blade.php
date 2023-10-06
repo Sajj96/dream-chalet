@@ -12,7 +12,7 @@
             <div class="row align-items-center">
                 <div class="col-lg-3">
                     <div class="result-show">
-                        <h5>Showing <span>{{ count($properties) }}</span> result of  {{ substr(ucwords(request()->segment(count(request()->segments()))), 0, strpos(ucwords(request()->segment(count(request()->segments()))), "=")) }}</h5>
+                        <h5>Showing <span>{{ count($properties) }}</span> result of {{ substr(ucwords(request()->segment(count(request()->segments()))), 0, strpos(ucwords(request()->segment(count(request()->segments()))), "=")) }}</h5>
                     </div>
                 </div>
                 <div class="col-lg-9">
@@ -83,16 +83,16 @@
                                                 {{ $property->bedrooms ?? 0 }} Beds
                                             </li>
                                             <li>
-                                                <i class="fas fa-bath fa-1x text-secondary mx-1"></i>
-                                                {{ $property->bathrooms ?? 0 }} Baths
+                                                <i class="fas fa-trowel-bricks fa-1x text-secondary mx-1"></i>
+                                                {{ $property->bathrooms ?? 0 }} Blocks
                                             </li>
                                             <li>
-                                                <i class="fas fa-square fa-1x text-secondary mx-1"></i>
-                                                {{ $property->square_meter }} Sqft
+                                                <i class="fas fa-sheet-plastic fa-1x text-secondary mx-1"></i>
+                                                {{ $property->floors }} Roof
                                             </li>
                                             <li>
-                                                <i class="fas fa-building fa-1x text-secondary mx-1"></i>
-                                                {{ $property->floors }} Storeys
+                                                <i class="fas fa-ruler-horizontal fa-1x text-secondary mx-1"></i>
+                                                {{ $property->square_meter }} Sqm
                                             </li>
                                         </ul>
                                     </div>
@@ -111,13 +111,11 @@
             <div class="modal-dialog modal-lg  modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+                        <h5 class="modal-title">Advanced Search</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="advanced-search">
-                            <h3>Advanced Search</h3>
                             <div class="row">
                                 <div class="col-lg-3 col-sm-6 col-12">
                                     <div class="review-form form-wrap ">
@@ -179,7 +177,7 @@
                                 <div class="col-lg-12">
                                     <div class="review-form-btn">
                                         <a href="javascript:void(0);" class="btn btn-primary">Apply Filter</a>
-                                        <a href="javascript:void(0);" data-dismiss="modal"  class="reset-btn">Close</a>
+                                        <a href="javascript:void(0);" data-dismiss="modal" class="reset-btn">Close</a>
                                     </div>
                                 </div>
                             </div>

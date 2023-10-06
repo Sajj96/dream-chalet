@@ -2,12 +2,12 @@
     $house_types = HouseType::get();
 @endphp
 <header class="header header-fix">
-    <div class="header-top">
+    <!-- <div class="header-top">
         <div class="template-ad">
             <img src="{{ asset('assets/img/icons/badge-icon.svg')}}" alt="icon">
             <h5>No 1, Construction Website to Buy Your House Plan</h5>
         </div>
-    </div>
+    </div> -->
     <nav class="navbar navbar-expand-lg header-nav">
         <div class="navbar-header">
             <a id="mobile_btn" href="javascript:void(0);">
@@ -18,13 +18,13 @@
                 </span>
             </a>
             <a href="{{ route('home') }}" class="navbar-brand logo">
-                <img src="{{ asset('assets/img/dce_logo.png')}}" class="img-fluid" alt="Logo">
+                <img src="{{ asset('assets/img/dce_logo.png')}}" width="100" class="img-fluid" alt="Logo">
             </a>
         </div>
         <div class="main-menu-wrapper">
             <div class="menu-header">
                 <a href="{{ route('home') }}" class="menu-logo">
-                    <img src="{{ asset('assets/img/dce_logo.png')}}" class="img-fluid" alt="Logo">
+                    <img src="{{ asset('assets/img/dce_logo.png')}}" width="100" class="img-fluid" alt="Logo">
                 </a>
                 <a id="menu_close" class="menu-close" href="javascript:void(0);">
                     <i class="fas fa-times"></i>
