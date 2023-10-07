@@ -21,6 +21,18 @@
             <li class="dropdown @if(\Request::is('dashboard/properties/all') || \Request::is('dashboard/properties/*') ) active @endif">
                 <a href="{{ url('/dashboard/properties/all') }}" class="nav-link"><i data-feather="home"></i><span>Properties</span></a>
             </li>
+            <li class="dropdown @if(\Request::is('dashboard/inquiries/all') || \Request::is('dashboard/inquiries/*') ) active @endif">
+                <a href="{{ url('/dashboard/inquiries/all') }}" class="nav-link"><i data-feather="mail"></i><span>Inquiries</span></a>
+            </li>
+            <li class="dropdown @if(\Request::is('dashboard/transactions/all') || \Request::is('dashboard/transactions/*') ) active @endif">
+                <a href="{{ url('/dashboard/transactions/all') }}" class="nav-link"><i data-feather="credit-card"></i><span>Transactions</span></a>
+            </li>
+            <li class="dropdown @if(\Request::is('dashboard/posts/all') || \Request::is('dashboard/posts/*') ) active @endif">
+                <a href="{{ url('/dashboard/posts/all') }}" class="nav-link"><i data-feather="cast"></i><span>Posts</span></a>
+            </li>
+            <li class="dropdown @if(\Request::is('dashboard/users/all') || \Request::is('dashboard/users/*') ) active @endif">
+                <a href="{{ url('/dashboard/users/all') }}" class="nav-link"><i data-feather="users"></i><span>Users</span></a>
+            </li>
         </ul>
     </aside>
 </div>

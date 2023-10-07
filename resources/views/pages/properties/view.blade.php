@@ -784,9 +784,9 @@
         $('#amount').val(price);
     });
 
-    $('input:radio[name=delivery_method]').on('change', function() {
-        var delivery_method = $('input:radio[name=delivery_method]:checked').val();
-        if (delivery_method == "print_1") {
+    $('input:radio[name=delivery_fee]').on('change', function() {
+        var delivery_fee = $('input:radio[name=delivery_fee]:checked').val();
+        if (delivery_fee == "10") {
             var amount = parseInt(price) + 10;
         } else {
             var amount = parseInt(price) + 65;

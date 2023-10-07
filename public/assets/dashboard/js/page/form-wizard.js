@@ -121,6 +121,11 @@ $(function () {
     //Select2
     $(".select2").select2();
 
+    $('#aniimated-thumbnials').lightGallery({
+        thumbnail: true,
+        selector: 'a'
+    });
+
     //Upload Preview
     $.uploadPreview({
         input_field: "#image-upload", // Default: .image-upload

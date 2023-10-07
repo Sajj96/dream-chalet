@@ -48,6 +48,7 @@ Route::middleware(['auth'])->group(function () {
         Route::prefix('/properties')->group(function () {
             Route::get('/all', [App\Http\Controllers\PropertyController::class, 'indexDashboard'])->name('dashboard.property');
             Route::match(['get', 'post'], '/add', [App\Http\Controllers\PropertyController::class, "add"])->name('dashboard.property.add');
+            Route::match(['get', 'post'], '/edit/{id?}', [App\Http\Controllers\PropertyController::class, "edit"])->name('dashboard.property.edit');
             Route::post('/delete', [App\Http\Controllers\PropertyController::class, "delete"])->name('dashboard.property.delete');
         });
 

@@ -157,7 +157,7 @@
                         <div class="product-custom">
                             <div class="profile-widget">
                                 <div class="doc-img">
-                                    <a href="{{ route('property.show',[strtolower(preg_replace('/[ ,]+/', '-',$property->title.' '.$property->houseType->name.' '.$property->id))])}}" class="property-img">
+                                    <a href="{{ route('property.show',[strtolower(preg_replace('/[ ,]+/', '-',$property->title.' '.$property->houseType->name.' '.$property->id))]) }}" class="property-img">
                                         <img class="img-fluid" alt="Property Image" src="{{ $property->thumbnail }}">
                                     </a>
                                     <div class="product-amount">
@@ -200,7 +200,7 @@
                                         </li>
                                         <li>
                                             <i class="fas fa-ruler-horizontal fa-1x text-secondary mx-1"></i>
-                                            {{ $property->square_meter }} Sqm
+                                            {{ $property->square_meter }} Sqrm
                                         </li>
                                     </ul>
                                 </div>
@@ -309,23 +309,16 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="feature-slider-deals owl-carousel">
+                    @foreach($trending_properties as $property)
                     <div class="slider-col">
                         <div class="product-custom">
                             <div class="profile-widget rent-list-view">
                                 <div class="doc-img">
-                                    <a href="buy-details.html" class="property-img">
-                                        <img class="img-fluid" alt="Property Image" src="assets/img/rent/rent-list-01.jpg" />
+                                    <a href="{{ route('property.show',[strtolower(preg_replace('/[ ,]+/', '-',$property->title.' '.$property->houseType->name.' '.$property->id))]) }}" class="property-img">
+                                        <img class="img-fluid" alt="Property Image" src="{{ $property->thumbnail }}" />
                                     </a>
                                     <div class="featured">
-                                        <span>Featured</span>
-                                    </div>
-                                    <a href="javascript:void(0)">
-                                        <div class="favourite selected">
-                                            <span><i class="fa-regular fa-heart"></i></span>
-                                        </div>
-                                    </a>
-                                    <div class="user-avatar">
-                                        <img src="assets/img/profiles/avatar-02.jpg" alt="User" />
+                                        <span>{{ $property->houseTypeName }}</span>
                                     </div>
                                 </div>
                                 <div class="pro-content">
@@ -339,105 +332,43 @@
                                             5.0 (20 Reviews)
                                             <div class="product-name-price">
                                                 <h3 class="title">
-                                                    <a href="buy-details.html" tabindex="-1">Place perfect for nature</a>
+                                                    <a href="{{ route('property.show',[strtolower(preg_replace('/[ ,]+/', '-',$property->title.' '.$property->houseType->name.' '.$property->id))]) }}" tabindex="-1">{!! $property->title !!}</a>
                                                 </h3>
                                                 <div class="product-amount">
-                                                    <h5><span>$41,400 </span></h5>
+                                                    <h5><span>${{ number_format($property->price) }} </span></h5>
                                                 </div>
                                             </div>
-                                            <p>
-                                                <i class="feather-map-pin"></i> 318-330 S Oakley Blvd,
-                                                Chicago, IL 60612, USA
-                                            </p>
                                         </div>
                                     </div>
                                     <ul class="d-flex details">
                                         <li>
-                                            <img src="assets/img/icons/bed-icon.svg" alt="bed-icon" />
-                                            2 Beds
+                                            <i class="fas fa-bed fa-1x text-secondary mx-1"></i>
+                                            {{ $property->bedrooms ?? 0 }} Beds
                                         </li>
                                         <li>
-                                            <img src="assets/img/icons/bath-icon.svg" alt="bath-icon" />
-                                            3 Baths
+                                            <i class="fas fa-trowel-bricks fa-1x text-secondary mx-1"></i>
+                                            {{ $property->bathrooms ?? 0 }} Blocks
                                         </li>
                                         <li>
-                                            <img src="assets/img/icons/building-icon.svg" alt="building-icon" />
-                                            10000 Sqft
+                                            <i class="fas fa-sheet-plastic fa-1x text-secondary mx-1"></i>
+                                            {{ $property->floors }} Roof
+                                        </li>
+                                        <li>
+                                            <i class="fas fa-ruler-horizontal fa-1x text-secondary mx-1"></i>
+                                            {{ $property->square_meter }} Sqrm
                                         </li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="slider-col">
-                        <div class="product-custom">
-                            <div class="profile-widget rent-list-view">
-                                <div class="doc-img">
-                                    <a href="buy-details.html" class="property-img">
-                                        <img class="img-fluid" alt="Property Image" src="assets/img/rent/rent-list-01.jpg" />
-                                    </a>
-                                    <div class="featured">
-                                        <span>Featured</span>
-                                    </div>
-                                    <a href="javascript:void(0)">
-                                        <div class="favourite selected">
-                                            <span><i class="fa-regular fa-heart"></i></span>
-                                        </div>
-                                    </a>
-                                    <div class="user-avatar">
-                                        <img src="assets/img/profiles/avatar-02.jpg" alt="User" />
-                                    </div>
-                                </div>
-                                <div class="pro-content">
-                                    <div class="list-head">
-                                        <div class="rating">
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star checked"></i>
-                                            5.0 (20 Reviews)
-                                            <div class="product-name-price">
-                                                <h3 class="title">
-                                                    <a href="buy-details.html" tabindex="-1">Place perfect for nature</a>
-                                                </h3>
-                                                <div class="product-amount">
-                                                    <h5><span>$41,400 </span></h5>
-                                                </div>
-                                            </div>
-                                            <p>
-                                                <i class="feather-map-pin"></i> 318-330 S Oakley Blvd,
-                                                Chicago, IL 60612, USA
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <ul class="d-flex details">
-                                        <li>
-                                            <img src="assets/img/icons/bed-icon.svg" alt="bed-icon" />
-                                            2 Beds
-                                        </li>
-                                        <li>
-                                            <img src="assets/img/icons/bath-icon.svg" alt="bath-icon" />
-                                            3 Baths
-                                        </li>
-                                        <li>
-                                            <img src="assets/img/icons/building-icon.svg" alt="building-icon" />
-                                            10000 Sqft
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="view-property-btn d-flex justify-content-center" data-aos="fade-down" data-aos-duration="2000">
-                    <a href="rent-property-grid.html" class="btn-primary">View All Properties</a>
+                    @endforeach
                 </div>
             </div>
         </div>
     </div>
     <div class="bg-imgs">
-        <img src="assets/img/bg/price-bg.png" class="bg-04" alt="Image">
+        <img src="{{ asset('assets/img/bg/price-bg.png') }}" class="bg-04" alt="Image">
     </div>
 </section>
 
@@ -456,14 +387,16 @@
             </div>
             <div class="col-md-4">
                 <div class="register-btn" data-aos="fade-down" data-aos-duration="2000">
-                    <a href="register.html" class="btn-primary">Register Now</a>
+                    @if(auth()->check() == false)
+                    <a href="{{ route('register') }}" class="btn-primary">Register Now</a>
+                    @endif
                 </div>
             </div>
         </div>
     </div>
     <div class="bg-imgs">
-        <img src="assets/img/icons/blue-circle.svg" class="bg-06" alt="icon">
-        <img src="assets/img/icons/red-circle.svg" class="bg-07" alt="icon">
+        <img src="{{ asset('assets/img/icons/blue-circle.svg') }}" class="bg-06" alt="icon">
+        <img src="{{ asset('assets/img/icons/red-circle.svg') }}" class="bg-07" alt="icon">
     </div>
 </section>
 

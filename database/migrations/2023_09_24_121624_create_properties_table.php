@@ -17,9 +17,11 @@ return new class extends Migration
             $table->double('price');
             $table->string('currency');
             $table->unsignedBigInteger('house_type_id');
-            $table->integer('bedrooms')->nullable();
+            $table->integer('bedrooms');
             $table->integer('bathrooms')->nullable();
             $table->integer('floors')->default(0);
+            $table->integer('roofs')->default(0);
+            $table->integer('blocks')->default(0);
             $table->integer('square_meter')->nullable();
             $table->string('thumbnail');
             $table->text('details')->nullable();

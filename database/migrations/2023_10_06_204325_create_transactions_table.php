@@ -13,7 +13,21 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('property_id');
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->string('type');
+            $table->string('first_name');
+            $table->string('last_name');
+            $table->string('email');
+            $table->string('mobile');
+            $table->string('street');
+            $table->string('ward');
+            $table->string('city');
+            $table->string('country');
+            $table->text('description')->nullable();
+            $table->double('amount');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

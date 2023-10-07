@@ -39,7 +39,7 @@ class PropertiesDataTable extends DataTable
         ->addColumn('action', function($row){
             return '
             <div class="buttons d-flex">
-                <a href="'.route("dashboard.property.delete").'" class="btn btn-outline-info" rel="tooltip" data-original-title="Tooltip on top" title="View Seats">Edit</a>
+                <a href="'.route("dashboard.property.edit", $row->id).'" class="btn btn-outline-info" rel="tooltip" data-original-title="Tooltip on top" title="View Seats">Edit</a>
                 <form class="delete-form" action="'.route("dashboard.property.delete").'" method="POST">
                     <input type="hidden" name="_token" value="'.csrf_token().'">
                     <input type="hidden" value="'.$row->id.'" name="property_id">
