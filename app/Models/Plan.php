@@ -9,6 +9,12 @@ class Plan extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'type',
+        'price',
+        'period'
+    ];
+
     const TYPE_FREE = 0;
     const TYPE_STANDARD = 1;
     const TYPE_PROFESSIONAL = 2;

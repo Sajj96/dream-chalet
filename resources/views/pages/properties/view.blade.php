@@ -3,6 +3,7 @@
 
 @section('styles')
 <link rel="stylesheet" href="{{ asset('assets/plugins/fancybox/jquery.fancybox.min.css')}}">
+<link rel="stylesheet" href="{{ asset('assets/plugins/intl-tel-input/css/intlTelInput.css')}}">
 @endsection
 
 @section('content')
@@ -114,25 +115,22 @@
                                     <h3>Upgrade To Premium</h3>
                                     <p>Subscribe to see clear floor plan before purchasing this drawings.</p>
                                 </div>
-                                <div class="arrival-div">
-                                    <ul class="prices">
-                                        <li>
-                                            <input type="radio" id="radio1" name="price">
-                                            <label for="radio1">Per Week<span>$10</span>Standard</label>
-                                        </li>
-                                        <li>
-                                            <input type="radio" id="radio2" name="price" checked>
-                                            <label for="radio2">Per Month<span>$25</span>Professional</label>
-                                        </li>
-                                        <li>
-                                            <input type="radio" id="radio3" name="price">
-                                            <label for="radio3">Per Year<span>$100</span>Enterprise</label>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="price-btn">
-                                    <a href="javascript:void(0);" class="btn-primary">Pay Now</a>
-                                </div>
+                                <form action="{{ url('/transactions/checkout') }}" method="get">
+                                    <input type="hidden" name="property" value="{{ $property->id }}">
+                                    <div class="arrival-div">
+                                        <ul class="prices">
+                                            @foreach($plans as $plan)
+                                            <li>
+                                                <input type="radio" id="radio{{ $plan->id }}" value="{{ $plan->id }}" @if($plan->type == 'Professional') checked @endif value="{{ $plan->id }}" name="plan">
+                                                <label for="radio{{ $plan->id }}">Per {{ $plan->period }}<span>${{ $plan->price }}</span>{{ $plan->type }}</label>
+                                            </li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                    <div class="price-btn">
+                                        <button type="submit" class="btn-primary d-block" style="width: 100%;">Pay Now</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -144,13 +142,12 @@
 
                     <div class="sidebar-card mt-3">
                         <div class="sidebar-card-title">
-                            <h5>Share Property</h5>
+                            <h5>Share this Property</h5>
                         </div>
                         <div class="social-links">
                             <ul class="sidebar-social-links">
                                 <li><a href="https://www.facebook.com/sharer/sharer.php?u={{ $currentUrl }}" class="fb-icon"><i class="fa-brands fa-facebook-f hi-icon"></i></a></li>
                                 <li><a href="https://twitter.com/intent/tweet?url={{ $currentUrl }}&text={{ $property->title }}" class="twitter-icon"><i class="fa-brands fa-twitter hi-icon"></i></a></li>
-                                <li><a href="javascript:void(0);"><i class="fa-brands fa-linkedin hi-icon"></i></a></li>
                                 <li><a href="whatsapp://send?text={{ $currentUrl }}"><i class="fa-brands fa-whatsapp hi-icon"></i></a></li>
                             </ul>
                         </div>
@@ -182,10 +179,10 @@
                                 <input type="text" class="form-control" name="full_name" placeholder="Owner Full Name" required>
                             </div>
                             <div class="review-form">
-                                <input type="email" class="form-control" name="email" placeholder="Your Email" required>
+                                <input type="email" class="form-control" name="email" placeholder="Your Email Address" required>
                             </div>
                             <div class="review-form">
-                                <input type="text" class="form-control" name="mobile" placeholder="Your Phone Number" required>
+                                <input type="tel" id="phone" class="form-control" name="mobile" required>
                             </div>
                             <div class="review-form">
                                 <input type="text" class="form-control" name="street" placeholder="Street/Village" required>
@@ -222,15 +219,15 @@
                             <div class="arrival-div arrival-dept">
                                 <ul class="files">
                                     <li>
-                                        <input type="radio" id="radio8" name="delivery_method" value="free" checked>
+                                        <input type="radio" id="radio8" name="delivery_fee" value="0" checked>
                                         <label for="radio8"><span>Free</span>Send in WhatsApp or Email</label>
                                     </li>
                                     <li>
-                                        <input type="radio" id="radio6" name="delivery_method" value="print_1">
+                                        <input type="radio" id="radio6" name="delivery_fee" value="10">
                                         <label for="radio6"><span>$10</span>Print 1 file and send to my location</label>
                                     </li>
                                     <li>
-                                        <input type="radio" id="radio7" name="delivery_method" value="print_4">
+                                        <input type="radio" id="radio7" name="delivery_fee" value="65">
                                         <label for="radio7"><span>$65</span>Print 4 files, apply Architect stamp and send to my location</label>
                                     </li>
                                 </ul>
@@ -304,7 +301,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="review-form">
-                                                <input type="email" class="form-control" placeholder="Your Email">
+                                                <input type="email" class="form-control" placeholder="Your Email Address">
                                             </div>
                                         </div>
                                         <div class="col-md-12">
@@ -757,6 +754,11 @@
 <script src="{{ asset('assets/plugins/theia-sticky-sidebar/ResizeSensor.js') }}"></script>
 <script src="{{ asset('assets/plugins/theia-sticky-sidebar/theia-sticky-sidebar.js')}}"></script>
 <script src="{{ asset('assets/plugins/fancybox/jquery.fancybox.min.js')}}"></script>
+<script src="{{ asset('assets/plugins/intl-tel-input/js/intlTelInput.min.js')}}"></script>
+<script type="text/javascript">
+    var utilUrl = "{{ asset('assets/plugins/intl-tel-input/js/utils.js?1638200991544')}}"
+</script>
+<script src="{{ asset('assets/js/int_tel_input.js')}}"></script>
 <script>
     var price = "{{ $property->price }}";
 

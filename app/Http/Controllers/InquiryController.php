@@ -6,6 +6,7 @@ use App\Models\Inquiry;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image;
 
@@ -29,7 +30,7 @@ class InquiryController extends Controller
             'ward'            => 'required|string',
             'city'            => 'required|string',
             'country'         => 'required|string',
-            'delivery_method' => 'required|string'
+            'delivery_fee'    => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -50,7 +51,7 @@ class InquiryController extends Controller
                 'country'   => $request->country,
                 'description' => $request->description,
                 'amount' => (int) $request->amount,
-                'delivery_method' => $request->delivery_method
+                'delivery_fee' => (int) $request->delivery_fee
             ]);
 
             if(Auth::check()) {
@@ -82,22 +83,22 @@ class InquiryController extends Controller
                 ]);
             }
 
-            return back()->withSuccess('Your information have been submitted successfully!');
+            return redirect()->route('checkout',['inquiry' => $inquiry->id])->withSuccess('Your information have been submitted successfully!');
         } catch (\Exception $exception) {
-            return back()->withError($exception->getMessage());
+            return back()->withError('An error has occurred failed to send information');
         }
     }
 
     public function delete(Request $request) {
         try {
-            if ($request->has('type_id')) {
-                $house_type = HouseType::find($request->input('type_id'));
-                $house_type->delete();
-                return redirect('/dashboard/house-types')->withSuccess('House type deleted successfully');
+            if ($request->has('inquiry_id')) {
+                $house_inquiry = Inquiry::find($request->input('inquiry_id'));
+                $house_inquiry->delete();
+                return redirect('/dashboard/inquiries')->withSuccess('Inquiry deleted successfully');
             }
         } catch(\Exception $exception) {
             Log::error($exception->getMessage());
         }
-        return redirect('/dashboard/house-types')->withError('House type could not be deleted');
+        return redirect('/dashboard/inquiries')->withError('Inquiry could not be deleted');
     }
 }

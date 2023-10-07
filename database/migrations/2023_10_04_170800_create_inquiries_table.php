@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('country');
             $table->text('description')->nullable();
             $table->string('photo_path')->nullable();
-            $table->string('delivery_method')->nullable();
+            $table->string('delivery_fee')->default(0);
             $table->double('amount');
             $table->timestamps();
             $table->softDeletes();

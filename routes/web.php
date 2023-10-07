@@ -25,10 +25,6 @@ Route::get('/contact-us', function(){
     return view('pages.contact');
 })->name('contact');
 
-Route::get('/checkout', function(){
-    return view('pages.checkout');
-})->name('checkout');
-
 Route::get('/about-us', function(){
     return view('pages.about');
 })->name('about');
@@ -36,6 +32,10 @@ Route::get('/about-us', function(){
 Route::prefix('/inquiries')->group(function () {
     Route::get('/', [App\Http\Controllers\InquiryController::class, 'index'])->name('inquiry');
     Route::post('/add', [App\Http\Controllers\InquiryController::class, "add"])->name('inquiry.create');
+});
+
+Route::prefix('/transactions')->group(function () {
+    Route::match(['get', 'post'],'/checkout', [App\Http\Controllers\TransactionController::class, 'checkout'])->name('checkout');
 });
 
 Auth::routes();

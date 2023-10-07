@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\DataTables\PropertiesDataTable;
 use App\Models\Amenity;
 use App\Models\HouseType;
+use App\Models\Plan;
 use App\Models\Property;
 use App\Models\PropertyAmenity;
 use App\Models\PropertyPhoto;
@@ -256,12 +257,17 @@ class PropertyController extends Controller
         $amenities = $property->amenities;
         $stages = $property->stages;
         $photos = $property->photos;
+        $plans = Plan::get();
+        
+        $property->clicks = $property->clicks + 1;
+        $property->save();
 
         return view('pages.properties.view', [
             'property' => $property,
             'amenities' => $amenities,
             'stages'   => $stages,
-            'photos' => $photos
+            'photos' => $photos,
+            'plans' => $plans
         ]);
     }
 
