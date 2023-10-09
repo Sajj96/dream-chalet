@@ -24,7 +24,7 @@
         <div class="details-wrap">
             <div class="detail-user-wrap">
                 <div class="detail-user-img">
-                    <img src="assets/img/anonymous.jpg" class="img-fluid" alt="Image">
+                    <img src="{{ asset('assets/img/anonymous.jpg') }}" class="img-fluid" alt="Image">
                 </div>
                 <div class="user-wrap">
                     <div class="user-info-wrap">
@@ -53,7 +53,8 @@
                         <div id="review" class="card-collapse collapse show  collapse-view">
                             <div class="review-card">
                                 <div class="property-review">
-                                    <form action="#">
+                                    <form action="{{ route('profile') }}" method="POST">
+                                        @csrf
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="review-form">
@@ -128,28 +129,69 @@
                         </h4>
                         <div id="service-area" class="card-collapse collapse show">
                             <div class="table-responsive">
-                            <table class="table table-stripped">
-                                <thead class="bg-primary-dark">
-                                    <tr>
-                                        <th class="text-white">Property</th>
-                                        <th class="text-white">Type</th>
-                                        <th class="text-white">Period</th>
-                                        <th class="text-white">Start Date</th>
-                                        <th class="text-white">End Date</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($subscriptions as $subscription)
-                                    <tr>
-                                        <td><a href="{{ route('property.show',[strtolower(preg_replace('/[ ,]+/', '-',$property->title.' '.$property->houseType->name.' '.$property->id))]) }}">{{ $subscription->title }}</a></td>
-                                        <td>{{ $subscription->planType }}</td>
-                                        <td>{{ $subscription->planPeriod }}</td>
-                                        <td>{{ date('d M Y', strtotime($subscription->pivot->updated_at)) }}</td>
-                                        <td>{{ date('d M Y', strtotime($subscription->pivot->ends_on)) }}</td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                                <table class="table table-stripped">
+                                    <thead class="bg-primary-dark">
+                                        <tr>
+                                            <th class="text-white">Property</th>
+                                            <th class="text-white">Type</th>
+                                            <th class="text-white">Period</th>
+                                            <th class="text-white">Start Date</th>
+                                            <th class="text-white">End Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($subscriptions as $subscription)
+                                        <tr>
+                                            <td><a href="{{ route('property.show',[strtolower(preg_replace('/[ ,]+/', '-',$property->title.' '.$property->houseType->name.' '.$property->id))]) }}">{{ $subscription->title }}</a></td>
+                                            <td>{{ $subscription->planType }}</td>
+                                            <td>{{ $subscription->planPeriod }}</td>
+                                            <td>{{ date('d M Y', strtotime($subscription->pivot->updated_at)) }}</td>
+                                            <td>{{ date('d M Y', strtotime($subscription->pivot->ends_on)) }}</td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="collapse-card">
+                        <h4 class="card-title">
+                            <a class="collapsed" data-bs-toggle="collapse" href="#service-area" aria-expanded="false">Active Subscriptions</a>
+                        </h4>
+                        <div id="service-area" class="card-collapse collapse show">
+                            <div class="table-responsive">
+                                <table class="table table-stripped">
+                                    <thead class="bg-primary-dark">
+                                        <tr>
+                                            <th class="text-white">{{ __('Property')}}</th>
+                                            <th class="text-white">{{ __('Type')}}</th>
+                                            <th class="text-white">{{ __('Delivery Fee')}}</th>
+                                            <th class="text-white">{{ __('Price')}}</th>
+                                            <th class="text-white">{{ __('Made On')}}</th>
+                                            <th class="text-white">{{ __('Status')}}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($orders as $order)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td><a class="text-info" href="{{ route('property.show',[strtolower(preg_replace('/[ ,]+/', '-',$row->property->title.' '.$row->property->houseTypeName.' '.$row->property->id))]) }}">{{ $order->propertyTitle }}</a></td>
+                                            <td>{{ strtoupper($order->type) }}</td>
+                                            <td>{{ number_format($order->delivery_fee,2) }}</td>
+                                            <td>{{ number_format($order->amount,2) }}</td>
+                                            <td>{{ date('M d Y',strtotime($order->created_at)) }}</td>
+                                            <td>
+                                                @if($order->status == 0)
+                                                <div class="badge text-bg-warning">Processing</div>
+                                                @else
+                                                <div class="badge text-bg-success">Completed</div>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>

@@ -11,7 +11,7 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4>{{ __('Orders')}}</h4>
+                        <h4>{{ __('Transactions')}}</h4>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -34,10 +34,10 @@
         var time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
 
         window.LaravelDataTables = window.LaravelDataTables || {};
-        window.LaravelDataTables["inquiries-table"] = $("#inquiries-table").dataTable({
+        window.LaravelDataTables["transactions-table"] = $("#transactions-table").dataTable({
             "serverSide": true,
             "processing": true,
-            "ajax": "{{ route('dashboard.order') }}",
+            "ajax": "{{ route('dashboard.transaction') }}",
             "columns": [{
                     "data": "DT_RowIndex",
                     "name": "id",
@@ -63,12 +63,6 @@
                     "orderable": true,
                     "searchable": true
                 }, {
-                    "data": "delivery_fee",
-                    "name": "delivery_fee",
-                    "title": "Delivery Fee",
-                    "orderable": true,
-                    "searchable": true
-                }, {
                     "data": "amount",
                     "name": "amount",
                     "title": "Price",
@@ -80,7 +74,7 @@
                     "title": "Created On",
                     "orderable": true,
                     "searchable": true
-                }, {
+                },{
                     "data": "status",
                     "name": "status",
                     "title": "Status",
@@ -105,7 +99,7 @@
                 "extend": "excel"
             }, {
                 "extend": "print",
-                "title": 'Inquiries_' + time,
+                "title": 'Transactions_' + time,
             },{
                 "extend": "pdf"
             }]

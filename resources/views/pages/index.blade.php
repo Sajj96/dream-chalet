@@ -1,6 +1,7 @@
 @extends('layouts.app', ['title' => 'Dream Chalets Engineering'])
 
 @section('content')
+@include('partials.session-message')
 <section class="swiper-slider banner-section">
     <div class="swiper-container">
         <div class="swiper-wrapper">
@@ -180,7 +181,7 @@
                                             <i class="fa-solid fa-star checked"></i>
                                             <i class="fa-solid fa-star checked"></i>
                                         </span>
-                                        <h6 class="rating-review text-white"><span>{{ number_format($property->review->rate/$property->review->average, 1) }}</span>({{ $property->review->review_count }} Reviews)</h6>
+                                        <h6 class="rating-review text-secondary"><span>{{ number_format($property->review->rate, 1) }}</span>({{ $property->review->review_count }} Reviews)</h6>
                                     </div>
                                     <h3 class="title">
                                         <a href="{{ route('property.show',[strtolower(preg_replace('/[ ,]+/', '-',$property->title.' '.$property->houseType->name.' '.$property->id))])}}">{!! $property->title !!}</a>
@@ -331,7 +332,7 @@
                                                 <i class="fa-solid fa-star checked"></i>
                                                 <i class="fa-solid fa-star checked"></i>
                                             </span>
-                                            <h6 class="rating-review text-white"><span>{{ number_format($property->review->rate/$property->review->average, 1) }}</span>({{ $property->review->review_count }} Reviews)</h6>
+                                            <h6 class="rating-review text-secondary"><span>{{ number_format($property->review->rate, 1) }}</span>({{ $property->review->review_count }} Reviews)</h6>
                                             <div class="product-name-price">
                                                 <h3 class="title">
                                                     <a href="{{ route('property.show',[strtolower(preg_replace('/[ ,]+/', '-',$property->title.' '.$property->houseType->name.' '.$property->id))]) }}" tabindex="-1">{!! $property->bedrooms .' Bedrooms - '. $property->title !!}</a>

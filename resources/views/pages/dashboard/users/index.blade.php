@@ -11,7 +11,7 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4>{{ __('Orders')}}</h4>
+                        <h4>{{ __('Users')}}</h4>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -34,10 +34,10 @@
         var time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
 
         window.LaravelDataTables = window.LaravelDataTables || {};
-        window.LaravelDataTables["inquiries-table"] = $("#inquiries-table").dataTable({
+        window.LaravelDataTables["users-table"] = $("#users-table").dataTable({
             "serverSide": true,
             "processing": true,
-            "ajax": "{{ route('dashboard.order') }}",
+            "ajax": "{{ route('dashboard.user') }}",
             "columns": [{
                     "data": "DT_RowIndex",
                     "name": "id",
@@ -45,48 +45,37 @@
                     "orderable": true,
                     "searchable": true
                 }, {
-                    "data": "property",
-                    "name": "property",
-                    "title": "Property",
+                    "data": "name",
+                    "name": "name",
+                    "title": "Name",
                     "orderable": true,
                     "searchable": true
                 }, {
-                    "data": "user",
-                    "name": "user",
-                    "title": "User",
+                    "data": "email",
+                    "name": "email",
+                    "title": "Email",
                     "orderable": true,
                     "searchable": true
                 }, {
-                    "data": "type",
-                    "name": "type",
-                    "title": "Type",
+                    "data": "mobile",
+                    "name": "mobile",
+                    "title": "Mobile",
                     "orderable": true,
                     "searchable": true
                 }, {
-                    "data": "delivery_fee",
-                    "name": "delivery_fee",
-                    "title": "Delivery Fee",
-                    "orderable": true,
-                    "searchable": true
-                }, {
-                    "data": "amount",
-                    "name": "amount",
-                    "title": "Price",
+                    "data": "city",
+                    "name": "city",
+                    "title": "City",
                     "orderable": true,
                     "searchable": true
                 }, {
                     "data": "created_at",
                     "name": "created_at",
-                    "title": "Created On",
+                    "title": "Joined On",
                     "orderable": true,
                     "searchable": true
-                }, {
-                    "data": "status",
-                    "name": "status",
-                    "title": "Status",
-                    "orderable": true,
-                    "searchable": true
-                }, {
+                },
+                {
                     "data": "action",
                     "name": "action",
                     "title": "Action",
@@ -105,7 +94,7 @@
                 "extend": "excel"
             }, {
                 "extend": "print",
-                "title": 'Inquiries_' + time,
+                "title": 'Users_' + time,
             },{
                 "extend": "pdf"
             }]

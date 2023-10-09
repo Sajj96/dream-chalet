@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Inquiry;
 use App\Models\Property;
+use App\Models\Transaction;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -20,6 +23,16 @@ class HomeController extends Controller
 
     public function dashboard()
     {
-        return view('pages.dashboard.index');
+        $transactions = Transaction::whereStatus(Transaction::STATUS_NOTPAID)->count();
+        $users = User::where('user_type', User::NORMAL_USER)->count();
+        $properties = Property::count();
+        $inquiries = Inquiry::whereStatus(Inquiry::STATUS_PROCESSING)->count();
+
+        return view('pages.dashboard.index', [
+            'transactions' => $transactions,
+            'users' => $users,
+            'properties' => $properties,
+            'inquiries' => $inquiries,
+        ]);
     }
 }

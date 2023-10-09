@@ -18,11 +18,15 @@ class Inquiry extends Model
         'description', 
         'photo_path', 
         'delivery_fee', 
-        'amount'
+        'amount',
+        'status'
     ];
 
     const TYPE_PURCHASE = "Purchase";
     const TYPE_CUSTOMIZE = "Customize";
+
+    const STATUS_PROCESSING = 0;
+    const STATUS_COMPLETED = 1;
 
     public function user(): BelongsTo
     {
@@ -32,6 +36,14 @@ class Inquiry extends Model
     public function property(): BelongsTo
     {
         return $this->belongsTo(Property::class);
+    }
+
+    public function getPropertyTitleAttribute()
+    {
+        if($this->property) {
+            return $this->property->title;
+        }
+        return "Unknown";
     }
 
     public function getUserNameAttribute()

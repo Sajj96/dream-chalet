@@ -163,13 +163,13 @@
                         <div class="sidebar-card mt-2 bg-gray">
                             <ul class="list-details con-list mb-3">
                                 <li><span>Delivery Charges</span> ${{ $inquiry->delivery_fee ?? 0 }}</li>
-                                <li><span>Subtotal</span> ${{ $property->price }}</li>
+                                <li><span>Subtotal</span> ${{ $price }}</li>
                                 <li><span><strong>Total</strong></span>
                                     <h5>${{ $price }}</h5>
                                 </li>
                             </ul>
                             <div class="review-form submit-btn">
-                                <button type="submit" class="btn-primary">Place Order</button>
+                                <button type="submit" class="btn-primary">Confirm Order</button>
                             </div>
                         </div>
                     </div>

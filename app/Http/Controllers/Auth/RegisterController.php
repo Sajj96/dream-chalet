@@ -71,7 +71,7 @@ class RegisterController extends Controller
             'mobile' => $data['mobile'],
             'password' => Hash::make($data['password']),
             'user_type' => User::NORMAL_USER,
-            'status'  => User::USER_NOT_VERIFIED,
+            'status'  => User::USER_VERIFIED,
         ]);
     }
 }

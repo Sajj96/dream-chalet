@@ -36,6 +36,15 @@ class TransactionsDataTable extends DataTable
         ->addColumn('amount', function ($row) {
             return '$'.number_format($row->amount);
         })
+        ->addColumn('status', function ($row) {
+            if($row->status == 0) {
+                return '<div class="badge badge-warning">PENDING</div><br>';
+             } elseif($row->status == 1) {
+                return '<div class="badge badge-success">PAID</div><br>';
+             } else {
+                return '<div class="badge badge-info">FAILED</div><br>';
+             }
+        })
         ->addColumn('created_at', function ($row) {
             return date('M, d Y', strtotime($row->created_at));
         })
@@ -56,7 +65,7 @@ class TransactionsDataTable extends DataTable
             $query->where('deleted_at', NULL)->orderBy('created_at', 'DESC');
 
         }, true)
-        ->rawColumns(['action', 'property'])
+        ->rawColumns(['action', 'property', 'status'])
         ->startsWithSearch()
         ->setRowId('id');
     }
@@ -78,16 +87,13 @@ class TransactionsDataTable extends DataTable
                     ->setTableId('transactions-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
-                    //->dom('Bfrtip')
+                    ->dom('Bfrtip')
                     ->orderBy(1)
                     ->selectStyleSingle()
                     ->buttons([
                         Button::make('excel'),
-                        Button::make('csv'),
                         Button::make('pdf'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload')
+                        Button::make('print')
                     ]);
     }
 
@@ -97,15 +103,20 @@ class TransactionsDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
-            Column::make('id'),
-            Column::make('add your columns'),
+            Column::make('id')
+            ->data('DT_RowIndex'),
+            Column::make('property'),
+            Column::make('user'),
+            Column::make('type'),
+            Column::make('amount'),
             Column::make('created_at'),
-            Column::make('updated_at'),
+            Column::computed('status')
+                    ->addClass('text-center'),
+            Column::computed('action')
+                ->exportable(false)
+                ->printable(false)
+                ->width(60)
+                ->addClass('text-center')
         ];
     }
 

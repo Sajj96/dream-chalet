@@ -13,29 +13,31 @@
                     <div class="col-lg-12">
                         <div class="invoice-title">
                             <img src="{{ asset('assets/img/dce_logo.png') }}" width="100" alt="">
-                            <h2>Order Invoice</h2>
-                            <div class="invoice-number">Order #{{ $inquiry->id }}</div>
+                            <h2>Transaction Invoice</h2>
+                            <div class="invoice-number">Transaction #{{ $transaction->id }}</div>
                         </div>
                         <hr>
                         <div class="row">
                             <div class="col-md-6">
                                 <address>
                                     <strong>Billed To:</strong><br>
-                                    {{ $inquiry->userName }}<br>
-                                    {{ $inquiry->userStreet }},<br>
-                                    {{ $inquiry->userWard }},<br>
-                                    {{ $inquiry->userCity }}, {{ $inquiry->userCountry }}
+                                    {{ $transaction->userName }}<br>
+                                    {{ $transaction->userStreet }},<br>
+                                    {{ $transaction->userWard }},<br>
+                                    {{ $transaction->userCity }}, {{ $transaction->userCountry }}
                                 </address>
                             </div>
                             <div class="col-md-6 text-md-right">
                                 <address>
-                                    <strong>Order Date:</strong><br>
-                                    {{ date('F d, Y', strtotime($inquiry->created_at)) }}<br>
+                                    <strong>Transaction Date:</strong><br>
+                                    {{ date('F d, Y', strtotime($transaction->created_at)) }}<br>
                                     <strong>Status: </strong>
-                                    @if($inquiry->status == 0)
-                                    <div class="badge badge-warning">PROCESSING</div><br>
+                                    @if($transaction->status == 0)
+                                    <div class="badge badge-warning">PENDING</div><br>
+                                    @elseif($transaction->status == 1)
+                                    <div class="badge badge-success">PAID</div><br>
                                     @else
-                                    <div class="badge badge-success">COMPLETED</div><br>
+                                    <div class="badge badge-info">FAILED</div><br>
                                     @endif
                                 </address>
                             </div>
@@ -44,7 +46,7 @@
                 </div>
                 <div class="row mt-4">
                     <div class="col-md-12">
-                        <div class="section-title">Order Summary</div>
+                        <div class="section-title">Transaction Summary</div>
                         <!-- <p class="section-lead">All items here cannot be deleted.</p> -->
                         <div class="table-responsive">
                             <table class="table table-striped table-hover table-md">
@@ -53,35 +55,29 @@
                                     <th>Property</th>
                                     <th class="text-center">Type</th>
                                     <th class="text-right">Price</th>
-                                    <th class="text-center">Sample Photo</th>
                                 </tr>
                                 <tr>
                                     <td>1</td>
-                                    <td><a href="">{{ $inquiry->propertyTitle }}</a></td>
-                                    <td class="text-center">{{ strtoupper($inquiry->type) }}</td>
-                                    <td class="text-right">${{ number_format($inquiry->amount,2) }}</td>
-                                    <td class="text-right">{{ $inquiry->photo_path}}</td>
+                                    <td><a href="">{{ $property->title }}</a></td>
+                                    <td class="text-center">{{ strtoupper($transaction->type) }}</td>
+                                    <td class="text-right">${{ number_format($transaction->amount) }}</td>
                                 </tr>
                             </table>
                         </div>
                         <div class="row mt-4">
                             <div class="col-lg-8">
-                                <div class="section-title">Order Note</div>
-                                <p class="section-lead">{!! $inquiry->description !!}</p>
+                                <div class="section-title">Transaction Note</div>
+                                <p class="section-lead">{!! $transaction->description !!}</p>
                             </div>
                             <div class="col-lg-4 text-right">
                                 <div class="invoice-detail-item">
                                     <div class="invoice-detail-name">Subtotal</div>
-                                    <div class="invoice-detail-value">${{ number_format($inquiry->amount,2) }}</div>
-                                </div>
-                                <div class="invoice-detail-item">
-                                    <div class="invoice-detail-name">Delivery Fee</div>
-                                    <div class="invoice-detail-value">${{ number_format($inquiry->delivery_fee,2) }}</div>
+                                    <div class="invoice-detail-value">${{ number_format($transaction->amount) }}</div>
                                 </div>
                                 <hr class="mt-2 mb-2">
                                 <div class="invoice-detail-item">
                                     <div class="invoice-detail-name">Total</div>
-                                    <div class="invoice-detail-value invoice-detail-value-lg">${{ number_format($inquiry->amount + $inquiry->delivery_fee,2) }}</div>
+                                    <div class="invoice-detail-value invoice-detail-value-lg">${{ number_format($transaction->amount) }}</div>
                                 </div>
                             </div>
                         </div>

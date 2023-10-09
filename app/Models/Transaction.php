@@ -16,6 +16,7 @@ class Transaction extends Model
         'property_id', 
         'user_id', 
         'description', 
+        'reference_no',
         'amount',
         'status'
     ];

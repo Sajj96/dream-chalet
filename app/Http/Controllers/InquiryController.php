@@ -65,13 +65,19 @@ class InquiryController extends Controller
                 'property_id'  => $request->property,
                 'description' => $request->description,
                 'amount' => (int) $request->amount,
-                'delivery_fee' => (int) $request->delivery_fee
+                'delivery_fee' => (int) $request->delivery_fee,
+                'status' => Inquiry::STATUS_PROCESSING
             ]);
 
             $user = null;
 
             if(Auth::check()) {
                 $user = Auth::user();
+                $user->street    = $request->street;
+                $user->ward      = $request->ward;
+                $user->city      = $request->city;
+                $user->country   = $request->country;
+                $user->save();
             } else {
                 $user = User::updateOrCreate(
                     [ 'email' => $request->email ],
@@ -117,7 +123,7 @@ class InquiryController extends Controller
                 ]);
             }
 
-            return redirect()->route('checkout',['inquiry' => $inquiry->id])->withSuccess('Your information have been submitted successfully!');
+            return redirect()->route('checkout',['inquiry' => $inquiry->id])->withSuccess('Your information have been submitted successfully. Confirm order to continue!');
         } catch (\Exception $exception) {
             return back()->withError('An error has occurred failed to send information');
         }

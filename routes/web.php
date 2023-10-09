@@ -54,6 +54,12 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('/dashboard')->group(function () {
         Route::get('/', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('dashboard');
 
+        Route::prefix('/users')->group(function () {
+            Route::get('/', [App\Http\Controllers\UserController::class, 'index'])->name('dashboard.user');
+            Route::get('/view/{id}', [App\Http\Controllers\UserController::class, "view"])->name('dashboard.user.show');
+            Route::post('/delete', [App\Http\Controllers\UserController::class, "delete"])->name('dashboard.user.delete');
+        });
+
         Route::prefix('/properties')->group(function () {
             Route::get('/all', [App\Http\Controllers\PropertyController::class, 'indexDashboard'])->name('dashboard.property');
             Route::match(['get', 'post'], '/add', [App\Http\Controllers\PropertyController::class, "add"])->name('dashboard.property.add');
@@ -83,6 +89,12 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/', [App\Http\Controllers\InquiryController::class, 'index'])->name('dashboard.order');
             Route::get('/view/{id}', [App\Http\Controllers\InquiryController::class, "view"])->name('dashboard.order.show');
             Route::post('/delete', [App\Http\Controllers\InquiryController::class, "delete"])->name('dashboard.order.delete');
+        });
+
+        Route::prefix('/transactions')->group(function () {
+            Route::get('/', [App\Http\Controllers\TransactionController::class, 'index'])->name('dashboard.transaction');
+            Route::get('/view/{id}', [App\Http\Controllers\TransactionController::class, "view"])->name('dashboard.transaction.show');
+            Route::post('/delete', [App\Http\Controllers\TransactionController::class, "delete"])->name('dashboard.transaction.delete');
         });
     })->middleware('admin');
 

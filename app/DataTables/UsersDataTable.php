@@ -22,8 +22,30 @@ class UsersDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'users.action')
-            ->setRowId('id');
+        ->addIndexColumn()
+        ->addColumn('created_at', function ($row) {
+            return date('M, d Y', strtotime($row->created_at));
+        })
+        ->addColumn('action', function($row){
+            return '
+            <div class="buttons d-flex">
+                <a href="'.route("dashboard.user.show", $row->id).'" class="btn btn-outline-secondary" rel="tooltip" data-original-title="Tooltip on top" title="View">View</a>
+                <form class="delete-form" action="'.route("dashboard.user.delete").'" method="POST">
+                    <input type="hidden" name="_token" value="'.csrf_token().'">
+                    <input type="hidden" value="'.$row->id.'" name="inquiry_id">
+                    <button type="submit" class="btn btn-outline-danger" rel="tooltip" data-original-title="Tooltip on top" title="View">Delete</button>
+                </form>
+            </div>
+            ';
+        })
+        ->filter(function ($query) {
+
+            $query->where('deleted_at', NULL)->orderBy('created_at', 'DESC');
+
+        }, true)
+        ->rawColumns(['action'])
+        ->startsWithSearch()
+        ->setRowId('id');
     }
 
     /**
@@ -43,16 +65,13 @@ class UsersDataTable extends DataTable
                     ->setTableId('users-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
-                    //->dom('Bfrtip')
+                    ->dom('Bfrtip')
                     ->orderBy(1)
                     ->selectStyleSingle()
                     ->buttons([
                         Button::make('excel'),
-                        Button::make('csv'),
                         Button::make('pdf'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload')
+                        Button::make('print')
                     ]);
     }
 
@@ -62,15 +81,18 @@ class UsersDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
-            Column::make('id'),
-            Column::make('add your columns'),
+            Column::make('id')
+            ->data('DT_RowIndex'),
+            Column::make('name'),
+            Column::make('email'),
+            Column::make('mobile'),
+            Column::make('city'),
             Column::make('created_at'),
-            Column::make('updated_at'),
+            Column::computed('action')
+                ->exportable(false)
+                ->printable(false)
+                ->width(60)
+                ->addClass('text-center')
         ];
     }
 

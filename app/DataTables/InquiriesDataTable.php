@@ -25,7 +25,7 @@ class InquiriesDataTable extends DataTable
         ->addIndexColumn()
         ->addColumn('property', function ($row) {
             $prop = strtolower(preg_replace('/[ ,]+/', '-',$row->property->title.' '.$row->property->houseTypeName.' '.$row->property->id));
-            return '<a href="'.route('property.show', $prop).'">'.$row->property->title.'</a>';
+            return '<a href="'.route('property.show', $prop).'">'.$row->propertyTitle.'</a>';
         })
         ->addColumn('user', function ($row) {
             return $row->userName;
@@ -41,6 +41,13 @@ class InquiriesDataTable extends DataTable
         })
         ->addColumn('created_at', function ($row) {
             return date('M, d Y', strtotime($row->created_at));
+        })
+        ->addColumn('status', function ($row) {
+            if($row->status == 0) {
+                return '<div class="badge badge-warning">PROCESSING</div><br>';
+             } else{
+                return '<div class="badge badge-success">COMPLETED</div><br>';
+             }
         })
         ->addColumn('action', function($row){
             return '
@@ -59,7 +66,7 @@ class InquiriesDataTable extends DataTable
             $query->where('deleted_at', NULL)->orderBy('created_at', 'DESC');
 
         }, true)
-        ->rawColumns(['action', 'property'])
+        ->rawColumns(['action', 'property', 'status'])
         ->startsWithSearch()
         ->setRowId('id');
     }
@@ -101,9 +108,12 @@ class InquiriesDataTable extends DataTable
                     ->data('DT_RowIndex'),
             Column::make('property'),
             Column::make('user'),
+            Column::make('type'),
             Column::make('delivery_fee'),
             Column::make('amount'),
             Column::make('created_at'),
+            Column::computed('status')
+                    ->addClass('text-center'),
             Column::computed('action')
                   ->exportable(false)
                   ->printable(false)

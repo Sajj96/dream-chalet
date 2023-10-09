@@ -29,7 +29,7 @@
                             <i class="fa-solid fa-star checked"></i>
                             <i class="fa-solid fa-star checked"></i>
                         </span>
-                        <h6 class="rating-review text-white"><span>{{ number_format($property->review->rate/$property->review->average, 1) }}</span>({{ $property->review->review_count }} Reviews)</h6>
+                        <h6 class="rating-review text-white"><span>{{ number_format($property->review->rate, 1) }}</span>({{ $property->review->review_count }} Reviews)</h6>
                     </div>
                     <p>${{ number_format($property->price) }}</p>
                     <ul class="other-pages">

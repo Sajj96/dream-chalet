@@ -19,6 +19,20 @@
                     <div class="sort-result">
                         <div class="price-range grid-head">
                             <div>
+                                <p>No. of Bedrooms</p>
+                            </div>
+                            <div class="review-form">
+                                <select class="select bedroom" name="bedroom">
+                                    <option value="{{ route('property', 'bedroom=1') }}">1 Bedroom</option>
+                                    <option value="{{ route('property', 'bedroom=2') }}">2 Bedrooms</option>
+                                    <option value="{{ route('property', 'bedroom=3') }}">3 Bedrooms</option>
+                                    <option value="{{ route('property', 'bedroom=4') }}">4 Bedrooms</option>
+                                    <option value="{{ route('property', 'bedroom=5') }}">5+ Bedrooms</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="price-range grid-head">
+                            <div>
                                 <p>Price Range</p>
                             </div>
                             <div class="review-form">
@@ -30,7 +44,7 @@
                         </div>
                         <div class="grid-list-view">
                             <ul>
-                                <li><a href="buy-property-list-sidebar.html" data-bs-toggle="modal" data-bs-target="#success"><i class="bx bx-filter-alt"></i></a></li>
+                                <!-- <li><a href="buy-property-list-sidebar.html" data-bs-toggle="modal" data-bs-target="#success"><i class="bx bx-filter-alt"></i></a></li> -->
                             </ul>
                         </div>
                     </div>
@@ -72,7 +86,7 @@
                                                 <i class="fa-solid fa-star checked"></i>
                                                 <i class="fa-solid fa-star checked"></i>
                                             </span>
-                                            <h6 class="rating-review text-white"><span>{{ number_format($property->review->rate/$property->review->average, 1) }}</span>({{ $property->review->review_count }} Reviews)</h6>
+                                            <h6 class="rating-review text-secondary"><span>{{ number_format($property->review->rate, 1) }}</span>({{ $property->review->review_count }} Reviews)</h6>
                                         </div>
                                         <h5 class="title">
                                             <a href="{{ route('property.show',[strtolower(preg_replace('/[ ,]+/', '-',$property->title.' '.$property->houseType->name.' '.$property->id))])}}">{!! $property->title !!}</a>
@@ -203,5 +217,10 @@
         showCounter: true,
         btnHTML: '<div class="d-flex justify-content-center" data-aos="fade-down" data-aos-duration="1000"><a href="#" class="btn btn-primary bg-warning">Load More</a></div>'
     });
+
+    $('.bedroom').on('select2:select', function(e){
+        var link = e.params.data.id;
+        window.location = link;
+    })
 </script>
 @endsection

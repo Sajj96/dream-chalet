@@ -151,10 +151,11 @@ class Property extends Model
             }
         }
 
+        $rate = ($average > 0) ? $rate/$average : 0;
+
         return (object) array(
             'rate' => $rate,
-            'review_count' => count($reviews_count),
-            'average' => $average
+            'review_count' => count($reviews_count)
         );
     }
 }
