@@ -180,7 +180,7 @@
                                             <i class="fa-solid fa-star checked"></i>
                                             <i class="fa-solid fa-star checked"></i>
                                         </span>
-                                        <p class="rating-review"><span>5.0</span>(20 Reviews)</p>
+                                        <h6 class="rating-review text-white"><span>{{ number_format($property->review->rate/$property->review->average, 1) }}</span>({{ $property->review->review_count }} Reviews)</h6>
                                     </div>
                                     <h3 class="title">
                                         <a href="{{ route('property.show',[strtolower(preg_replace('/[ ,]+/', '-',$property->title.' '.$property->houseType->name.' '.$property->id))])}}">{!! $property->title !!}</a>
@@ -192,11 +192,11 @@
                                         </li>
                                         <li>
                                             <i class="fas fa-trowel-bricks fa-1x text-secondary mx-1"></i>
-                                            {{ $property->bathrooms ?? 0 }} Blocks
+                                            {{ $property->blocks ?? 0 }} Blocks
                                         </li>
                                         <li>
                                             <i class="fas fa-sheet-plastic fa-1x text-secondary mx-1"></i>
-                                            {{ $property->floors }} Roof
+                                            {{ $property->roofs }} Roof
                                         </li>
                                         <li>
                                             <i class="fas fa-ruler-horizontal fa-1x text-secondary mx-1"></i>
@@ -307,7 +307,7 @@
             <p>Check out the listings of our best deals</p>
         </div>
         <div class="row justify-content-center">
-            <div class="col-md-12">
+            <div class="col-md-10">
                 <div class="feature-slider-deals owl-carousel">
                     @foreach($trending_properties as $property)
                     <div class="slider-col">
@@ -324,15 +324,17 @@
                                 <div class="pro-content">
                                     <div class="list-head">
                                         <div class="rating">
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star checked"></i>
-                                            5.0 (20 Reviews)
+                                            <span class="rating-count">
+                                                <i class="fa-solid fa-star checked"></i>
+                                                <i class="fa-solid fa-star checked"></i>
+                                                <i class="fa-solid fa-star checked"></i>
+                                                <i class="fa-solid fa-star checked"></i>
+                                                <i class="fa-solid fa-star checked"></i>
+                                            </span>
+                                            <h6 class="rating-review text-white"><span>{{ number_format($property->review->rate/$property->review->average, 1) }}</span>({{ $property->review->review_count }} Reviews)</h6>
                                             <div class="product-name-price">
                                                 <h3 class="title">
-                                                    <a href="{{ route('property.show',[strtolower(preg_replace('/[ ,]+/', '-',$property->title.' '.$property->houseType->name.' '.$property->id))]) }}" tabindex="-1">{!! $property->title !!}</a>
+                                                    <a href="{{ route('property.show',[strtolower(preg_replace('/[ ,]+/', '-',$property->title.' '.$property->houseType->name.' '.$property->id))]) }}" tabindex="-1">{!! $property->bedrooms .' Bedrooms - '. $property->title !!}</a>
                                                 </h3>
                                                 <div class="product-amount">
                                                     <h5><span>${{ number_format($property->price) }} </span></h5>
@@ -347,11 +349,11 @@
                                         </li>
                                         <li>
                                             <i class="fas fa-trowel-bricks fa-1x text-secondary mx-1"></i>
-                                            {{ $property->bathrooms ?? 0 }} Blocks
+                                            {{ $property->blocks ?? 0 }} Blocks
                                         </li>
                                         <li>
                                             <i class="fas fa-sheet-plastic fa-1x text-secondary mx-1"></i>
-                                            {{ $property->floors }} Roof
+                                            {{ $property->roofs }} Roof
                                         </li>
                                         <li>
                                             <i class="fas fa-ruler-horizontal fa-1x text-secondary mx-1"></i>

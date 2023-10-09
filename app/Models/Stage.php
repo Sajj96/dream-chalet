@@ -18,10 +18,12 @@ class Stage extends Model
 
     public function getStagePriceAttribute()
     {
-        if($this->property){
-            return $this->pivot->price;
-        } else {
-            return 0;
-        }
+        $price = 0;
+        foreach($this->property as $property) {
+            if($this->id == $property->pivot->stage_id) {
+                $price = $property->pivot->price;
+            }
+        }   
+        return $price;
     }
 }

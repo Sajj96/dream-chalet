@@ -150,7 +150,7 @@ class PropertyController extends Controller
 
                 $floorImg = Image::make($request->file('floor_image')->getRealPath());
                 $floorImg->resize(817, 446);
-                $floorImg->pixelate(20)->blur(100);
+                $floorImg->pixelate(20)->blur(100)->greyscale();
 
                 $premiumImg = Image::make($request->file('floor_image')->getRealPath());
                 $premiumImg->resize(817, 446);
@@ -257,8 +257,8 @@ class PropertyController extends Controller
             $house_types = HouseType::get();
             $house_stages = Stage::get();
             $house_amenities = Amenity::get();
-            $property_amenities = $property->amenities()->pluck('property_amenities.id')->toArray();
-            $property_stages = $property->stages()->pluck('property_stages.id')->toArray();
+            $property_amenities = $property->amenities()->pluck('property_amenities.amenity_id')->toArray();
+            $property_stages = $property->stages()->pluck('property_stages.stage_id')->toArray();
             $property_photos = $property->photos;
 
             return view('pages.dashboard.properties.edit',[
@@ -274,9 +274,7 @@ class PropertyController extends Controller
 
         $validator = Validator::make($request->all(), [
             'title'       => 'required|string',
-            'price'       => 'required|numeric',
-            'main_image'  => 'image|mimes:jpg,jpeg,png,gif',
-            'floor_image' => 'image|mimes:jpg,jpeg,png,gif'
+            'price'       => 'required|numeric'
         ]);
 
         if ($validator->fails()) {
@@ -286,19 +284,17 @@ class PropertyController extends Controller
 
         try {
 
-            $property->update([
-                'title'         => $request->title,
-                'house_type_id' => $request->type,
-                'price'         => $request->price,
-                'currency'      => $request->currency,
-                'bedrooms'      => $request->bedroom,
-                'bathrooms'     => $request->bathroom,
-                'roofs'         => $request->roofs,
-                'blocks'        => $request->blocks,
-                'floors'        => $request->no_floor,
-                'square_meter'  => $request->sqmt,
-                'details'       => $request->details
-            ]);
+                $property->title = $request->title;
+                $property->house_type_id = $request->type;
+                $property->price         = $request->price;
+                $property->currency      = $request->currency;
+                $property->bedrooms      = $request->bedroom;
+                $property->bathrooms     = $request->bathroom;
+                $property->roofs         = $request->roofs;
+                $property->blocks        = $request->blocks;
+                $property->floors        = $request->no_floor;
+                $property->square_meter  = $request->sqmt;
+                $property->details       = $request->details;
 
             if ($request->hasFile('main_image')) {
 

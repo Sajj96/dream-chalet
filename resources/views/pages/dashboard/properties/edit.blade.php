@@ -172,7 +172,7 @@
                                     <label for="inputEmail3" class="col-sm-3 col-form-label">{{ $stage->name }}</label>
                                     <div class="col-sm-9">
                                         @if(in_array($stage->id,$property_stages))
-                                         <input type="number" name="stages[{{ $stage->id }}]['price']" class="form-control" value="" id="inputEmail3" placeholder="Enter {{ strtolower($stage->name) }} development cost">
+                                         <input type="number" name="stages[{{ $stage->id }}]['price']" class="form-control" value="{{ $stage->stagePrice }}" id="inputEmail3" placeholder="Enter {{ strtolower($stage->name) }} development cost">
                                         @else 
                                         <input type="number" name="stages[{{ $stage->id }}]['price']" class="form-control" id="inputEmail3" placeholder="Enter {{ strtolower($stage->name) }} development cost">
                                         @endif
@@ -203,5 +203,12 @@
     let token = "{{ csrf_token() }}";
 </script>
 <script src="{{ asset('assets/dashboard/js/page/form-wizard.js') }}"></script>
-
+<script>
+    $(function(){
+        $('#aniimated-thumbnials').lightGallery({
+            thumbnail: true,
+            selector: 'a'
+        });
+    })
+</script>
 @endsection

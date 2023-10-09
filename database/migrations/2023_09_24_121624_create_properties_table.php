@@ -25,6 +25,7 @@ return new class extends Migration
             $table->integer('square_meter')->nullable();
             $table->string('thumbnail');
             $table->text('details')->nullable();
+            $table->integer('clicks')->default(0);
             $table->timestamps();
             $table->softDeletes();
 

@@ -53,7 +53,7 @@
                                             <img class="img-fluid" alt="Property Image" src="{{ $property->thumbnail }}">
                                         </a>
                                         <div class="product-amount">
-                                            <span>{{ number_format($property->price)." ".$property->currency }}</span>
+                                            <span>${{ number_format($property->price) }}</span>
                                         </div>
                                         <div class="feature-rating">
                                             <div>
@@ -72,7 +72,7 @@
                                                 <i class="fa-solid fa-star checked"></i>
                                                 <i class="fa-solid fa-star checked"></i>
                                             </span>
-                                            <p class="rating-review"><span>5.0</span>(20 Reviews)</p>
+                                            <h6 class="rating-review text-white"><span>{{ number_format($property->review->rate/$property->review->average, 1) }}</span>({{ $property->review->review_count }} Reviews)</h6>
                                         </div>
                                         <h5 class="title">
                                             <a href="{{ route('property.show',[strtolower(preg_replace('/[ ,]+/', '-',$property->title.' '.$property->houseType->name.' '.$property->id))])}}">{!! $property->title !!}</a>
@@ -84,11 +84,11 @@
                                             </li>
                                             <li>
                                                 <i class="fas fa-trowel-bricks fa-1x text-secondary mx-1"></i>
-                                                {{ $property->bathrooms ?? 0 }} Blocks
+                                                {{ $property->blocks ?? 0 }} Blocks
                                             </li>
                                             <li>
                                                 <i class="fas fa-sheet-plastic fa-1x text-secondary mx-1"></i>
-                                                {{ $property->floors }} Roof
+                                                {{ $property->roofs }} Roof
                                             </li>
                                             <li>
                                                 <i class="fas fa-ruler-horizontal fa-1x text-secondary mx-1"></i>

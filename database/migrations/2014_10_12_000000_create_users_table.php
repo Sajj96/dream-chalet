@@ -20,7 +20,11 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->integer('user_type')->default(User::NORMAL_USER);
-            $table->integer('status')->default(User::USER_NOT_VERIFIED);
+            $table->string('street')->nullable();
+            $table->string('ward')->nullable();
+            $table->string('city')->nullable();
+            $table->string('country')->nullable();
+            $table->integer('status')->default(User::USER_VERIFIED);
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

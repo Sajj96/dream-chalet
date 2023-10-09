@@ -13,6 +13,11 @@ class Subscription extends Model
         'property_id', 
         'user_id', 
         'plan_id',
-        'end_on'
+        'ends_on'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

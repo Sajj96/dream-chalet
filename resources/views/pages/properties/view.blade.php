@@ -21,11 +21,21 @@
             </div>
             <div class="col-lg-4">
                 <div class="latest-update">
+                    <div class="rating">
+                        <span class="rating-count">
+                            <i class="fa-solid fa-star checked"></i>
+                            <i class="fa-solid fa-star checked"></i>
+                            <i class="fa-solid fa-star checked"></i>
+                            <i class="fa-solid fa-star checked"></i>
+                            <i class="fa-solid fa-star checked"></i>
+                        </span>
+                        <h6 class="rating-review text-white"><span>{{ number_format($property->review->rate/$property->review->average, 1) }}</span>({{ $property->review->review_count }} Reviews)</h6>
+                    </div>
                     <p>${{ number_format($property->price) }}</p>
                     <ul class="other-pages">
                         <li><a href="compare.html"><i class="feather-git-pull-request"></i>Add to Compare</a>
                         </li>
-                        <li><a href="javascript:void(0);"><i class="feather-heart"></i>Wishlist</a></li>
+                        <li><a href="javascript:void(0);"><i class="feather-heart"></i>Add to Wishlist</a></li>
                     </ul>
                 </div>
             </div>
@@ -74,11 +84,11 @@
                             </li>
                             <li>
                                 <img src="{{ asset('assets/img/block.png')}}" width="40" alt="Image">
-                                <p>{{ $property->bathrooms }} Blocks</p>
+                                <p>{{ $property->blocks }} Blocks</p>
                             </li>
                             <li>
                                 <img src="{{ asset('assets/img/roof.png')}}" width="40" alt="Image">
-                                <p>{{ $property->floors }} Roofing Sheets</p>
+                                <p>{{ $property->roofs }} Roofing Sheets</p>
                             </li>
                             <li>
                                 <img src="{{ asset('assets/img/plot.png')}}" width="40" alt="Image">
@@ -105,6 +115,12 @@
                     </h4>
                     <div id="video" class="card-collapse collapse show">
                         <div class="sample-video collapse-view">
+                            @if($property->hasUserSubscribed)
+                            <img src="{{ $property->premium_image }}" alt="Image">
+                            <div class="review-form submit-btn">
+                                <button type="submit" class="btn-primary"><i class="bx bx-download bx-sm ml-3"></i> Download</button>
+                            </div>
+                            @else
                             <img src="{{ $property->floor_image }}" alt="Image">
 
                             <div class="price-card premium">
@@ -132,6 +148,7 @@
                                     </div>
                                 </form>
                             </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -159,7 +176,7 @@
                         </div>
                         <form action="{{ url('/inquiries/add') }}" method="post" enctype="multipart/form-data">
                             @csrf
-                            <input type="hidden" name="property_id" value="{{ $property->id }}">
+                            <input type="hidden" name="property" value="{{ $property->id }}">
                             <div class="arrival-div arrival-dept">
                                 <ul class="prices-two">
                                     <li>
@@ -176,22 +193,22 @@
                                 <p>Your Information</p>
                             </div>
                             <div class="review-form">
-                                <input type="text" class="form-control" name="full_name" placeholder="Owner Full Name" required>
+                                <input type="text" class="form-control" name="full_name" value="{{ auth()->user()->name ?? old('full_name') }}" placeholder="Owner Full Name" required>
                             </div>
                             <div class="review-form">
-                                <input type="email" class="form-control" name="email" placeholder="Your Email Address" required>
+                                <input type="email" class="form-control" name="email" value="{{ auth()->user()->email ?? old('email') }}" placeholder="Your Email Address" required>
                             </div>
                             <div class="review-form">
-                                <input type="tel" id="phone" class="form-control" name="mobile" required>
+                                <input type="tel" id="phone" class="form-control" name="mobile" value="{{ auth()->user()->mobile ?? old('mobile') }}" required>
                             </div>
                             <div class="review-form">
-                                <input type="text" class="form-control" name="street" placeholder="Street/Village" required>
+                                <input type="text" class="form-control" name="street" value="{{ auth()->user()->street ?? old('street') }}" placeholder="Street/Village" required>
                             </div>
                             <div class="review-form">
-                                <input type="text" class="form-control" name="ward" placeholder="Ward" required>
+                                <input type="text" class="form-control" name="ward" value="{{ auth()->user()->ward ?? old('ward') }}" placeholder="Ward" required>
                             </div>
                             <div class="review-form">
-                                <input type="text" class="form-control" name="city" placeholder="Town / City" required>
+                                <input type="text" class="form-control" name="city" value="{{ auth()->user()->city ?? old('city') }}" placeholder="Town / City" required>
                             </div>
                             <div class="review-form">
                                 <select class="select" name="country" required>
@@ -257,7 +274,7 @@
                     </div>
                     <ul class="list-details">
                         @foreach($stages as $stage)
-                        <li>{{ $stage->name }} <span>{{ number_format($stage->pivot->price)." ".$property->currency }}</span></li>
+                        <li>{{ $stage->name }} <span>{{ ($property->hasUserSubscribed) ? '$'.number_format($stage->stagePrice) : 'Subscribers only' }}</span></li>
                         @endforeach
                     </ul>
                 </div>
@@ -292,21 +309,43 @@
                         <div class="review-card">
                             <div class="property-review">
                                 <h5 class="card-title">Property Reviews</h5>
-                                <form action="#">
+                                <form action="{{ route('review.create') }}" method="POST">
+                                    @csrf
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="review-form">
-                                                <input type="text" class="form-control" placeholder="Your Name">
+                                                <label for="">Your Name</label>
+                                                <input type="text" class="form-control" name="full_name" value="{{ auth()->user()->name ?? ''}}" placeholder="Your Name">
+                                                <input type="hidden" name="property_id" value="{{ $property->id }}">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="review-form">
-                                                <input type="email" class="form-control" placeholder="Your Email Address">
+                                                <label for="">Your Email</label>
+                                                <input type="email" class="form-control" name="email" value="{{ auth()->user()->email ?? ''}}" placeholder="Your Email Address">
                                             </div>
                                         </div>
                                         <div class="col-md-12">
                                             <div class="review-form">
-                                                <textarea rows="5" placeholder="Enter Your Comments"></textarea>
+                                                <label class="review-label">Star Ratings</label>
+                                                <div class="rate list-inline">
+                                                    <input type="radio" id="star5" class="rate" name="rating" value="5" />
+                                                    <label for="star5" title="5 stars">5 stars</label>
+                                                    <input type="radio" id="star4" class="rate" name="rating" value="4" />
+                                                    <label for="star4" title="4 stars">4 stars</label>
+                                                    <input type="radio" id="star3" class="rate" name="rating" value="3" />
+                                                    <label for="star3" title="3 stars">3 stars</label>
+                                                    <input type="radio" id="star2" class="rate" name="rating" value="2">
+                                                    <label for="star2" title="2 stars">2 stars</label>
+                                                    <input type="radio" id="star1" class="rate" name="rating" value="1" />
+                                                    <label for="star1" title="1 star">1 star</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="review-form">
+                                                <label for="">Comment</label>
+                                                <textarea rows="5" placeholder="Enter Your Comments" name="comment"></textarea>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
@@ -463,284 +502,6 @@
                             </div>
                         </div>
 
-
-                        <div class="product-custom">
-                            <div class="profile-widget">
-                                <div class="doc-img">
-                                    <a href="buy-detail-view.html" class="property-img">
-                                        <img class="img-fluid" alt="Property Image" src="{{ asset('assets/img/product/product-2.jpg')}}">
-                                    </a>
-                                    <div class="product-amount">
-                                        <span>$78,000</span>
-                                    </div>
-                                    <div class="feature-rating">
-                                        <div>
-                                            <div class="featured">
-                                                <span>Featured</span>
-                                            </div>
-                                        </div>
-                                        <a href="javascript:void(0)">
-                                            <div class="favourite">
-                                                <span><i class="fa-regular fa-heart"></i></span>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="user-avatar">
-                                        <img src="assets/img/profiles/avatar-02.jpg" alt="User">
-                                    </div>
-                                </div>
-                                <div class="pro-content">
-                                    <div class="rating">
-                                        <span class="rating-count">
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star checked"></i>
-                                        </span>
-                                        <p class="rating-review"><span>5.0</span>(25 Reviews)</p>
-                                    </div>
-                                    <h3 class="title">
-                                        <a href="buy-detail-view.html">Beautiful Condo Room</a>
-                                    </h3>
-                                    <p><i class="feather-map-pin"></i> 470 Park Ave S, New York, NY 10016</p>
-                                    <ul class="d-flex details">
-                                        <li>
-                                            <img src="assets/img/icons/bed-icon.svg" alt="bed-icon">
-                                            2 Beds
-                                        </li>
-                                        <li>
-                                            <img src="assets/img/icons/bath-icon.svg" alt="bath-icon">
-                                            2 Baths
-                                        </li>
-                                        <li>
-                                            <img src="assets/img/icons/building-icon.svg" alt="building-icon">
-                                            3000 Sqft
-                                        </li>
-                                    </ul>
-                                    <ul class="property-category d-flex justify-content-between">
-                                        <li>
-                                            <span class="list">Listed on : </span>
-                                            <span class="date">17 Jan 2023</span>
-                                        </li>
-                                        <li>
-                                            <span class="category list">Category : </span>
-                                            <span class="category-value date">Condos</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="product-custom">
-                            <div class="profile-widget">
-                                <div class="doc-img">
-                                    <a href="buy-detail-view.html" class="property-img">
-                                        <img class="img-fluid" alt="Property Image" src="{{ asset('assets/img/product/product-3.jpg')}}">
-                                    </a>
-                                    <div class="product-amount">
-                                        <span>$63,000</span>
-                                    </div>
-                                    <div class="feature-rating">
-                                        <div>
-                                            <div class="featured">
-                                                <span>Featured</span>
-                                            </div>
-                                        </div>
-                                        <a href="javascript:void(0)">
-                                            <div class="favourite">
-                                                <span><i class="fa-regular fa-heart"></i></span>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="user-avatar">
-                                        <img src="assets/img/profiles/avatar-03.jpg" alt="User">
-                                    </div>
-                                </div>
-                                <div class="pro-content">
-                                    <div class="rating">
-                                        <span class="rating-count">
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star checked"></i>
-                                        </span>
-                                        <p class="rating-review"><span>5.0</span>(10 Reviews)</p>
-                                    </div>
-                                    <h3 class="title">
-                                        <a href="buy-detail-view.html">Summer house</a>
-                                    </h3>
-                                    <p><i class="feather-map-pin"></i> 82-25 Parsons Blvd, Jamaica, NY 11432,
-                                        USA</p>
-                                    <ul class="d-flex details">
-                                        <li>
-                                            <img src="assets/img/icons/bed-icon.svg" alt="bed-icon">
-                                            3 Beds
-                                        </li>
-                                        <li>
-                                            <img src="assets/img/icons/bath-icon.svg" alt="bath-icon">
-                                            4 Baths
-                                        </li>
-                                        <li>
-                                            <img src="assets/img/icons/building-icon.svg" alt="building-icon">
-                                            35000 Sqft
-                                        </li>
-                                    </ul>
-                                    <ul class="property-category d-flex justify-content-between">
-                                        <li>
-                                            <span class="list">Listed on : </span>
-                                            <span class="date">13 Jan 2023</span>
-                                        </li>
-                                        <li>
-                                            <span class="category list">Category : </span>
-                                            <span class="category-value date">House</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="product-custom">
-                            <div class="profile-widget">
-                                <div class="doc-img">
-                                    <a href="buy-detail-view.html" class="property-img">
-                                        <img class="img-fluid" alt="Property Image" src="assets/img/product/product-4.jpg">
-                                    </a>
-                                    <div class="product-amount">
-                                        <span>$51,000</span>
-                                    </div>
-                                    <div class="feature-rating">
-                                        <div>
-                                            <div class="featured">
-                                                <span>Featured</span>
-                                            </div>
-                                        </div>
-                                        <a href="javascript:void(0)">
-                                            <div class="favourite">
-                                                <span><i class="fa-regular fa-heart"></i></span>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="user-avatar">
-                                        <img src="assets/img/profiles/avatar-04.jpg" alt="User">
-                                    </div>
-                                </div>
-                                <div class="pro-content">
-                                    <div class="rating">
-                                        <span class="rating-count">
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star checked"></i>
-                                        </span>
-                                        <p class="rating-review"><span>5.0</span>(5 Reviews)</p>
-                                    </div>
-                                    <h3 class="title">
-                                        <a href="buy-detail-view.html">Minimalist and bright flat</a>
-                                    </h3>
-                                    <p><i class="feather-map-pin"></i> 518-520 8th Ave, New York, NY 10018, USA
-                                    </p>
-                                    <ul class="d-flex details">
-                                        <li>
-                                            <img src="assets/img/icons/bed-icon.svg" alt="bed-icon">
-                                            4 Beds
-                                        </li>
-                                        <li>
-                                            <img src="assets/img/icons/bath-icon.svg" alt="bath-icon">
-                                            1 Bath
-                                        </li>
-                                        <li>
-                                            <img src="assets/img/icons/building-icon.svg" alt="building-icon">
-                                            5000 Sqft
-                                        </li>
-                                    </ul>
-                                    <ul class="property-category d-flex justify-content-between">
-                                        <li>
-                                            <span class="list">Listed on : </span>
-                                            <span class="date">18 Jan 2023</span>
-                                        </li>
-                                        <li>
-                                            <span class="category list">Category : </span>
-                                            <span class="category-value date">Flats</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="product-custom">
-                            <div class="profile-widget">
-                                <div class="doc-img">
-                                    <a href="buy-detail-view.html" class="property-img">
-                                        <img class="img-fluid" alt="Property Image" src="assets/img/product/product-5.jpg">
-                                    </a>
-                                    <div class="product-amount">
-                                        <span>$29,000</span>
-                                    </div>
-                                    <div class="feature-rating">
-                                        <div>
-                                            <div class="featured">
-                                                <span>Featured</span>
-                                            </div>
-                                        </div>
-                                        <a href="javascript:void(0)">
-                                            <div class="favourite">
-                                                <span><i class="fa-regular fa-heart"></i></span>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="user-avatar">
-                                        <img src="assets/img/profiles/avatar-05.jpg" alt="User">
-                                    </div>
-                                </div>
-                                <div class="pro-content">
-                                    <div class="rating">
-                                        <span class="rating-count">
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star checked"></i>
-                                        </span>
-                                        <p class="rating-review"><span>5.0</span>(20 Reviews)</p>
-                                    </div>
-                                    <h3 class="title">
-                                        <a href="buy-detail-view.html">Two storey modern flat</a>
-                                    </h3>
-                                    <p><i class="feather-map-pin"></i> 470 Park Ave S, New York, NY 10016</p>
-                                    <ul class="d-flex details">
-                                        <li>
-                                            <img src="assets/img/icons/bed-icon.svg" alt="bed-icon">
-                                            4 Beds
-                                        </li>
-                                        <li>
-                                            <img src="assets/img/icons/bath-icon.svg" alt="bath-icon">
-                                            4 Baths
-                                        </li>
-                                        <li>
-                                            <img src="assets/img/icons/building-icon.svg" alt="building-icon">
-                                            35000 Sqft
-                                        </li>
-                                    </ul>
-                                    <ul class="property-category d-flex justify-content-between">
-                                        <li>
-                                            <span class="list">Listed on : </span>
-                                            <span class="date">19 Jan 2023</span>
-                                        </li>
-                                        <li>
-                                            <span class="category list">Category : </span>
-                                            <span class="category-value date">Flat</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
             </div>
@@ -781,19 +542,21 @@
         }
 
         $('.total').text(price);
-        $('#amount').val(price);
     });
+
+    var amount = 0;
 
     $('input:radio[name=delivery_fee]').on('change', function() {
         var delivery_fee = $('input:radio[name=delivery_fee]:checked').val();
         if (delivery_fee == "10") {
-            var amount = parseInt(price) + 10;
+            amount = parseInt(price) + 10;
+        } else if (delivery_fee == "65") {
+            amount = parseInt(price) + 65;
         } else {
-            var amount = parseInt(price) + 65;
+            amount = "{{ $property->price }}";
         }
 
         $('.total').text(amount);
-        $('#amount').val(amount);
     });
 </script>
 @endsection

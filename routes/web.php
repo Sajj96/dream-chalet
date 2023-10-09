@@ -36,11 +36,20 @@ Route::prefix('/inquiries')->group(function () {
 
 Route::prefix('/transactions')->group(function () {
     Route::match(['get', 'post'],'/checkout', [App\Http\Controllers\TransactionController::class, 'checkout'])->name('checkout');
+    Route::post('/add', [App\Http\Controllers\TransactionController::class, "add"])->name('transaction.create');
 });
 
 Auth::routes();
 
 Route::middleware(['auth'])->group(function () {
+
+    Route::prefix('/users')->group(function () {
+        Route::match(['get', 'post'],'/my-profile', [App\Http\Controllers\UserController::class, 'profile'])->name('profile');
+    });
+
+    Route::prefix('/reviews')->group(function () {
+        Route::post('/', [App\Http\Controllers\ReviewController::class, 'add'])->name('review.create');
+    });
 
     Route::prefix('/dashboard')->group(function () {
         Route::get('/', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('dashboard');
@@ -68,6 +77,12 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/', [App\Http\Controllers\StageController::class, 'index'])->name('dashboard.stage');
             Route::match(['get', 'post'], '/add', [App\Http\Controllers\StageController::class, "add"])->name('dashboard.stage.add');
             Route::post('/delete', [App\Http\Controllers\StageController::class, "delete"])->name('dashboard.stage.delete');
+        });
+
+        Route::prefix('/orders')->group(function () {
+            Route::get('/', [App\Http\Controllers\InquiryController::class, 'index'])->name('dashboard.order');
+            Route::get('/view/{id}', [App\Http\Controllers\InquiryController::class, "view"])->name('dashboard.order.show');
+            Route::post('/delete', [App\Http\Controllers\InquiryController::class, "delete"])->name('dashboard.order.delete');
         });
     })->middleware('admin');
 

@@ -2,20 +2,41 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\InquiriesDataTable;
 use App\Models\Inquiry;
+use App\Models\Property;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image;
 
 class InquiryController extends Controller
 {
-    public function index()
+    public function index(InquiriesDataTable $datatable)
     {
-        $inquiries = Inquiry::get();
-        return view('pages.dashboard.inquiries.index', ['inquiries' => $inquiries]);
+        return $datatable->render('pages.dashboard.inquiries.index');
+    }
+
+    public function view($id)
+    {
+        $inquiry = Inquiry::find($id);
+        if (!$inquiry) {
+            return back()->withError('Inquiry not found');
+        }
+
+        $property = Property::whereId($inquiry->property_id)->where('deleted_at', NULL)->first();
+        if (!$property) {
+            return back()->withError('Property not found');
+        }
+
+        return view('pages.dashboard.inquiries.view', [
+            'inquiry' => $inquiry,
+            'property' => $property
+        ]);
     }
 
     public function add(Request $request)
@@ -41,24 +62,37 @@ class InquiryController extends Controller
 
             $inquiry = Inquiry::create([
                 'type'      => $request->service,
-                'property_id'  => $request->property_id,
-                'name'      => $request->full_name,
-                'email'     => $request->email,
-                'mobile'    => $request->mobile,
-                'street'    => $request->street,
-                'ward'      => $request->ward,
-                'city'      => $request->city,
-                'country'   => $request->country,
+                'property_id'  => $request->property,
                 'description' => $request->description,
                 'amount' => (int) $request->amount,
                 'delivery_fee' => (int) $request->delivery_fee
             ]);
 
+            $user = null;
+
             if(Auth::check()) {
-                $inquiry->update([
-                    'user_id' => Auth::user()->id
-                ]);
+                $user = Auth::user();
+            } else {
+                $user = User::updateOrCreate(
+                    [ 'email' => $request->email ],
+                    [
+                        'name' => $request->full_name,
+                        'email' => $request->email,
+                        'mobile' => $request->mobile,
+                        'password' => Hash::make($request->password),
+                        'user_type' => User::NORMAL_USER,
+                        'street'    => $request->street,
+                        'ward'      => $request->ward,
+                        'city'      => $request->city,
+                        'country'   => $request->country,
+                        'status'  => User::USER_VERIFIED, 
+                    ]
+                );
             }
+
+            $inquiry->update([
+                'user_id' => $user->id
+            ]);
 
             if ($request->hasFile('support_image')) {
 
@@ -89,7 +123,8 @@ class InquiryController extends Controller
         }
     }
 
-    public function delete(Request $request) {
+    public function delete(Request $request) 
+    {
         try {
             if ($request->has('inquiry_id')) {
                 $house_inquiry = Inquiry::find($request->input('inquiry_id'));

@@ -11,10 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('properties', function (Blueprint $table) {
-            $table->integer('blocks')->after('bathrooms')->nullable();
-            $table->integer('roofs')->after('blocks')->nullable();
-            $table->integer('clicks')->after('details')->default(0);
+        Schema::table('reviews', function (Blueprint $table) {
+            $table->unsignedBigInteger('property_id')->after('user_id');
         });
     }
 
@@ -23,7 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('properties', function (Blueprint $table) {
+        Schema::table('reviews', function (Blueprint $table) {
             //
         });
     }

@@ -80,7 +80,7 @@ class LoginController extends Controller
 
         $login_data = $request->input('login');
 
-        if (Auth::attempt([$login_type => $login_data, 'password' => $request->input('password'), 'status' => User::USER_VERIFIED], $remember)) {
+        if (Auth::attempt([$login_type => $login_data, 'password' => $request->input('password'), 'status' => User::USER_VERIFIED, 'deleted_at' => NULL], $remember)) {
             if(Auth::user()->user_type == User::ADMIN_USER) {
                 return redirect()->route('dashboard');
             }

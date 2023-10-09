@@ -16,13 +16,6 @@ return new class extends Migration
             $table->unsignedBigInteger('property_id');
             $table->unsignedBigInteger('user_id')->nullable();
             $table->string('type');
-            $table->string('name');
-            $table->string('email')->nullable();
-            $table->string('mobile');
-            $table->string('street');
-            $table->string('ward');
-            $table->string('city');
-            $table->string('country');
             $table->text('description')->nullable();
             $table->string('photo_path')->nullable();
             $table->string('delivery_fee')->default(0);

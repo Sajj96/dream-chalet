@@ -66,7 +66,7 @@
                     </a>
                 </li>
                 @if(auth()->check())
-                <li class="login-link"><a href="#">My Profile</a></li>
+                <li class="login-link"><a href="{{ route('profile') }}">My Profile</a></li>
                 <li class="login-link">
                     <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form-one').submit();">Logout</a>
                     <form id="logout-form-one" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -84,7 +84,7 @@
             <li class="new-property-btn dropstart">
                 <a href="javascript:void(0);" class="active dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="bx bxs-user-circle bx-md"></i> {{ auth()->user()->name }}</a>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">My Profile</a></li>
+                    <li><a class="dropdown-item" href="{{ route('profile') }}">My Profile</a></li>
                     <li>
                         <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
