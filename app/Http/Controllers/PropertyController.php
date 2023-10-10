@@ -14,7 +14,9 @@ use App\Models\Stage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image;
 
@@ -150,7 +152,7 @@ class PropertyController extends Controller
 
                 $floorImg = Image::make($request->file('floor_image')->getRealPath());
                 $floorImg->resize(817, 446);
-                $floorImg->pixelate(20)->blur(100)->greyscale();
+                $floorImg->pixelate(12)->blur(100)->greyscale();
 
                 $premiumImg = Image::make($request->file('floor_image')->getRealPath());
                 $premiumImg->resize(817, 446);
@@ -250,7 +252,7 @@ class PropertyController extends Controller
 
         $property = Property::find($id);
         if (!$property) {
-            return redirect('/dashboard/properties')->withError('Property not found!');
+            return redirect('/dashboard/properties/all')->withError('Property not found!');
         }
 
         if($request->method() == "GET") {
@@ -284,17 +286,17 @@ class PropertyController extends Controller
 
         try {
 
-                $property->title = $request->title;
-                $property->house_type_id = $request->type;
-                $property->price         = $request->price;
-                $property->currency      = $request->currency;
-                $property->bedrooms      = $request->bedroom;
-                $property->bathrooms     = $request->bathroom;
-                $property->roofs         = $request->roofs;
-                $property->blocks        = $request->blocks;
-                $property->floors        = $request->no_floor;
-                $property->square_meter  = $request->sqmt;
-                $property->details       = $request->details;
+            $property->title = $request->title;
+            $property->house_type_id = $request->type;
+            $property->price         = $request->price;
+            $property->currency      = $request->currency;
+            $property->bedrooms      = $request->bedroom;
+            $property->bathrooms     = $request->bathroom;
+            $property->roofs         = $request->roofs;
+            $property->blocks        = $request->blocks;
+            $property->floors        = $request->no_floor;
+            $property->square_meter  = $request->sqmt;
+            $property->details       = $request->details;
 
             if ($request->hasFile('main_image')) {
 
@@ -339,7 +341,7 @@ class PropertyController extends Controller
 
                 $floorImg = Image::make($request->file('floor_image')->getRealPath());
                 $floorImg->resize(817, 446);
-                $floorImg->pixelate(20)->blur(100);
+                $floorImg->pixelate(12)->blur(100)->greyscale();
 
                 $premiumImg = Image::make($request->file('floor_image')->getRealPath());
                 $premiumImg->resize(817, 446);
@@ -434,6 +436,8 @@ class PropertyController extends Controller
                 }
             }
 
+            $property->save();
+
             Session::flash('success', 'Property updated successfully'); 
             return response()->json(['success' => 'ok']);
         } catch (\Exception $exception) {
@@ -461,6 +465,9 @@ class PropertyController extends Controller
         $stages = $property->stages;
         $photos = $property->photos;
         $plans = Plan::get();
+        $similar_properties = Property::where('house_type_id',$property->id)
+                            ->where('deleted_at', NULL)->whereNot('id', $property->id)
+                            ->latest()->take(3)->get();
         
         $property->clicks = $property->clicks + 1;
         $property->save();
@@ -470,8 +477,29 @@ class PropertyController extends Controller
             'amenities' => $amenities,
             'stages'   => $stages,
             'photos' => $photos,
-            'plans' => $plans
+            'plans' => $plans,
+            'similar_properties' => $similar_properties
         ]);
+    }
+
+    public function downloadFile(Request $request, $id)
+    {
+        $property = Property::whereId($id)->where('deleted_at', NULL)->first();
+        if (!$property) {
+            return back()->withError('Property not found');
+        }
+
+        if($property->hasUserSubscribed) {
+            $path = Property::whereId($id)->value("premium_image");
+            $headers = [
+                'Content-Type'        => 'application/jpeg',
+                'Content-Disposition' => 'attachment; filename="HouseFloorPlan.jpg"',
+            ];
+    
+            return Response::make(Storage::disk('public')->get($path), 200, $headers);
+        }
+
+        return back()->withError('Please subscribe first to download the file!');
     }
 
     public function delete(Request $request) {
@@ -480,7 +508,7 @@ class PropertyController extends Controller
                 $property = Property::find($request->input('property_id'));
                 if ($property){
                     $property->delete();
-                    return redirect('/dashboard/properties')->withSuccess('Property Deleted');
+                    return redirect('/dashboard/properties/all')->withSuccess('Property Deleted');
                 } else {
                     return back()->withError('Property not found');
                 }
@@ -488,6 +516,6 @@ class PropertyController extends Controller
         } catch(\Exception $exception) {
             Log::error($exception->getMessage());
         }
-        return redirect('/dashboard/properties')->withError('Property could not be deleted');
+        return redirect('/dashboard/properties/all')->withError('Property could not be deleted');
     }
 }

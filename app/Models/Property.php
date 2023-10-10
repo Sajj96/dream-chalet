@@ -28,7 +28,8 @@ class Property extends Model
         'thumbnail',
         'floor_image',
         'premium_image',
-        'details'
+        'details',
+        'clicks'
     ];
 
     public function houseType(): BelongsTo

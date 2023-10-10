@@ -106,7 +106,7 @@
                                                 <div class="form-group review-form">
                                                     <label for="">New Password*</label>
                                                     <div class="pass-group">
-                                                        <input type="password" class="form-control pass-input @error('password') is-invalid @enderror" name="password" required autocomplete="new-password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;">
+                                                        <input type="password" class="form-control pass-input @error('password') is-invalid @enderror" name="password" autocomplete="new-password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;">
                                                         <span class="fas fa-eye toggle-password"></span>
                                                     </div>
                                                 </div>
@@ -142,7 +142,7 @@
                                     <tbody>
                                         @foreach($subscriptions as $subscription)
                                         <tr>
-                                            <td><a href="{{ route('property.show',[strtolower(preg_replace('/[ ,]+/', '-',$property->title.' '.$property->houseType->name.' '.$property->id))]) }}">{{ $subscription->title }}</a></td>
+                                            <td><a href="{{ route('property.show',[strtolower(preg_replace('/[ ,]+/', '-',$subscription->title.' '.$subscription->houseTypeName.' '.$subscription->id))]) }}">{{ $subscription->title }}</a></td>
                                             <td>{{ $subscription->planType }}</td>
                                             <td>{{ $subscription->planPeriod }}</td>
                                             <td>{{ date('d M Y', strtotime($subscription->pivot->updated_at)) }}</td>
@@ -157,16 +157,17 @@
 
                     <div class="collapse-card">
                         <h4 class="card-title">
-                            <a class="collapsed" data-bs-toggle="collapse" href="#service-area" aria-expanded="false">Active Subscriptions</a>
+                            <a class="collapsed" data-bs-toggle="collapse" href="#service-area" aria-expanded="false">My Orders</a>
                         </h4>
                         <div id="service-area" class="card-collapse collapse show">
                             <div class="table-responsive">
                                 <table class="table table-stripped">
                                     <thead class="bg-primary-dark">
                                         <tr>
+                                            <th class="text-white">#</th>
                                             <th class="text-white">{{ __('Property')}}</th>
                                             <th class="text-white">{{ __('Type')}}</th>
-                                            <th class="text-white">{{ __('Delivery Fee')}}</th>
+                                            <th class="text-white">{{ __('Delivery')}}</th>
                                             <th class="text-white">{{ __('Price')}}</th>
                                             <th class="text-white">{{ __('Made On')}}</th>
                                             <th class="text-white">{{ __('Status')}}</th>
@@ -176,7 +177,7 @@
                                         @foreach($orders as $order)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td><a class="text-info" href="{{ route('property.show',[strtolower(preg_replace('/[ ,]+/', '-',$row->property->title.' '.$row->property->houseTypeName.' '.$row->property->id))]) }}">{{ $order->propertyTitle }}</a></td>
+                                            <td><a class="text-info" href="{{ route('property.show',[strtolower(preg_replace('/[ ,]+/', '-',$order->property->title.' '.$order->property->houseTypeName.' '.$order->property->id))]) }}">{{ $order->propertyTitle }}</a></td>
                                             <td>{{ strtoupper($order->type) }}</td>
                                             <td>{{ number_format($order->delivery_fee,2) }}</td>
                                             <td>{{ number_format($order->amount,2) }}</td>

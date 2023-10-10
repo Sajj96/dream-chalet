@@ -55,7 +55,7 @@
                             </div>
                             @empty
                             <div class="product-img">
-                                <img src="{{ $property->thumbnail }}" alt="Slider">
+                                <img src="{{ $property->thumbnail }}" width="800" alt="Slider">
                             </div>
                             @endforelse
                         </div>
@@ -118,7 +118,7 @@
                             @if($property->hasUserSubscribed)
                             <img src="{{ $property->premium_image }}" alt="Image">
                             <div class="review-form submit-btn">
-                                <button type="submit" class="btn-primary"><i class="bx bx-download bx-sm ml-3"></i> Download</button>
+                                <a href="{{ route('property.download', $property->id) }}" class="btn-primary"><i class="bx bx-download bx-sm ml-3"></i> Download</a>
                             </div>
                             @else
                             <img src="{{ $property->floor_image }}" alt="Image">
@@ -379,44 +379,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="slide-img-card">
-                            <div class="slide-img">
-                                <img src="{{ asset('assets/img/sidebar-slide.jpg')}}" alt="Image">
-                            </div>
-                            <div class="property-name">
-                                <h3>High-Rise Townhouse</h3>
-                                <span><i class="feather-map-pin"></i>Chicago</span>
-                                <div class="star-rate">
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="slide-img-card">
-                            <div class="slide-img">
-                                <img src="{{ asset('assets/img/sidebar-slide.jpg')}}" alt="Image">
-                            </div>
-                            <div class="property-name">
-                                <h3>High-Rise Townhouse</h3>
-                                <span><i class="feather-map-pin"></i>Chicago</span>
-                                <div class="star-rate">
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
+        @if(count($similar_properties) > 0)
         <div class="similar-list">
             <div class="section-heading">
                 <h2>Similar Listings</h2>
@@ -430,32 +398,22 @@
                 <div class="col-md-12">
                     <div class="blog-slider owl-carousel">
 
+                        @foreach($similar_properties as $similar_property)
                         <div class="product-custom">
                             <div class="profile-widget">
                                 <div class="doc-img">
-                                    <a href="buy-detail-view.html" class="property-img">
-                                        <img class="img-fluid" alt="Property Image" src="{{ asset('assets/img/product/product-1.jpg')}}">
+                                    <a href="{{ route('property.show',[strtolower(preg_replace('/[ ,]+/', '-',$similar_property->title.' '.$similar_property->houseTypeName.' '.$similar_property->id))]) }}" class="property-img">
+                                        <img class="img-fluid" alt="Property Image" src="{{ $similar_property->thumbnail }}" />
                                     </a>
                                     <div class="product-amount">
-                                        <span>$41,000</span>
+                                        <span>${{ number_format($similar_property->price) }}</span>
                                     </div>
                                     <div class="feature-rating">
                                         <div>
                                             <div class="featured">
-                                                <span>Featured</span>
-                                            </div>
-                                            <div class="new-featured">
-                                                <span>New</span>
+                                                <span>{{ $similar_property->houseTypeName }}</span>
                                             </div>
                                         </div>
-                                        <a href="javascript:void(0)">
-                                            <div class="favourite">
-                                                <span><i class="fa-regular fa-heart"></i></span>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="user-avatar">
-                                        <img src="assets/img/profiles/avatar-01.jpg" alt="User">
                                     </div>
                                 </div>
                                 <div class="pro-content">
@@ -467,46 +425,38 @@
                                             <i class="fa-solid fa-star checked"></i>
                                             <i class="fa-solid fa-star checked"></i>
                                         </span>
-                                        <p class="rating-review"><span>5.0</span>(20 Reviews)</p>
+                                        <p class="rating-review"><span>{{ number_format($similar_property->review->rate, 1) }}</span>({{ $similar_property->review->review_count }} Reviews)</p>
                                     </div>
                                     <h3 class="title">
-                                        <a href="buy-detail-view.html">Place perfect for nature</a>
+                                        <a href="{{ route('property.show',[strtolower(preg_replace('/[ ,]+/', '-',$similar_property->title.' '.$similar_property->houseTypeName.' '.$similar_property->id))]) }}" tabindex="-1">{!! $similar_property->bedrooms .' Bedrooms - '. $similar_property->title !!}</a>
                                     </h3>
-                                    <p><i class="feather-map-pin"></i> 318-S Oakley Blvd, Chicago, IL 60612, USA
-                                    </p>
                                     <ul class="d-flex details">
                                         <li>
-                                            <img src="assets/img/icons/bed-icon.svg" alt="bed-icon">
-                                            3 Beds
+                                            <i class="fas fa-bed fa-1x text-secondary mx-1"></i>
+                                            {{ $similar_property->bedrooms ?? 0 }} Beds
                                         </li>
                                         <li>
-                                            <img src="assets/img/icons/bath-icon.svg" alt="bath-icon">
-                                            3 Baths
+                                            <i class="fas fa-trowel-bricks fa-1x text-secondary mx-1"></i>
+                                            {{ $similar_property->blocks ?? 0 }} Blocks
                                         </li>
                                         <li>
-                                            <img src="assets/img/icons/building-icon.svg" alt="building-icon">
-                                            15000 Sqft
-                                        </li>
-                                    </ul>
-                                    <ul class="property-category d-flex justify-content-between">
-                                        <li>
-                                            <span class="list">Listed on : </span>
-                                            <span class="date">16 Jan 2023</span>
+                                            <i class="fas fa-sheet-plastic fa-1x text-secondary mx-1"></i>
+                                            {{ $similar_property->roofs }} Roofing Sheets
                                         </li>
                                         <li>
-                                            <span class="category list">Category : </span>
-                                            <span class="category-value date">Apartment</span>
+                                            <i class="fas fa-ruler-horizontal fa-1x text-secondary mx-1"></i>
+                                            {{ $similar_property->square_meter }} Sqrm
                                         </li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
-
+                        @endforeach
                     </div>
                 </div>
             </div>
         </div>
-
+        @endif
     </div>
 </section>
 @endsection

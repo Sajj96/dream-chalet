@@ -28,7 +28,11 @@
                 <a href="{{ url('/dashboard/transactions') }}" class="nav-link"><i data-feather="credit-card"></i><span>Transactions</span></a>
             </li>
             <li class="dropdown @if(\Request::is('dashboard/posts/all') || \Request::is('dashboard/posts/*') ) active @endif">
-                <a href="{{ url('/dashboard/posts') }}" class="nav-link"><i data-feather="cast"></i><span>Posts</span></a>
+                <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="cast"></i><span>Posts</span></a>
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="{{ url('/dashboard/posts/categories') }}">Categories</a></li>
+                    <li><a class="nav-link" href="{{ url('/dashboard/posts') }}">All Posts</a></li>
+                </ul>
             </li>
             <li class="dropdown @if(\Request::is('dashboard/users/all') || \Request::is('dashboard/users/*') ) active @endif">
                 <a href="{{ url('/dashboard/users') }}" class="nav-link"><i data-feather="users"></i><span>Users</span></a>

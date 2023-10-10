@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Inquiry;
+use App\Models\Post;
 use App\Models\Property;
 use App\Models\Transaction;
 use App\Models\User;
@@ -14,10 +15,12 @@ class HomeController extends Controller
     {
         $properties = Property::where('deleted_at', NULL)->latest()->take(6)->get();
         $trending_properties = Property::where('deleted_at', NULL)->orderBy('clicks', 'DESC')->take(3)->get();
+        $posts = Post::where('deleted_at', NULL)->latest()->take(3)->get();
 
         return view('pages.index',[
             'properties'          => $properties,
-            'trending_properties' => $trending_properties
+            'trending_properties' => $trending_properties,
+            'posts' => $posts
         ]);
     }
 

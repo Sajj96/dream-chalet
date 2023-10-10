@@ -12,7 +12,7 @@
             <div class="row align-items-center">
                 <div class="col-lg-3">
                     <div class="result-show">
-                        <h5>Showing <span>{{ count($properties) }}</span> result of {{ substr(ucwords(request()->segment(count(request()->segments()))), 0, strpos(ucwords(request()->segment(count(request()->segments()))), "=")) }}</h5>
+                        <h5>Showing <span>{{ count($properties) }}</span> results {{ substr(ucwords(request()->segment(count(request()->segments()))), 0, strpos(ucwords(request()->segment(count(request()->segments()))), "=")) }}</h5>
                     </div>
                 </div>
                 <div class="col-lg-9">
@@ -102,7 +102,7 @@
                                             </li>
                                             <li>
                                                 <i class="fas fa-sheet-plastic fa-1x text-secondary mx-1"></i>
-                                                {{ $property->roofs }} Roof
+                                                {{ $property->roofs }} Roofing Sheets
                                             </li>
                                             <li>
                                                 <i class="fas fa-ruler-horizontal fa-1x text-secondary mx-1"></i>

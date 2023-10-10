@@ -58,7 +58,7 @@
                     </ul>
                 </li>
                 <li><a href="{{ route('about') }}">About Us</a></li>
-                <li><a href="contact-us.html">Blog</a></li>
+                <li><a href="{{ route('post') }}">Blog</a></li>
                 <li><a href="{{ route('contact') }}">Contact Us</a></li>
                 <li class="searchbar">
                     <a href="javascript:void(0);">

@@ -158,7 +158,7 @@
                         <div class="product-custom">
                             <div class="profile-widget">
                                 <div class="doc-img">
-                                    <a href="{{ route('property.show',[strtolower(preg_replace('/[ ,]+/', '-',$property->title.' '.$property->houseType->name.' '.$property->id))]) }}" class="property-img">
+                                    <a href="{{ route('property.show',[strtolower(preg_replace('/[ ,]+/', '-',$property->title.' '.$property->houseTypeName.' '.$property->id))]) }}" class="property-img">
                                         <img class="img-fluid" alt="Property Image" src="{{ $property->thumbnail }}">
                                     </a>
                                     <div class="product-amount">
@@ -171,6 +171,11 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <a href="javascript:void(0)">
+                                        <div class="favourite">
+                                            <span><i class="fa-regular fa-heart"></i></span>
+                                        </div>
+                                    </a>
                                 </div>
                                 <div class="pro-content">
                                     <div class="rating">
@@ -184,7 +189,7 @@
                                         <h6 class="rating-review text-secondary"><span>{{ number_format($property->review->rate, 1) }}</span>({{ $property->review->review_count }} Reviews)</h6>
                                     </div>
                                     <h3 class="title">
-                                        <a href="{{ route('property.show',[strtolower(preg_replace('/[ ,]+/', '-',$property->title.' '.$property->houseType->name.' '.$property->id))])}}">{!! $property->title !!}</a>
+                                        <a href="{{ route('property.show',[strtolower(preg_replace('/[ ,]+/', '-',$property->title.' '.$property->houseTypeName.' '.$property->id))])}}">{!! $property->title !!}</a>
                                     </h3>
                                     <ul class="d-flex details">
                                         <li>
@@ -197,7 +202,7 @@
                                         </li>
                                         <li>
                                             <i class="fas fa-sheet-plastic fa-1x text-secondary mx-1"></i>
-                                            {{ $property->roofs }} Roof
+                                            {{ $property->roofs }} Roofing Sheets
                                         </li>
                                         <li>
                                             <i class="fas fa-ruler-horizontal fa-1x text-secondary mx-1"></i>
@@ -315,12 +320,17 @@
                         <div class="product-custom">
                             <div class="profile-widget rent-list-view">
                                 <div class="doc-img">
-                                    <a href="{{ route('property.show',[strtolower(preg_replace('/[ ,]+/', '-',$property->title.' '.$property->houseType->name.' '.$property->id))]) }}" class="property-img">
+                                    <a href="{{ route('property.show',[strtolower(preg_replace('/[ ,]+/', '-',$property->title.' '.$property->houseTypeName.' '.$property->id))]) }}" class="property-img">
                                         <img class="img-fluid" alt="Property Image" src="{{ $property->thumbnail }}" />
                                     </a>
                                     <div class="featured">
                                         <span>{{ $property->houseTypeName }}</span>
                                     </div>
+                                    <a href="javascript:void(0)">
+                                        <div class="favourite">
+                                            <span><i class="fa-regular fa-heart"></i></span>
+                                        </div>
+                                    </a>
                                 </div>
                                 <div class="pro-content">
                                     <div class="list-head">
@@ -335,7 +345,7 @@
                                             <h6 class="rating-review text-secondary"><span>{{ number_format($property->review->rate, 1) }}</span>({{ $property->review->review_count }} Reviews)</h6>
                                             <div class="product-name-price">
                                                 <h3 class="title">
-                                                    <a href="{{ route('property.show',[strtolower(preg_replace('/[ ,]+/', '-',$property->title.' '.$property->houseType->name.' '.$property->id))]) }}" tabindex="-1">{!! $property->bedrooms .' Bedrooms - '. $property->title !!}</a>
+                                                    <a href="{{ route('property.show',[strtolower(preg_replace('/[ ,]+/', '-',$property->title.' '.$property->houseTypeName.' '.$property->id))]) }}" tabindex="-1">{!! $property->bedrooms .' Bedrooms - '. $property->title !!}</a>
                                                 </h3>
                                                 <div class="product-amount">
                                                     <h5><span>${{ number_format($property->price) }} </span></h5>
@@ -354,7 +364,7 @@
                                         </li>
                                         <li>
                                             <i class="fas fa-sheet-plastic fa-1x text-secondary mx-1"></i>
-                                            {{ $property->roofs }} Roof
+                                            {{ $property->roofs }} Roofing Sheets
                                         </li>
                                         <li>
                                             <i class="fas fa-ruler-horizontal fa-1x text-secondary mx-1"></i>
@@ -403,6 +413,7 @@
     </div>
 </section>
 
+@if(count($posts) > 0)
 <section class="latest-blog-sec">
     <div class="container">
         <div class="row">
@@ -420,149 +431,36 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="blog-slider owl-carousel">
-
+                    @foreach($posts as $post)
                     <div class="blog-card" data-aos="fade-down" data-aos-duration="2000">
                         <div class="blog-img">
-                            <a href="blog-details.html"><img src="assets/img/blog/blog-1.jpg" alt="Blog Image"></a>
+                            <a href="{{ route('post.show', $post->id) }}"><img src="{{ $post->thumbnail }}" alt="Blog Image"></a>
                         </div>
                         <div class="blog-content">
                             <div class="blog-property">
-                                <span>Property</span>
+                                <span>{{ $post->categoryName }}</span>
                             </div>
                             <div class="blog-title">
-                                <h3><a href="blog-details.html">How to achieve financial independence</a></h3>
-                                <p>There are many variations of passages of lorem ipsum available.</p>
+                                <h3><a href="{{ route('post.show', $post->id) }}">{{ $post->title }}</a></h3>
+                                <p>{{ $post->limit() }}</p>
                             </div>
                             <ul class="property-category d-flex justify-content-between align-items-center">
                                 <li class="user-info">
-                                    <a href="javascript:void(0);"><img src="assets/img/profiles/avatar-01.jpg" class="img-fluid avatar" alt="User"></a>
                                     <div class="user-name">
-                                        <h6><a href="javascript:void(0);">Doe John</a></h6>
-                                        <p>Posted on : 15 Jan 2023</p>
+                                        <p>Posted on : {{ date('d M Y', strtotime($post->created_at))}}</p>
                                     </div>
                                 </li>
                                 <li>
-                                    <a href="blog-details.html"><span><i class="fa-solid fa-arrow-right"></i></span></a>
+                                    <a href="{{ route('post.show', $post->id) }}"><span><i class="fa-solid fa-arrow-right"></i></span></a>
                                 </li>
                             </ul>
                         </div>
                     </div>
-
-
-                    <div class="blog-card" data-aos="fade-down" data-aos-duration="2000">
-                        <div class="blog-img">
-                            <a href="blog-details.html"><img src="assets/img/blog/blog-2.jpg" alt="Blog Image"></a>
-                        </div>
-                        <div class="blog-content">
-                            <div class="blog-property">
-                                <span>Advantages</span>
-                            </div>
-                            <div class="blog-title">
-                                <h3><a href="blog-details.html">The most popular cities for homebuyers</a></h3>
-                                <p>There are many variations of passages of lorem ipsum available.</p>
-                            </div>
-                            <ul class="property-category d-flex justify-content-between align-items-center">
-                                <li class="user-info">
-                                    <a href="javascript:void(0);"><img src="assets/img/profiles/avatar-03.jpg" class="img-fluid avatar" alt="User"></a>
-                                    <div class="user-name">
-                                        <h6><a href="javascript:void(0);">John</a></h6>
-                                        <p>Posted on : 15 Jan 2023</p>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="blog-details.html"><span><i class="fa-solid fa-arrow-right"></i></span></a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-
-
-                    <div class="blog-card" data-aos="fade-down" data-aos-duration="2000">
-                        <div class="blog-img">
-                            <a href="blog-details.html"><img src="assets/img/blog/blog-3.jpg" alt="Blog Image"></a>
-                        </div>
-                        <div class="blog-content">
-                            <div class="blog-property">
-                                <span>Finanace</span>
-                            </div>
-                            <div class="blog-title">
-                                <h3><a href="blog-details.html">Learn how real estate really shapes our future</a></h3>
-                                <p>There are many variations of passages of lorem ipsum available.</p>
-                            </div>
-                            <ul class="property-category d-flex justify-content-between align-items-center">
-                                <li class="user-info">
-                                    <a href="javascript:void(0);"><img src="assets/img/profiles/avatar-05.jpg" class="img-fluid avatar" alt="User"></a>
-                                    <div class="user-name">
-                                        <h6><a href="javascript:void(0);">Eric Krok</a></h6>
-                                        <p>Posted on : 15 Jan 2023</p>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="blog-details.html"><span><i class="fa-solid fa-arrow-right"></i></span></a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-
-
-                    <div class="blog-card" data-aos="fade-down" data-aos-duration="2000">
-                        <div class="blog-img">
-                            <a href="blog-details.html"><img src="assets/img/blog/blog-2.jpg" alt="Blog Image"></a>
-                        </div>
-                        <div class="blog-content">
-                            <div class="blog-property">
-                                <span>Property</span>
-                            </div>
-                            <div class="blog-title">
-                                <h3><a href="blog-details.html">The most popular cities for homebuyers</a></h3>
-                                <p>There are many variations of passages of lorem ipsum available.</p>
-                            </div>
-                            <ul class="property-category d-flex justify-content-between align-items-center">
-                                <li class="user-info">
-                                    <a href="javascript:void(0);"><img src="assets/img/profiles/avatar-07.jpg" class="img-fluid avatar" alt="User"></a>
-                                    <div class="user-name">
-                                        <h6><a href="javascript:void(0);">Francis</a></h6>
-                                        <p>Posted on : 12 May 2023</p>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="blog-details.html"><span><i class="fa-solid fa-arrow-right"></i></span></a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-
-
-                    <div class="blog-card" data-aos="fade-down" data-aos-duration="2000">
-                        <div class="blog-img">
-                            <a href="blog-details.html"><img src="assets/img/blog/blog-1.jpg" alt="Blog Image"></a>
-                        </div>
-                        <div class="blog-content">
-                            <div class="blog-property">
-                                <span>Property</span>
-                            </div>
-                            <div class="blog-title">
-                                <h3><a href="blog-details.html">How to achieve financial independence</a></h3>
-                                <p>There are many variations of passages of lorem ipsum available.</p>
-                            </div>
-                            <ul class="property-category d-flex justify-content-between align-items-center">
-                                <li class="user-info">
-                                    <a href="javascript:void(0);"><img src="assets/img/profiles/avatar-03.jpg" class="img-fluid avatar" alt="User"></a>
-                                    <div class="user-name">
-                                        <h6><a href="javascript:void(0);">Rafael</a></h6>
-                                        <p>Posted on : 13 Jan 2023</p>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="blog-details.html"><span><i class="fa-solid fa-arrow-right"></i></span></a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-
+                    @endforeach
                 </div>
             </div>
         </div>
     </div>
 </section>
+@endif
 @endsection

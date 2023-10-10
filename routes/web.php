@@ -19,6 +19,7 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 Route::prefix('/properties')->group(function () {
     Route::get('/{prop?}', [App\Http\Controllers\PropertyController::class, 'index'])->name('property');
     Route::get('/view/{prop}', [App\Http\Controllers\PropertyController::class, "view"])->name('property.show');
+    Route::get('/download/{id}', [App\Http\Controllers\PropertyController::class, "downloadFile"])->name('property.download')->middleware('auth');
 });
 
 Route::get('/contact-us', function(){
@@ -37,6 +38,11 @@ Route::prefix('/inquiries')->group(function () {
 Route::prefix('/transactions')->group(function () {
     Route::match(['get', 'post'],'/checkout', [App\Http\Controllers\TransactionController::class, 'checkout'])->name('checkout');
     Route::post('/add', [App\Http\Controllers\TransactionController::class, "add"])->name('transaction.create');
+});
+
+Route::prefix('/posts')->group(function () {
+    Route::get('/', [App\Http\Controllers\PostController::class, 'getAll'])->name('post');
+    Route::get('/view/{prop}', [App\Http\Controllers\PostController::class, "view"])->name('post.show');
 });
 
 Auth::routes();
@@ -95,6 +101,19 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/', [App\Http\Controllers\TransactionController::class, 'index'])->name('dashboard.transaction');
             Route::get('/view/{id}', [App\Http\Controllers\TransactionController::class, "view"])->name('dashboard.transaction.show');
             Route::post('/delete', [App\Http\Controllers\TransactionController::class, "delete"])->name('dashboard.transaction.delete');
+        });
+
+        Route::prefix('/posts')->group(function () {
+            Route::get('/', [App\Http\Controllers\PostController::class, 'index'])->name('dashboard.post');
+            Route::match(['get', 'post'], '/add', [App\Http\Controllers\PostController::class, "add"])->name('dashboard.post.add');
+            Route::match(['get', 'post'], '/edit/{id?}', [App\Http\Controllers\PostController::class, "edit"])->name('dashboard.post.edit');
+            Route::post('/delete', [App\Http\Controllers\PostController::class, "delete"])->name('dashboard.post.delete');
+
+            Route::prefix('/categories')->group(function () {
+                Route::get('/', [App\Http\Controllers\PostCategoryController::class, 'index'])->name('dashboard.category');
+                Route::match(['get', 'post'], '/add', [App\Http\Controllers\PostCategoryController::class, "add"])->name('dashboard.category.add');
+                Route::post('/delete', [App\Http\Controllers\PostCategoryController::class, "delete"])->name('dashboard.category.delete');
+            });
         });
     })->middleware('admin');
 

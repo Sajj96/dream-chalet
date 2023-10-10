@@ -24,6 +24,7 @@
                                     <div class="form-line">
                                         <label class="form-label">Title*</label>
                                         <input type="text" class="form-control" name="title" value="{{ $property->title }}" placeholder="Enter title" required>
+                                        <input type="hidden" name="id" value="{{ $property->id }}">
                                     </div>
                                 </div>
                                 <div class="form-group form-float">
@@ -198,7 +199,7 @@
 <script src="{{ asset('assets/dashboard/bundles/select2/dist/js/select2.full.min.js') }}"></script>
 <script src="{{ asset('assets/dashboard/bundles/lightgallery/dist/js/lightgallery-all.js') }}"></script>
 <script type="text/javascript">
-    let addUrl = "{{ route('dashboard.property.add') }}";
+    let addUrl = "{{ route('dashboard.property.edit') }}";
     let propertyUrl = "{{ route('dashboard.property') }}";
     let token = "{{ csrf_token() }}";
 </script>
