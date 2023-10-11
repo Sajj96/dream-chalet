@@ -42,6 +42,8 @@
     <link rel="mask-icon" href="{{ asset('assets/img/safari-pinned-tab.svg') }}" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Styles -->
     <link rel="shortcut icon" href="{{ asset('assets/img/favicon.ico') }}" type="image/x-icon">
@@ -115,6 +117,8 @@
     <script src="{{ asset('assets/js/jquery.counterup.min.js') }}"></script>
 
     @yield('scripts')
+
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
     <script src="{{ asset('assets/js/script.js') }}"></script>
     <script>

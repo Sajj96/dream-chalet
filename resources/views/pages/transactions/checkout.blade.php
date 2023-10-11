@@ -32,7 +32,7 @@
             </div>
         </div>
         @include('partials.session-message')
-        <form action="{{ url('/transactions/add') }}" method="post">
+        <form action="{{ url('/transactions/add') }}" id="checkout-form" method="post">
             <div class="row">
                 @csrf
                 <input type="hidden" name="property_id" value="{{ $property->id }}">
@@ -149,7 +149,7 @@
                                         </li>
                                         <li>
                                             <i class="fas fa-sheet-plastic fa-1x text-secondary mx-1"></i>
-                                            {{ $property->floors }} Roof
+                                            {{ $property->floors }} Roofing Sheets
                                         </li>
                                         <li>
                                             <i class="fas fa-ruler-horizontal fa-1x text-secondary mx-1"></i>
@@ -163,13 +163,13 @@
                         <div class="sidebar-card mt-2 bg-gray">
                             <ul class="list-details con-list mb-3">
                                 <li><span>Delivery Charges</span> ${{ $inquiry->delivery_fee ?? 0 }}</li>
-                                <li><span>Subtotal</span> ${{ $price }}</li>
+                                <li><span>Subtotal</span> ${{ $amount }}</li>
                                 <li><span><strong>Total</strong></span>
                                     <h5>${{ $price }}</h5>
                                 </li>
                             </ul>
                             <div class="review-form submit-btn">
-                                <button type="submit" class="btn-primary">Confirm Order</button>
+                                <button type="button" class="btn-primary" id="confirm">Confirm Order</button>
                             </div>
                         </div>
                     </div>
@@ -178,6 +178,21 @@
         </form>
     </div>
 </section>
+
+<div class="modal fade modal-succeess" id="payment" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen modal-lg  modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Select payment method</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <iframe frameborder="0" frameborder="0" allowfullscreen
+      style="width:100%;height:100%;" id="popup-iframe"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('scripts')
@@ -189,4 +204,32 @@
     var utilUrl = "{{ asset('assets/plugins/intl-tel-input/js/utils.js?1638200991544')}}"
 </script>
 <script src="{{ asset('assets/js/int_tel_input.js')}}"></script>
+<script>
+    $(document).on('click', '#confirm', function(event) {
+        event.preventDefault();
+        var form = $('#checkout-form')[0];
+        var formData = new FormData(form);
+        formData.append('_token', '{{ csrf_token() }}');
+
+        $(this).attr('disabled', true);
+        $(this).text('Please wait...');
+        console.log(formData);
+
+        $.ajax({
+            url: "{{ route('transaction.create') }}",
+            method: "POST",
+            contentType: false,
+            processData: false,
+            data: formData,
+            success: function(response) {
+                console.log(response);
+                $('#popup-iframe').attr('src', response);
+                $('#payment').modal('show');
+            },
+            error: function(response) {
+                console.log(response);
+            }
+        });
+    });
+</script>
 @endsection

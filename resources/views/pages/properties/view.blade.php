@@ -117,9 +117,6 @@
                         <div class="sample-video collapse-view">
                             @if($property->hasUserSubscribed)
                             <img src="{{ $property->premium_image }}" alt="Image">
-                            <div class="review-form submit-btn">
-                                <a href="{{ route('property.download', $property->id) }}" class="btn-primary"><i class="bx bx-download bx-sm ml-3"></i> Download</a>
-                            </div>
                             @else
                             <img src="{{ $property->floor_image }}" alt="Image">
 
@@ -308,6 +305,32 @@
                     </h4>
                     <div id="review" class="card-collapse collapse show  collapse-view">
                         <div class="review-card">
+                            @foreach($reviews as $review)
+                            <div class="customer-review">
+                                <div class="customer-info">
+                                    <div class="customer-name">
+                                        <a href="javascript:void(0);"><img src="{{ asset('assets/img/anonymous.jpg')}}" alt="User"></a>
+                                        <div>
+                                            <h5><a href="javascript:void(0);">{{ $review->name }}</a></h5>
+                                            <p>{{ date('d M Y', strtotime($review->created_at)) }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="rating">
+                                        <span class="rating-count">
+                                            <i class="fa-solid fa-star checked"></i>
+                                            <i class="fa-solid fa-star checked"></i>
+                                            <i class="fa-solid fa-star checked"></i>
+                                            <i class="fa-solid fa-star checked"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                        </span>
+                                        <p class="rating-review"><span>{{ $review->star_rating }}</span></p>
+                                    </div>
+                                </div>
+                                <div class="review-para">
+                                    <p>{{ $review->comments }}</p>
+                                </div>
+                            </div>
+                            @endforeach
                             <div class="property-review">
                                 <h5 class="card-title">Property Reviews</h5>
                                 <form action="{{ route('review.create') }}" method="POST">
@@ -393,7 +416,6 @@
                     <span class="sec-line1"></span>
                     <span class="sec-line2"></span>
                 </div>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmodtempor incididunt</p>
             </div>
             <div class="row">
                 <div class="col-md-12">
@@ -474,7 +496,7 @@
                     <form action="{{ url('/transactions/checkout') }}" method="get">
                         <input type="hidden" name="property" value="{{ $property->id }}">
                         <div class="arrival-div">
-                            <ul class="prices-2">
+                            <ul class="prices-2 justify-content-center">
                                 @foreach($plans as $plan)
                                 <li>
                                     <input type="radio" id="radio{{ $plan->id }}-2" value="{{ $plan->id }}" @if($plan->type == 'Professional') checked @endif value="{{ $plan->id }}" name="plan">
@@ -484,7 +506,7 @@
                             </ul>
                         </div>
                         <div class="price-btn">
-                            <button type="submit" class="btn-primary d-block" style="width: 100%;">Proceed</button>
+                            <button type="submit" class="btn-primary d-block" style="width: 100%;">Checkout</button>
                         </div>
                     </form>
                 </div>

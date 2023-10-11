@@ -78,7 +78,7 @@ class PaymentService {
             $ipn_id = $this->registerIPNUrl()->getData()->ipn_id;
             $form_params = [
                 "id" => $reference,
-                "currency" => "TZS",
+                "currency" => "USD",
                 "amount" => $order->price,
                 "description" => $order->name,
                 "callback_url" => route('transaction.callback'),

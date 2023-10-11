@@ -15,7 +15,7 @@ class HomeController extends Controller
     {
         $properties = Property::where('deleted_at', NULL)->latest()->take(6)->get();
         $trending_properties = Property::where('deleted_at', NULL)->orderBy('clicks', 'DESC')->take(3)->get();
-        $posts = Post::where('deleted_at', NULL)->latest()->take(3)->get();
+        $posts = Post::where('deleted_at', NULL)->whereStatus(1)->latest()->take(3)->get();
 
         return view('pages.index',[
             'properties'          => $properties,

@@ -20,7 +20,7 @@ class PostController extends Controller
 
     public function getAll()
     {
-        $posts = Post::get();
+        $posts = Post::whereStatus(1)->get();
         return view('pages.posts.index', [
             'posts' => $posts
         ]);
@@ -80,7 +80,7 @@ class PostController extends Controller
 
                 $thumbnail = sprintf("%s_%s_THUMBNAIL.%s", uniqid(),date("YmdHis"), $thumbnailExtension);
                 $thumbnailImg = Image::make($request->file('image')->getRealPath());
-                $thumbnailImg->resize(856, 326);
+                $thumbnailImg->resize(1076, 509);
 
                 $thumbnailImg->save(storage_path('/app/public/posts/thumbnails/' . $thumbnail),90);
 
@@ -147,7 +147,7 @@ class PostController extends Controller
 
                 $thumbnail = sprintf("%s_%s_THUMBNAIL.%s", uniqid(),date("YmdHis"), $thumbnailExtension);
                 $thumbnailImg = Image::make($request->file('image')->getRealPath());
-                $thumbnailImg->resize(856, 326);
+                $thumbnailImg->resize(1076, 509);
 
                 $thumbnailImg->save(storage_path('/app/public/posts/thumbnails/' . $thumbnail),90);
 

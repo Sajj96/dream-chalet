@@ -1,3 +1,6 @@
+@php use App\Models\HouseType;
+    $house_types = HouseType::get();
+@endphp
 <footer class="footer">
 
     <div class="footer-top">
@@ -11,7 +14,7 @@
                                 <h4>Dream Chalets Engineering </h4>
                             </div>
                             <div class="social-links">
-                                <h4>Connect with us</h4>
+                                <h5 class="text-white">Connect with us</h5>
                                 <ul>
                                     <li><a href="javascript:void(0);"><i class="fa-brands fa-facebook-f hi-icon"></i></a></li>
                                     <li><a href="javascript:void(0);"><i class="fa-brands fa-instagram hi-icon"></i></a></li>
@@ -33,7 +36,7 @@
                             <li><a href="{{ route('property') }}">Properties</a></li>
                             <li><a href="{{ route('register') }}">Register</a></li>
                             <li><a href="{{ route('login') }}">Login</a></li>
-                            <li><a href="blog-grid.html">Blogs</a></li>
+                            <li><a href="{{ route('post') }}">Blogs</a></li>
                         </ul>
                     </div>
                 </div>
@@ -43,11 +46,9 @@
                             <h4>Categories</h4>
                         </div>
                         <ul>
-                            <li><a href="javascript:void(0);">Apartments</a></li>
-                            <li><a href="javascript:void(0);">Home</a></li>
-                            <li><a href="javascript:void(0);">Office</a></li>
-                            <li><a href="javascript:void(0);">Villas</a></li>
-                            <li><a href="javascript:void(0);">Flat</a></li>
+                            @foreach($house_types as $type)
+                            <li><a href="{{ route('property', $type->name.'='.$type->id) }}">{{ $type->name }}</a></li>
+                            @endforeach
                         </ul>
                     </div>
                 </div>
@@ -57,11 +58,10 @@
                             <h4>Quick Links</h4>
                         </div>
                         <ul>
-                            <li><a href="about-us.html">About</a></li>
+                            <li><a href="{{ route('about') }}">About Us</a></li>
                             <li><a href="faq.html">Faq</a></li>
                             <li><a href="terms-condition.html">Terms & Conditions</a></li>
                             <li><a href="privacy-policy.html">Privacy Policy</a></li>
-                            <li><a href="gallery.html">Gallery</a></li>
                         </ul>
                     </div>
                 </div>
@@ -79,7 +79,7 @@
                                 document.getElementById('copyright').appendChild(document.createTextNode(new Date().getFullYear()))
                             </script>
                         </span>
-                         Dream Chalets Engineering Ltd - All rights reserved
+                        Dream Chalets Engineering Ltd - All rights reserved
                     </p>
                 </div>
             </div>

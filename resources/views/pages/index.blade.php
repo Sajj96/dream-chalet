@@ -89,51 +89,51 @@
                 <span class="sec-line1"></span>
                 <span class="sec-line2"></span>
             </div>
-            <p>Follow these 4 steps to get your dream house plan</p>
+            <p>We strive to complete projects timely and within budget.</p>
         </div>
         <div class="row justify-content-center">
             <div class="col-lg-3 col-md-6">
                 <div class="howit-work-card" data-aos="fade-down" data-aos-duration="1200" data-aos-delay="100">
                     <div class="work-card-icon">
                         <span>
-                            <img src="assets/img/icons/work-icon-1.svg" alt="icon">
+                            <img src="{{ asset('assets/img/icons/work-icon-1.svg')}}" alt="icon">
                         </span>
                     </div>
-                    <h4>01. Search for Location</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis mollis et sem sed sollicitudin. Donec non odio…</p>
+                    <h4>{{ __('01. Meets Client\'s Expectations')}}</h4>
+                    <p>Create detail schedule and resources plan to meet client's project objective</p>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6">
                 <div class="howit-work-card" data-aos="fade-down" data-aos-duration="1200" data-aos-delay="200">
                     <div class="work-card-icon">
                         <span class="bg-red">
-                            <img src="assets/img/icons/work-icon-2.svg" alt="icon">
+                            <img src="{{ asset('assets/img/icons/work-icon-2.svg')}}" alt="icon">
                         </span>
                     </div>
-                    <h4>02. Select Property Type</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis mollis et sem sed sollicitudin. Donec non odio…</p>
+                    <h4>{{ __('02. Effective Communication')}}</h4>
+                    <p>Communicate clearly with all project stakeholders</p>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6">
                 <div class="howit-work-card" data-aos="fade-down" data-aos-duration="1200" data-aos-delay="300">
                     <div class="work-card-icon">
                         <span class="bg-green">
-                            <img src="assets/img/icons/work-icon-3.svg" alt="icon">
+                            <img src="{{ asset('assets/img/icons/work-icon-3.svg')}}" alt="icon">
                         </span>
                     </div>
-                    <h4>03. Book Your Property</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis mollis et sem sed sollicitudin. Donec non odio…</p>
+                    <h4>{{ __('03. Project Management')}}</h4>
+                    <p>Track project progress and fine-tune deviations</p>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6">
                 <div class="howit-work-card" data-aos="fade-down" data-aos-duration="1200" data-aos-delay="300">
                     <div class="work-card-icon">
                         <span class="bg-secondary">
-                            <img src="assets/img/icons/work-icon-3.svg" alt="icon">
+                            <img src="{{ asset('assets/img/icons/work-icon-3.svg')}}" alt="icon">
                         </span>
                     </div>
-                    <h4>04. Book Your Property</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis mollis et sem sed sollicitudin. Donec non odio…</p>
+                    <h4>{{ __('04. Quality and Affordable')}}</h4>
+                    <p>Dealing with cost control [Cost minimising] while uplifting job quality</p>
                 </div>
             </div>
         </div>
@@ -236,7 +236,7 @@
     </div>
     <div class="container">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="section-heading" data-aos="fade-down" data-aos-duration="1000">
                     <h2>What are you looking for?</h2>
                     <div class="sec-line">
@@ -249,51 +249,42 @@
                     <div class="owl-nav mynav1 nav-control"></div>
                 </div>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-9">
                 <div class="property-type-slider owl-carousel">
                     <div class="property-card" data-aos="fade-down" data-aos-duration="1000">
                         <div class="property-img">
-                            <img src="assets/img/icons/property-icon-1.svg" alt="icon">
+                            <img src="{{ asset('assets/img/icons/property-icon-1.svg')}}" alt="icon">
                         </div>
                         <div class="property-name">
-                            <h4>Houses</h4>
+                            <h4><a href="{{ route('property', 'bedroom=1') }}">1 Bedroom</a></h4>
                             <p>30 Properties</p>
                         </div>
                     </div>
                     <div class="property-card" data-aos="fade-down" data-aos-duration="1000">
                         <div class="property-img">
-                            <img src="assets/img/icons/property-icon-2.svg" alt="icon">
+                            <img src="{{ asset('assets/img/icons/property-icon-1.svg')}}" alt="icon">
                         </div>
                         <div class="property-name">
-                            <h4>Offices</h4>
+                            <h4><a href="{{ route('property', 'bedroom=2') }}">2 Bedrooms</a></h4>
                             <p>25 Properties</p>
                         </div>
                     </div>
                     <div class="property-card" data-aos="fade-down" data-aos-duration="1000">
                         <div class="property-img">
-                            <img src="assets/img/icons/property-icon-4.svg" alt="icon">
+                            <img src="{{ asset('assets/img/icons/property-icon-4.svg')}}" alt="icon">
                         </div>
                         <div class="property-name">
-                            <h4>Apartment</h4>
+                            <h4><a href="{{ route('property', 'bedroom=3') }}">3 Bedrooms</a></h4>
                             <p>35 Properties</p>
                         </div>
                     </div>
                     <div class="property-card" data-aos="fade-down" data-aos-duration="1000">
                         <div class="property-img">
-                            <img src="assets/img/icons/property-icon-1.svg" alt="icon">
+                            <img src="{{ asset('assets/img/icons/property-icon-4.svg')}}" alt="icon">
                         </div>
                         <div class="property-name">
-                            <h4>Houses</h4>
+                            <h4><a href="{{ route('property', 'bedroom=4') }}">4 Bedrooms</a></h4>
                             <p>30 Properties</p>
-                        </div>
-                    </div>
-                    <div class="property-card" data-aos="fade-down" data-aos-duration="1000">
-                        <div class="property-img">
-                            <img src="assets/img/icons/property-icon-4.svg" alt="icon">
-                        </div>
-                        <div class="property-name">
-                            <h4>Apartment</h4>
-                            <p>35 Properties</p>
                         </div>
                     </div>
                 </div>
@@ -395,13 +386,13 @@
                         <span class="sec-line1"></span>
                         <span class="sec-line2"></span>
                     </div>
-                    <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt</p>
+                    <p>We have grown to be a leader in our field because we build and nurture strong client relationships, we rise to any challenge and we value innovation and resourcefulness.</p>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="register-btn" data-aos="fade-down" data-aos-duration="2000">
                     @if(auth()->check() == false)
-                    <a href="{{ route('register') }}" class="btn-primary">Register Now</a>
+                    <a href="{{ route('register') }}" class="btn-primary">Join Us Now</a>
                     @endif
                 </div>
             </div>
@@ -424,7 +415,7 @@
                         <span class="sec-line1"></span>
                         <span class="sec-line2"></span>
                     </div>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmodtempor incididunt</p>
+                    <p>Checkout our latest posts</p>
                 </div>
             </div>
         </div>

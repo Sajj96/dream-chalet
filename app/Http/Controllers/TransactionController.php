@@ -58,6 +58,7 @@ class TransactionController extends Controller
             $price = 0;
             $inquiry = (object) [];
             $plan = null;
+            $amount = 0;
 
             if($request->has('plan')) {
                 $plan = Plan::find((int) $request->get('plan'));
@@ -68,6 +69,7 @@ class TransactionController extends Controller
 
                 $type = Transaction::TYPE_SUBSCRIPTION;
                 $price = $plan->price;
+                $amount = $price;
             }
 
             if($request->has('inquiry')) {
@@ -81,7 +83,7 @@ class TransactionController extends Controller
                 $property = Property::find($inquiry->property_id);
                 $type = Transaction::TYPE_INQUIRY;
                 $price = $inquiry->amount + $inquiry->delivery_fee;
-                
+                $amount = $inquiry->amount;
             }
 
             return view('pages.transactions.checkout', [
@@ -89,14 +91,14 @@ class TransactionController extends Controller
                 'price' => $price,
                 'property' => $property,
                 'plan' => $plan,
-                'type' => $type
+                'type' => $type,
+                'amount' => $amount
             ]);
         }
     }
 
     public function add(Request $request)
     {
-
         $validator = Validator::make($request->all(), [
             'type'            => 'required|string',
             'full_name'       => 'required|string',
@@ -109,7 +111,7 @@ class TransactionController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return back()->with('error', $validator->errors()->first());
+            return response()->json(['error' => $validator->errors()->first()]);
         }
 
         try {
@@ -117,7 +119,7 @@ class TransactionController extends Controller
             $property = Property::whereId($request->property_id)->where('deleted_at', NULL)->first();
 
             if(!$property) {
-                return back()->withError('Property not found');
+                return response()->json(['error' => 'Property not found']);
             }
 
             $transaction = Transaction::create([
@@ -186,21 +188,23 @@ class TransactionController extends Controller
                 "user" => $user
             );
 
-            // $payment = app(PaymentService::class);
-            // $response = $payment->submitPayment($order, $reference);
+            $payment = app(PaymentService::class);
+            $response = $payment->submitPayment($order, $reference);
 
-            // $order_id = $response->getData()->order_tracking_id;
-            // $redirect_url = $response->getData()->redirect_url;
+            $order_id = $response->getData()->order_tracking_id;
+            $redirect_url = $response->getData()->redirect_url;
 
-            // $transaction->payment_reference = $order_id;
+            $transaction->payment_reference = $order_id;
 
-            // if ($response->getStatusCode() == 200 && $response->statusText() == "OK") {
-            //     return $redirect_url;
-            // }
+            if ($response->getStatusCode() == 200 && $response->statusText() == "OK") {
+                return $redirect_url;
+            }
 
-            return redirect()->route('property.show',[strtolower(preg_replace('/[ ,]+/', '-',$property->title.' '.$property->houseType->name.' '.$property->id))])->withSuccess('Billing information have been submitted successfully!');
+            return response()->json(['error' => 'Something went wrong while making payment.']);
+
+            // return redirect()->route('property.show',[strtolower(preg_replace('/[ ,]+/', '-',$property->title.' '.$property->houseType->name.' '.$property->id))])->withSuccess('Billing information have been submitted successfully!');
         } catch (\Exception $exception) {
-            return back()->withError('An error has occurred failed to send information');
+            return response()->json(['error' => $exception->getMessage()]);
         }
     }
 

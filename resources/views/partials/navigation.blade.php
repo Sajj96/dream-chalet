@@ -60,11 +60,6 @@
                 <li><a href="{{ route('about') }}">About Us</a></li>
                 <li><a href="{{ route('post') }}">Blog</a></li>
                 <li><a href="{{ route('contact') }}">Contact Us</a></li>
-                <li class="searchbar">
-                    <a href="javascript:void(0);">
-                        <img src="{{ asset('assets/img/icons/search-icon.svg')}}" alt="img">
-                    </a>
-                </li>
                 @if(auth()->check())
                 <li class="login-link"><a href="{{ route('profile') }}">My Profile</a></li>
                 <li class="login-link">

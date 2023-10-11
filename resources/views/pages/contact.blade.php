@@ -13,8 +13,7 @@
                                 <span><img src="assets/img/icons/phone.svg" alt="Image"></span>
                                 <div>
                                     <h4>Call Us At</h4>
-                                    <a href="tel:+16398098393">+1 63980 98393</a>,
-                                    <a href="tel:+16398098393">+1 63980 98393</a>
+                                    <a href="tel:+16398098393">+255 762 807 944</a>
                                 </div>
                             </div>
                         </div>
@@ -25,7 +24,7 @@
                                 <span><img src="assets/img/icons/mail.svg" alt="Image"></span>
                                 <div>
                                     <h4>Email Us</h4>
-                                    <a href="">dcengerring@gmail.com</a>
+                                    <a href="">dreamchaletstz@gmail.com</a>
                                 </div>
                             </div>
                         </div>
@@ -36,7 +35,7 @@
                                 <span><img src="assets/img/icons/map-pin.svg" alt="Image"></span>
                                 <div>
                                     <h4>Location</h4>
-                                    <p>Jl. Surabaya Jaya, No.10, Surabaya United States</p>
+                                    <p>Shamo Tower, Bagamoyo Road Dar es Salaam. Tanzania.</p>
                                 </div>
                             </div>
                         </div>

@@ -36,6 +36,7 @@ Route::prefix('/inquiries')->group(function () {
 });
 
 Route::prefix('/transactions')->group(function () {
+    Route::get('/call-back', [App\Http\Controllers\TransactionController::class, "callback"])->name('transaction.callback');
     Route::match(['get', 'post'],'/checkout', [App\Http\Controllers\TransactionController::class, 'checkout'])->name('checkout');
     Route::post('/add', [App\Http\Controllers\TransactionController::class, "add"])->name('transaction.create');
 });

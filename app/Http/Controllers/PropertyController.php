@@ -469,6 +469,8 @@ class PropertyController extends Controller
                             ->where('deleted_at', NULL)->whereNot('id', $property->id)
                             ->latest()->take(3)->get();
         
+        $reviews = $property->reviews()->orderByDesc('id')->get();
+        
         $property->clicks = $property->clicks + 1;
         $property->save();
 
@@ -478,7 +480,8 @@ class PropertyController extends Controller
             'stages'   => $stages,
             'photos' => $photos,
             'plans' => $plans,
-            'similar_properties' => $similar_properties
+            'similar_properties' => $similar_properties,
+            'reviews' => $reviews
         ]);
     }
 
