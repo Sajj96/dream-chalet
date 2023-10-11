@@ -144,7 +144,8 @@
                                         </ul>
                                     </div>
                                     <div class="price-btn">
-                                        <button type="submit" class="btn-primary d-block" style="width: 100%;">Pay Now</button>
+                                        <button type="submit" class="btn-primary d-xl-block d-lg-block d-md-none d-sm-none d-none" style="width: 100%;">Pay Now</button>
+                                        <a href="#" class="d-lg-none d-xl-none d-md-block d-sm-block d-block" data-bs-toggle="modal" data-bs-target="#success">Pay Now Small</a>
                                     </div>
                                 </form>
                             </div>
@@ -459,6 +460,38 @@
         @endif
     </div>
 </section>
+
+<div class="modal fade modal-succeess" id="success" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg  modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Select Plan</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Select you desired plan to continue</p>
+                <div class="advanced-search">
+                    <form action="{{ url('/transactions/checkout') }}" method="get">
+                        <input type="hidden" name="property" value="{{ $property->id }}">
+                        <div class="arrival-div">
+                            <ul class="prices-2">
+                                @foreach($plans as $plan)
+                                <li>
+                                    <input type="radio" id="radio{{ $plan->id }}-2" value="{{ $plan->id }}" @if($plan->type == 'Professional') checked @endif value="{{ $plan->id }}" name="plan">
+                                    <label for="radio{{ $plan->id }}-2">Per {{ $plan->period }}<span>${{ $plan->price }}</span>{{ $plan->type }}</label>
+                                </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        <div class="price-btn">
+                            <button type="submit" class="btn-primary d-block" style="width: 100%;">Proceed</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('scripts')
