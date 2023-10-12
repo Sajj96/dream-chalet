@@ -213,7 +213,6 @@
 
         $(this).attr('disabled', true);
         $(this).text('Please wait...');
-        console.log(formData);
 
         $.ajax({
             url: "{{ route('transaction.create') }}",

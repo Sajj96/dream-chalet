@@ -218,6 +218,9 @@ class TransactionController extends Controller
                 $payment = app(PaymentService::class);
                 $response = $payment->getTransactionStatus($transaction->payment_reference)->getData();
 
+                $property = Property::find($transaction->property_id);
+                $user = User::find($transaction->user_id);
+
                 $transaction->amount = $response->amount;
                 $transaction->payment_method = $response->payment_method;
                 $transaction->currency = $response->currency;
@@ -225,20 +228,45 @@ class TransactionController extends Controller
                 if ($response->status_code == 1) {
                     $transaction->status = Transaction::STATUS_PAID;
                     if ($transaction->type == "Inquiry") {
+                        $inquiry = Inquiry::where('property_id', $property->id)->where('user_id', $user->id)->where('status', Inquiry::STATUS_PROCESSING)->first();
+                        $inquiry->status = Inquiry::STATUS_COMPLETED;
+                        $inquiry->update();
                     }
 
                     if ($transaction->type == "Subscription") {
-                        $property = Property::find($transaction->product_id);
-                        $property->is_featured = 1;
-                        $property->update();
+                        $subscription = Subscription::where('property_id', $property->id)->where('user_id', $user->id)->first();
+                        $plan = Plan::find($subscription->plan_id);
+                        
+                        $date = date('Y-m-d H:i:s');
+
+                        $period = "";
+                        if($plan->period == "Month") {
+                            $period = "1 months";
+                        } elseif($plan->period == "Week") {
+                            $period = "1 week";
+                        } else {
+                            $period = "1 years";
+                        }
+
+                        $subscription->ends_on = date('Y-m-d H:i:s', strtotime(' +'.$period, strtotime($date)));
+                        $subscription->update();
+
+                        if(Auth::check() == false) {
+                            return redirect()->route('property.show',[strtolower(preg_replace('/[ ,]+/', '-',$property->title.' '.$property->houseType->name.' '.$property->id))])->withSuccess('Payment received successfully!. Please login to access your account');
+                        }
+
+                        return redirect()->route('property.show',[strtolower(preg_replace('/[ ,]+/', '-',$property->title.' '.$property->houseType->name.' '.$property->id))])->withSuccess('Payment received successfully!');
+
                     }
                 } else if ($response->status_code == 2) {
                     $transaction->status = Transaction::STATUS_FAILED;
+                    return redirect()->route('property.show',[strtolower(preg_replace('/[ ,]+/', '-',$property->title.' '.$property->houseType->name.' '.$property->id))])->withErrors('An error occured payment failed!');
+
                 } else {
                     $transaction->status = Transaction::STATUS_NOTPAID;
+                    return redirect()->route('property.show',[strtolower(preg_replace('/[ ,]+/', '-',$property->title.' '.$property->houseType->name.' '.$property->id))])->withErrors('An error occured payment not received!');
                 } 
 
-                return redirect()->back()->withSuccess('Payment received successfully!');
             }
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());

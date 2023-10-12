@@ -139,9 +139,6 @@
                                     </div>
                                 </div>
                                 <div class="form-group form-float">
-
-                                </div>
-                                <div class="form-group form-float">
                                     <div class="form-line">
                                         <label class="form-label">Other Images</label>
                                         <div class="dropzone" id="mydropzone">

@@ -182,6 +182,42 @@ $(function () {
             arr += value + "\n";
         });
     });
+
+    var floorDropzone = new Dropzone("#floordropzone", {
+        url: addUrl,
+        autoProcessQueue: false,
+        uploadMultiple: true,
+        parallelUploads: 20,
+        paramName: "floors",
+        maxFiles: 20,
+        addRemoveLinks: true,
+        maxFilesize: 250,
+        dictDefaultMessage: "Drop your files here!",
+    });
+
+    floorDropzone.on("sendingmultiple", function (file, xhr, formData) {
+        formData.append("_token", token);
+        formData.append(
+            "main_image",
+            $('input[name="main_image"]')[0].files[0]
+        );
+
+        var formValues = $("#wizard_with_validation").serializeArray();
+        $(formValues).each(function (key, obj) {
+            formData.append(obj.name, obj.value);
+        });
+    });
+
+    floorDropzone.on("successmultiple", function (response) {
+        window.location = propertyUrl;
+    });
+
+    floorDropzone.on("errormultiple", function (file, errorMessage, xhr) {
+        var arr = [];
+        $.each(errorMessage, function (key, value) {
+            arr += value + "\n";
+        });
+    });
 });
 
 function setButtonWavesEffect(event) {

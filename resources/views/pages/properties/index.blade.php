@@ -89,7 +89,7 @@
                                             <h6 class="rating-review text-secondary"><span>{{ number_format($property->review->rate, 1) }}</span>({{ $property->review->review_count }} Reviews)</h6>
                                         </div>
                                         <h5 class="title">
-                                            <a href="{{ route('property.show',[strtolower(preg_replace('/[ ,]+/', '-',$property->title.' '.$property->houseType->name.' '.$property->id))])}}">{!! $property->title !!}</a>
+                                            <a href="{{ route('property.show',[strtolower(preg_replace('/[ ,]+/', '-',$property->title.' '.$property->houseType->name.' '.$property->id))])}}">{!! $property->bedrooms .' Bedrooms - '. $property->title !!}</a>
                                         </h5>
                                         <ul class="d-flex details">
                                             <li>
@@ -212,8 +212,8 @@
 <script>
     $('.loadMore').simpleLoadMore({
         item: '.item',
-        count: 4,
-        itemsToLoad: 4,
+        count: 10,
+        itemsToLoad: 6,
         showCounter: true,
         btnHTML: '<div class="d-flex justify-content-center" data-aos="fade-down" data-aos-duration="1000"><a href="#" class="btn btn-primary bg-warning">Load More</a></div>'
     });
