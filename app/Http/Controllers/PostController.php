@@ -20,7 +20,7 @@ class PostController extends Controller
 
     public function getAll()
     {
-        $posts = Post::whereStatus(1)->get();
+        $posts = Post::whereStatus(Post::STATUS_PUBLISHED)->get();
         return view('pages.posts.index', [
             'posts' => $posts
         ]);

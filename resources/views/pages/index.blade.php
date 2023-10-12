@@ -189,7 +189,7 @@
                                         <h6 class="rating-review text-secondary"><span>{{ number_format($property->review->rate, 1) }}</span>({{ $property->review->review_count }} Reviews)</h6>
                                     </div>
                                     <h3 class="title">
-                                        <a href="{{ route('property.show',[strtolower(preg_replace('/[ ,]+/', '-',$property->title.' '.$property->houseTypeName.' '.$property->id))])}}">{!! $property->title !!}</a>
+                                        <a href="{{ route('property.show',[strtolower(preg_replace('/[ ,]+/', '-',$property->title.' '.$property->houseTypeName.' '.$property->id))])}}">{!! $property->bedrooms .' Bedrooms - '. $property->title !!}</a>
                                     </h3>
                                     <ul class="d-flex details">
                                         <li>

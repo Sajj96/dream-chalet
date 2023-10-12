@@ -151,7 +151,7 @@ $(function () {
         paramName: "attachments",
         maxFiles: 20,
         addRemoveLinks: true,
-        maxFilesize: 1,
+        maxFilesize: 250,
         dictDefaultMessage: "Drop your files here!",
     });
 

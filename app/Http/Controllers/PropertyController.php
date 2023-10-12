@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image;
+use App\Helpers\ImageFilter;
 
 class PropertyController extends Controller
 {
@@ -39,6 +40,10 @@ class PropertyController extends Controller
 
         if (in_array('bathroom', $type)) {
             $properties = $properties->where('bathrooms', intval(end($type)));
+        }
+
+        if ($request->has('search')) {
+            $properties = $properties->where('title', 'LIKE', '%'.$request->get('search').'%');
         }
 
         if (!empty($request->sort_price)) {
@@ -121,6 +126,7 @@ class PropertyController extends Controller
 
                 $thumbnail = sprintf("%s_%s_THUMBNAIL.%s", uniqid(),date("YmdHis"), $thumbnailExtension);
                 $thumbnailImg = Image::make($request->file('main_image')->getRealPath());
+                $thumbnailImg->insert(public_path('assets/img/dce_1.png'), 'center', 10, 10);
                 $thumbnailImg->resize(817, 446);
 
                 $thumbnailImg->save(storage_path('/app/public/properties/thumbnails/' . $thumbnail),90);
@@ -151,11 +157,12 @@ class PropertyController extends Controller
                 $premium = sprintf("%s_%s_PREMIUM.%s", uniqid(), date("YmdHis"), $floorExtension);
 
                 $floorImg = Image::make($request->file('floor_image')->getRealPath());
-                $floorImg->resize(817, 446);
-                $floorImg->pixelate(12)->blur(100)->greyscale();
+                $floorImg->resize(670, 595);
+                $floorImg->filter(new ImageFilter(25))->blur(20);
 
                 $premiumImg = Image::make($request->file('floor_image')->getRealPath());
-                $premiumImg->resize(817, 446);
+                $premiumImg->insert(public_path('assets/img/dce_1.png'), 'center', 10, 10);
+                $premiumImg->resize(670, 595);
 
                 $floorImg->save(storage_path('/app/public/properties/floors/' . $floor),90);
                 $premiumImg->save(storage_path('/app/public/properties/premium/' . $premium),90);
@@ -188,6 +195,7 @@ class PropertyController extends Controller
 
                     if(in_array($extension,['png','jpg','jpeg'])) {
                         $img = Image::make($attachment->getRealPath());
+                        $img->insert(public_path('assets/img/dce_1.png'), 'center', 10, 10);
                         $img->resize(817, 446);
                         $img->text($request->title, 0, 0, function($font){
                             $font->color([0, 0, 0, 0.5]);
@@ -310,6 +318,7 @@ class PropertyController extends Controller
 
                 $thumbnail = sprintf("%s_%s_THUMBNAIL.%s", uniqid(),date("YmdHis"), $thumbnailExtension);
                 $thumbnailImg = Image::make($request->file('main_image')->getRealPath());
+                $thumbnailImg->insert(public_path('assets/img/dce_1.png'), 'center', 10, 10);
                 $thumbnailImg->resize(817, 446);
 
                 $thumbnailImg->save(storage_path('/app/public/properties/thumbnails/' . $thumbnail),90);
@@ -340,11 +349,12 @@ class PropertyController extends Controller
                 $premium = sprintf("%s_%s_PREMIUM.%s", uniqid(), date("YmdHis"), $floorExtension);
 
                 $floorImg = Image::make($request->file('floor_image')->getRealPath());
-                $floorImg->resize(817, 446);
-                $floorImg->pixelate(12)->blur(100)->greyscale();
+                $floorImg->resize(670, 595);
+                $floorImg->filter(new ImageFilter(25))->blur(20);
 
                 $premiumImg = Image::make($request->file('floor_image')->getRealPath());
-                $premiumImg->resize(817, 446);
+                $premiumImg->insert(public_path('assets/img/dce_1.png'), 'center', 10, 10);
+                $premiumImg->resize(670, 595);
 
                 $floorImg->save(storage_path('/app/public/properties/floors/' . $floor),90);
                 $premiumImg->save(storage_path('/app/public/properties/premium/' . $premium),90);
@@ -377,6 +387,7 @@ class PropertyController extends Controller
 
                     if(in_array($extension,['png','jpg','jpeg'])) {
                         $img = Image::make($attachment->getRealPath());
+                        $img->insert(public_path('assets/img/dce_1.png'), 'center', 10, 10);
                         $img->resize(817, 446);
                         $img->text($request->title, 0, 0, function($font){
                             $font->color([0, 0, 0, 0.5]);

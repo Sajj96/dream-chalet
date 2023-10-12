@@ -54,8 +54,8 @@
                                 <img src="{{ $photo->photo_path }}" alt="Slider">
                             </div>
                             @empty
-                            <div class="product-img">
-                                <img src="{{ $property->thumbnail }}" width="800" alt="Slider">
+                            <div class="product-img" style="display: contents !important;">
+                                <img src="{{ $property->thumbnail }}" alt="Slider">
                             </div>
                             @endforelse
                         </div>
@@ -63,9 +63,7 @@
                             @forelse($photos as $photo)
                             <div><img src="{{ $photo->photo_path }}" alt="product image"></div>
                             @empty
-                            <div class="product-img">
-                                <img src="{{ $property->thumbnail }}" alt="Slider">
-                            </div>
+                            <div style="display: contents !important;"><img src="{{ $property->thumbnail }}" class="thumb" alt="Slider"></div>
                             @endforelse
                         </div>
                     </div>
@@ -142,7 +140,7 @@
                                     </div>
                                     <div class="price-btn">
                                         <button type="submit" class="btn-primary d-xl-block d-lg-block d-md-none d-sm-none d-none" style="width: 100%;">Pay Now</button>
-                                        <a href="#" class="d-lg-none d-xl-none d-md-block d-sm-block d-block" data-bs-toggle="modal" data-bs-target="#success">Pay Now Small</a>
+                                        <a href="#" class="d-lg-none d-xl-none d-md-block d-sm-block d-block" data-bs-toggle="modal" data-bs-target="#success">Pay Now</a>
                                     </div>
                                 </form>
                             </div>
