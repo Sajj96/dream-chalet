@@ -49,37 +49,37 @@
                                     <div class="col-md-12">
                                         <div class="review-form">
                                             <label>Full Name*</label>
-                                            <input type="text" class="form-control" name="full_name" value="{{  auth()->user()->name ?? old('full_name') }}" placeholder="Enter full name">
+                                            <input type="text" class="form-control" name="full_name" value="{{  auth()->user()->name ?? old('full_name') }}" placeholder="Enter full name" required>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="review-form">
                                             <label>Email*</label>
-                                            <input type="email" class="form-control" name="email" value="{{  auth()->user()->email ?? old('email') }}" placeholder="Enter email address">
+                                            <input type="email" class="form-control" name="email" value="{{  auth()->user()->email ?? old('email') }}" placeholder="Enter email address" required>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="review-form">
                                             <label>Phone</label>
-                                            <input type="text" id="phone" class="form-control" value="{{  auth()->user()->mobile ?? old('mobile') }}" name="mobile" style="padding: 10px 0px 10px 50px">
+                                            <input type="text" id="phone" class="form-control" value="{{  auth()->user()->mobile ?? old('mobile') }}" name="mobile" style="padding: 10px 0px 10px 50px" required>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="review-form">
                                             <label>Street*</label>
-                                            <input type="text" class="form-control" name="street" value="{{ auth()->user()->street ?? old('street') }}" placeholder="Enter street address">
+                                            <input type="text" class="form-control" name="street" value="{{ auth()->user()->street ?? old('street') }}" placeholder="Enter street address" required>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="review-form">
                                             <label>Ward*</label>
-                                            <input type="text" class="form-control" name="ward" value="{{ auth()->user()->ward ?? old('ward') }}" placeholder="Enter ward">
+                                            <input type="text" class="form-control" name="ward" value="{{ auth()->user()->ward ?? old('ward') }}" placeholder="Enter ward" required>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="review-form">
                                             <label>City*</label>
-                                            <input type="text" class="form-control" name="city" value="{{ auth()->user()->city ?? old('city') }}" placeholder="Enter city">
+                                            <input type="text" class="form-control" name="city" value="{{ auth()->user()->city ?? old('city') }}" placeholder="Enter city" required>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -98,7 +98,7 @@
                                             <label for="">Account Password*</label>
                                             <small>This will enable you to login into your account next time</small>
                                             <div class="pass-group">
-                                                <input type="password" class="form-control pass-input @error('password') is-invalid @enderror" name="password" required autocomplete="new-password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;">
+                                                <input type="password" class="form-control pass-input @error('password') is-invalid @enderror" name="password" required autocomplete="new-password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" >
                                                 <span class="fas fa-eye toggle-password"></span>
                                                 @error('password')
                                                 <span class="invalid-feedback" role="alert">
@@ -196,6 +196,7 @@
 @endsection
 
 @section('scripts')
+<script src="{{ asset('assets/dashboard/bundles/jquery-validation/dist/jquery.validate.min.js') }}"></script>
 <script src="{{ asset('assets/plugins/theia-sticky-sidebar/ResizeSensor.js') }}"></script>
 <script src="{{ asset('assets/plugins/theia-sticky-sidebar/theia-sticky-sidebar.js')}}"></script>
 <script src="{{ asset('assets/plugins/fancybox/jquery.fancybox.min.js')}}"></script>
@@ -207,6 +208,28 @@
 <script>
     $(document).on('click', '#confirm', function(event) {
         event.preventDefault();
+
+        var isValid = $('#checkout-form').valid({
+            highlight: function (input) {
+                $(input).parents(".form-line").addClass("error text-danger");
+            },
+            unhighlight: function (input) {
+                $(input).parents(".form-line").removeClass("error");
+            },
+            errorPlacement: function (error, element) {
+                $(element).parents(".form-group").append(error);
+            },
+            rules: {
+                confirm: {
+                    equalTo: "#password",
+                },
+            },
+        });
+
+        if(!isValid) { 
+            return false;
+        }
+
         var form = $('#checkout-form')[0];
         var formData = new FormData(form);
         formData.append('_token', '{{ csrf_token() }}');

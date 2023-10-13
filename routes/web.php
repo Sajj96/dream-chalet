@@ -30,8 +30,13 @@ Route::get('/about-us', function(){
     return view('pages.about');
 })->name('about');
 
+
+Route::get('forget-password', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'showForgetPasswordForm'])->name('forget.password.get');
+Route::post('forget-password', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'submitForgetPasswordForm'])->name('forget.password.post'); 
+Route::get('reset-password/{token}', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'showResetPasswordForm'])->name('reset.password.get');
+Route::post('reset-password', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'submitResetPasswordForm'])->name('reset.password.post');
+
 Route::prefix('/inquiries')->group(function () {
-    Route::get('/', [App\Http\Controllers\InquiryController::class, 'index'])->name('inquiry');
     Route::post('/add', [App\Http\Controllers\InquiryController::class, "add"])->name('inquiry.create');
 });
 

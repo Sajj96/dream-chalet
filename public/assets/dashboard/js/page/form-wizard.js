@@ -150,8 +150,9 @@ $(function () {
         parallelUploads: 20,
         paramName: "attachments",
         maxFiles: 20,
+        timeout: 120000,
         addRemoveLinks: true,
-        maxFilesize: 250,
+        maxFilesize: 500,
         dictDefaultMessage: "Drop your files here!",
     });
 

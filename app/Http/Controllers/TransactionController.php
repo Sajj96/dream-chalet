@@ -184,7 +184,7 @@ class TransactionController extends Controller
 
             $order = (object) array(
                 "name" => $property->title,
-                "price" => (float) $request->amount,
+                "price" => (float) 2,
                 "user" => $user
             );
 
