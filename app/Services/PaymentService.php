@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Http;
 class PaymentService {
 
     public $client;
-    public $url = 'https://pay.pesapal.com/v3';
+    public $url = 'https://cybqa.pesapal.com/pesapalv3';
 
     public function __construct(Client $client) 
     {

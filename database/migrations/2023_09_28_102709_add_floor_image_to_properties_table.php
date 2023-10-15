@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::table('properties', function (Blueprint $table) {
             $table->string('floor_image')->after('thumbnail');
-            $table->string('premium_image')->after('floor_image');
         });
     }
 

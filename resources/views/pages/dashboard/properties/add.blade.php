@@ -4,6 +4,7 @@
 <link rel="stylesheet" href="{{ asset('assets/dashboard/bundles/summernote/summernote-bs4.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/dashboard/bundles/dropzonejs/dropzone.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/dashboard/bundles/select2/dist/css/select2.min.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/dashboard/bundles/bootstrap-fileinput/css/fileinput.css')}}" media="all" type="text/css" />
 @endsection
 
 @section('content')
@@ -17,6 +18,7 @@
                     </div>
                     <div class="card-body">
                         <form id="wizard_with_validation" action="{{ url('dashboard/properties/add') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
                             <h3>Property Information</h3>
                             <fieldset>
                                 <div class="form-group form-float">
@@ -36,13 +38,13 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="form-group form-float col-6">
+                                    <div class="form-group form-float col-md-6">
                                         <div class="form-line">
                                             <label class="form-label">Price*</label>
                                             <input type="number" class="form-control" name="price" value="{{ old('price') }}" placeholder="Enter price" required>
                                         </div>
                                     </div>
-                                    <div class="form-group form-float col-6">
+                                    <div class="form-group form-float col-md-6">
                                         <div class="form-line">
                                             <label>Currency</label>
                                             <select class="form-control" name="currency" required>
@@ -52,13 +54,13 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="form-group form-float col-6">
+                                    <div class="form-group form-float col-md-6">
                                         <div class="form-line">
                                             <label class="form-label">No. of Bedrooms*</label>
                                             <input type="number" class="form-control" name="bedroom" value="{{ old('bedroom') }}" placeholder="Enter number of bedroom(s)" required>
                                         </div>
                                     </div>
-                                    <div class="form-group form-float col-6">
+                                    <div class="form-group form-float col-md-6">
                                         <div class="form-line">
                                             <label class="form-label">No. of Bathrooms</label>
                                             <input type="number" class="form-control" name="bathroom" value="{{ old('bathroom') }}" placeholder="Enter number of bathroom(s)">
@@ -66,13 +68,13 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="form-group form-float col-6">
+                                    <div class="form-group form-float col-md-6">
                                         <div class="form-line">
                                             <label class="form-label">No. of Roofing Sheets</label>
                                             <input type="number" class="form-control" name="roofs" value="{{ old('roof') }}" placeholder="Enter number of roofing sheet(s)">
                                         </div>
                                     </div>
-                                    <div class="form-group form-float col-6">
+                                    <div class="form-group form-float col-md-6">
                                         <div class="form-line">
                                             <label class="form-label">No. of Blocks</label>
                                             <input type="number" class="form-control" name="blocks" value="{{ old('block') }}" placeholder="Enter number of block(s)">
@@ -80,13 +82,13 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="form-group form-float col-6">
+                                    <div class="form-group form-float col-md-6">
                                         <div class="form-line">
                                             <label class="form-label">No. of Floors</label>
                                             <input type="number" class="form-control" name="no_floor" value="{{ old('no_floor') }}" placeholder="Enter number of floor(s)">
                                         </div>
                                     </div>
-                                    <div class="form-group form-float col-6">
+                                    <div class="form-group form-float col-md-6">
                                         <div class="form-line">
                                             <label class="form-label">Plot Size</label>
                                             <input type="number" class="form-control" name="sqmt" value="{{ old('sqmt') }}" placeholder="Enter plot size">
@@ -96,14 +98,14 @@
                                 <div class="form-group form-float">
                                     <div class="form-line">
                                         <label class="form-label">Details</label>
-                                        <textarea name="details" class="summernote-simple" id="" placeholder="Type property details" rows="5">{{ old('details') }}</textarea>
+                                        <textarea name="details" class="summernote" id="" placeholder="Type property details" rows="5">{{ old('details') }}</textarea>
                                     </div>
                                 </div>
                             </fieldset>
                             <h3>Property Photos</h3>
                             <fieldset>
                                 <div class="row">
-                                    <div class="form-group form-float col-6">
+                                    <div class="form-group form-float col-md-12">
                                         <div class="form-line">
                                             <label class="form-label">Main Photo</label>
                                             <div id="image-preview" class="image-preview">
@@ -112,27 +114,17 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group form-float col-6">
-                                        <div class="form-line">
-                                            <label class="form-label">Floor Plan Photo</label>
-                                            <div id="image-preview-floor" class="image-preview">
-                                                <label for="image-upload" class="image-label" id="image-label-floor">Choose File</label>
-                                                <input type="file" name="floor_image" id="image-upload-floor" required class="image-upload" />
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                                 <div class="form-group form-float">
-
+                                    <div class="form-line">
+                                        <label class="form-label">Floor Plan Images</label>
+                                        <input id="file-2" name="floor_images[]" data-overwrite-initial="false" type="file" accept=".jpg,.gif,.png,.jpeg" data-browse-on-zone-click="true" multiple>
+                                    </div>
                                 </div>
                                 <div class="form-group form-float">
                                     <div class="form-line">
                                         <label class="form-label">Other Images</label>
-                                        <div class="dropzone" id="mydropzone">
-                                            <div class="dz-message needsclick">
-                                                Drop files here or click to upload
-                                            </div>
-                                        </div>
+                                        <input id="file-1" name="attachments[]" data-overwrite-initial="false" type="file" accept=".jpg,.gif,.png,.jpeg" data-browse-on-zone-click="true" multiple>
                                     </div>
                                 </div>
                             </fieldset>
@@ -177,11 +169,11 @@
 <script src="{{ asset('assets/dashboard/bundles/dropzonejs/min/dropzone.min.js') }}"></script>
 <script src="{{ asset('assets/dashboard/bundles/upload-preview/assets/js/jquery.uploadPreview.min.js') }}"></script>
 <script src="{{ asset('assets/dashboard/bundles/select2/dist/js/select2.full.min.js') }}"></script>
-<script type="text/javascript">
-    let addUrl = "{{ route('dashboard.property.add') }}";
-    let propertyUrl = "{{ route('dashboard.property') }}";
-    let token = "{{ csrf_token() }}";
-</script>
+<script src="{{ asset('assets/dashboard/bundles/bootstrap-fileinput/js/plugins/piexif.js')}}"></script>
+<script src="{{ asset('assets/dashboard/bundles/bootstrap-fileinput/js/plugins/sortable.js')}}"></script>
+<script src="{{ asset('assets/dashboard/bundles/bootstrap-fileinput/js/fileinput.js')}}"></script>
+<script src="{{ asset('assets/dashboard/bundles/bootstrap-fileinput/themes/fas/theme.js')}}"></script>
+<script src="{{ asset('assets/dashboard/bundles/bootstrap-fileinput/themes/explorer-fas/theme.js')}}"></script>
 <script src="{{ asset('assets/dashboard/js/page/form-wizard.js') }}"></script>
 
 @endsection

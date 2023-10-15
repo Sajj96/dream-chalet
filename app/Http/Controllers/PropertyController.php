@@ -20,12 +20,13 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image;
 use App\Helpers\ImageFilter;
+use App\Models\PropertyFloor;
 
 class PropertyController extends Controller
 {
     public function index(Request $request, $prop = null )
     {
-        $properties = Property::where('deleted_at', NULL)->orderByDesc('id');
+        $properties = Property::where('deleted_at', NULL);
         $house_types = HouseType::get()->pluck('name')->toArray();
 
         $type = explode('=', $prop);
@@ -35,7 +36,11 @@ class PropertyController extends Controller
         }
 
         if (in_array('bedroom', $type)) {
-            $properties = $properties->where('bedrooms' , intval(end($type)));
+            if(intval(end($type)) == 5) {
+                $properties = $properties->where('bedrooms' , '>=', intval(end($type))); 
+            } else {
+                $properties = $properties->where('bedrooms' , intval(end($type)));
+            }
         }
 
         if (in_array('bathroom', $type)) {
@@ -46,17 +51,19 @@ class PropertyController extends Controller
             $properties = $properties->where('title', 'LIKE', '%'.$request->get('search').'%');
         }
 
-        if (!empty($request->sort_price)) {
-            if ($request->sort_price == "high_price") {
+        if ($request->has('sort_price')) {
+            if ($request->get('sort_price') == "high_price") {
                 $properties = $properties->orderBy('price', 'DESC');
             }
 
-            if ($request->sort_price == "low_price") {
+            if ($request->get('sort_price') == "low_price") {
                 $properties = $properties->orderBy('price', 'ASC');
             }
+        } else {
+            $properties = $properties->orderByDesc('id');
         }
 
-        $properties = $properties->lazy();
+        $properties = $properties->get();
         
         return view('pages.properties.index', [
             'properties' => $properties
@@ -84,15 +91,13 @@ class PropertyController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'title'       => 'required|string',
-            'price'       => 'required|numeric',
-            'main_image'  => 'image|mimes:jpg,jpeg,png,gif',
-            'floor_image' => 'image|mimes:jpg,jpeg,png,gif'
+            'title'        => 'required|string',
+            'price'        => 'required|numeric',
+            'main_image'   => 'image|mimes:jpg,jpeg,png,gif'
         ]);
 
         if ($validator->fails()) {
-            Session::flash('error', $validator->errors()->first()); 
-            return response()->json(['error' => 'ok']);
+            return back()->withErrors($validator->errors()->first()); 
         }
 
         try {
@@ -110,7 +115,6 @@ class PropertyController extends Controller
                 'square_meter'  => $request->sqmt,
                 'thumbnail'     => "https://",
                 'floor_image'   => "https://",
-                'premium_image' => "https://",
                 'details'       => $request->details
             ]);
 
@@ -138,7 +142,7 @@ class PropertyController extends Controller
                 ]);
             }
 
-            if ($request->hasFile('floor_image')) {
+            if ($request->hasFile('floor_images')) {
 
                 $path = storage_path('/app/public/properties/floors/');
                 if(!File::isDirectory($path)) {
@@ -150,29 +154,42 @@ class PropertyController extends Controller
                     File::makeDirectory($path, $mode = 0777, true, true);
                 }
 
-                $floor = $request->floor_image->getClientOriginalName();
-                $floorExtension = $request->file('floor_image')->extension();
+                $floor_images = $request->floor_images;
+                if (!is_array($floor_images)) {
+                    $floor_images = [$request->floor_images];
+                }
 
-                $floor = sprintf("%s_%s_FLOOR.%s", uniqid(), date("YmdHis"), $floorExtension);
-                $premium = sprintf("%s_%s_PREMIUM.%s", uniqid(), date("YmdHis"), $floorExtension);
+                $floorLink = "";
 
-                $floorImg = Image::make($request->file('floor_image')->getRealPath());
-                $floorImg->resize(670, 595);
-                $floorImg->filter(new ImageFilter(25))->blur(20);
+                foreach($floor_images as $floor_image) {
+                    $floor = $floor_image->getClientOriginalName();
+                    $extension = $floor_image->extension();
+    
+                    $floor = sprintf("%s_%s_FLOOR.%s", uniqid(), date("YmdHis"), $extension);
+                    $premium = sprintf("%s_%s_PREMIUM.%s", uniqid(), date("YmdHis"), $extension);
+    
+                    $floorImg = Image::make($floor_image->getRealPath());
+                    $floorImg->resize(670, 595);
+                    $floorImg->filter(new ImageFilter(25))->blur(20);
+    
+                    $premiumImg = Image::make($floor_image->getRealPath());
+                    $premiumImg->insert(public_path('assets/img/dce_1.png'), 'center', 10, 10);
+                    $premiumImg->resize(670, 595);
+    
+                    $floorImg->save(storage_path('/app/public/properties/floors/' . $floor),90);
+                    $premiumImg->save(storage_path('/app/public/properties/premium/' . $premium),90);
+    
+                    $floorLink = url('storage/properties/floors/'.$floor);
+                    $premiumLink = url('storage/properties/premium/'.$premium);
 
-                $premiumImg = Image::make($request->file('floor_image')->getRealPath());
-                $premiumImg->insert(public_path('assets/img/dce_1.png'), 'center', 10, 10);
-                $premiumImg->resize(670, 595);
-
-                $floorImg->save(storage_path('/app/public/properties/floors/' . $floor),90);
-                $premiumImg->save(storage_path('/app/public/properties/premium/' . $premium),90);
-
-                $floorLink = url('storage/properties/floors/'.$floor);
-                $premiumLink = url('storage/properties/premium/'.$premium);
+                    PropertyFloor::create([
+                        'property_id' => $property->id,
+                        'photo_path'  => $premiumLink
+                    ]);
+                }
 
                 $property->update([
-                    'floor_image'   => $floorLink,
-                    'premium_image' => $premiumLink
+                    'floor_image'   => $floorLink
                 ]);
             }
 
@@ -243,12 +260,10 @@ class PropertyController extends Controller
                 }
             }
 
-            Session::flash('success', 'Property created successfully'); 
-            return response()->json(['success' => 'ok']);
+            return redirect()->route('dashboard.property')->withSuccess('Property created successfully');
         } catch (\Exception $exception) {
             Log::error($exception->getMessage());
-            Session::flash('error', 'An error has occurred failed to add new property'); 
-            return response()->json(['error' => 'ok']);
+            return back()->withErrors('An error has occurred failed to add new property');
         }
     }
 
@@ -260,7 +275,7 @@ class PropertyController extends Controller
 
         $property = Property::find($id);
         if (!$property) {
-            return redirect('/dashboard/properties/all')->withError('Property not found!');
+            return redirect('/dashboard/properties/all')->withErrors('Property not found!');
         }
 
         if($request->method() == "GET") {
@@ -270,6 +285,7 @@ class PropertyController extends Controller
             $property_amenities = $property->amenities()->pluck('property_amenities.amenity_id')->toArray();
             $property_stages = $property->stages()->pluck('property_stages.stage_id')->toArray();
             $property_photos = $property->photos;
+            $premium_floors = $property->floorImages;
 
             return view('pages.dashboard.properties.edit',[
                 'house_types'     => $house_types,
@@ -278,7 +294,8 @@ class PropertyController extends Controller
                 'property_amenities' => $property_amenities,
                 'property_stages' => $property_stages,
                 'property_photos' => $property_photos,
-                'property' => $property
+                'property' => $property,
+                'premium_floors' => $premium_floors
             ]);
         }
 
@@ -288,8 +305,7 @@ class PropertyController extends Controller
         ]);
 
         if ($validator->fails()) {
-            Session::flash('error', $validator->errors()->first()); 
-            return response()->json(['error' => 'ok']);
+            return back()->withErrors($validator->errors()->first()); 
         }
 
         try {
@@ -330,7 +346,7 @@ class PropertyController extends Controller
                 ]);
             }
 
-            if ($request->hasFile('floor_image')) {
+            if ($request->hasFile('floor_images')) {
 
                 $path = storage_path('/app/public/properties/floors/');
                 if(!File::isDirectory($path)) {
@@ -342,29 +358,42 @@ class PropertyController extends Controller
                     File::makeDirectory($path, $mode = 0777, true, true);
                 }
 
-                $floor = $request->floor_image->getClientOriginalName();
-                $floorExtension = $request->file('floor_image')->extension();
+                $floor_images = $request->floor_images;
+                if (!is_array($floor_images)) {
+                    $floor_images = [$request->floor_images];
+                }
 
-                $floor = sprintf("%s_%s_FLOOR.%s", uniqid(), date("YmdHis"), $floorExtension);
-                $premium = sprintf("%s_%s_PREMIUM.%s", uniqid(), date("YmdHis"), $floorExtension);
+                $floorLink = "";
 
-                $floorImg = Image::make($request->file('floor_image')->getRealPath());
-                $floorImg->resize(670, 595);
-                $floorImg->filter(new ImageFilter(25))->blur(20);
+                foreach($floor_images as $floor_image) {
+                    $floor = $floor_image->getClientOriginalName();
+                    $extension = $floor_image->extension();
+    
+                    $floor = sprintf("%s_%s_FLOOR.%s", uniqid(), date("YmdHis"), $extension);
+                    $premium = sprintf("%s_%s_PREMIUM.%s", uniqid(), date("YmdHis"), $extension);
+    
+                    $floorImg = Image::make($floor_image->getRealPath());
+                    $floorImg->resize(670, 595);
+                    $floorImg->filter(new ImageFilter(25))->blur(20);
+    
+                    $premiumImg = Image::make($floor_image->getRealPath());
+                    $premiumImg->insert(public_path('assets/img/dce_1.png'), 'center', 10, 10);
+                    $premiumImg->resize(670, 595);
+    
+                    $floorImg->save(storage_path('/app/public/properties/floors/' . $floor),90);
+                    $premiumImg->save(storage_path('/app/public/properties/premium/' . $premium),90);
+    
+                    $floorLink = url('storage/properties/floors/'.$floor);
+                    $premiumLink = url('storage/properties/premium/'.$premium);
 
-                $premiumImg = Image::make($request->file('floor_image')->getRealPath());
-                $premiumImg->insert(public_path('assets/img/dce_1.png'), 'center', 10, 10);
-                $premiumImg->resize(670, 595);
-
-                $floorImg->save(storage_path('/app/public/properties/floors/' . $floor),90);
-                $premiumImg->save(storage_path('/app/public/properties/premium/' . $premium),90);
-
-                $floorLink = url('storage/properties/floors/'.$floor);
-                $premiumLink = url('storage/properties/premium/'.$premium);
+                    PropertyFloor::create([
+                        'property_id' => $property->id,
+                        'photo_path'  => $premiumLink
+                    ]);
+                }
 
                 $property->update([
-                    'floor_image'   => $floorLink,
-                    'premium_image' => $premiumLink
+                    'floor_image'   => $floorLink
                 ]);
             }
 
@@ -449,12 +478,10 @@ class PropertyController extends Controller
 
             $property->save();
 
-            Session::flash('success', 'Property updated successfully'); 
-            return response()->json(['success' => 'ok']);
+            return redirect()->route('dashboard.property')->withSuccess('Property updated successfully');
         } catch (\Exception $exception) {
             Log::error($exception->getMessage());
-            Session::flash('error', 'An error has occurred failed to update property'); 
-            return response()->json(['error' => 'ok']);
+            return back()->withErrors('An error has occurred failed to update property');
         }
     }
 
@@ -481,6 +508,7 @@ class PropertyController extends Controller
                             ->latest()->take(3)->get();
         
         $reviews = $property->reviews()->orderByDesc('id')->get();
+        $premium_floors = $property->floorImages;
         
         $property->clicks = $property->clicks + 1;
         $property->save();
@@ -492,7 +520,8 @@ class PropertyController extends Controller
             'photos' => $photos,
             'plans' => $plans,
             'similar_properties' => $similar_properties,
-            'reviews' => $reviews
+            'reviews' => $reviews,
+            'premium_floors' => $premium_floors
         ]);
     }
 
@@ -510,7 +539,7 @@ class PropertyController extends Controller
                 'Content-Disposition' => 'attachment; filename="HouseFloorPlan.jpg"',
             ];
     
-            return Response::make(Storage::disk('public')->get($path), 200, $headers);
+            // return Response::make(Storage::disk('public')->get($path), 200, $headers);
         }
 
         return back()->withError('Please subscribe first to download the file!');

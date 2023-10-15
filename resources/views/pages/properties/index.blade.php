@@ -36,16 +36,14 @@
                                 <p>Price Range</p>
                             </div>
                             <div class="review-form">
-                                <select class="select" name="sort_price">
-                                    <option value="low_price">Low to High</option>
-                                    <option value="high_price">High to Low</option>
-                                </select>
+                                <form action="{{ route('property') }}" id="sort_form">
+                                    <select class="select range" name="sort_price">
+                                        <option value="">Select Range</option>
+                                        <option value="low_price">Low to High</option>
+                                        <option value="high_price">High to Low</option>
+                                    </select>
+                                </form>
                             </div>
-                        </div>
-                        <div class="grid-list-view">
-                            <ul>
-                                <!-- <li><a href="buy-property-list-sidebar.html" data-bs-toggle="modal" data-bs-target="#success"><i class="bx bx-filter-alt"></i></a></li> -->
-                            </ul>
                         </div>
                     </div>
                 </div>
@@ -106,7 +104,7 @@
                                             </li>
                                             <li>
                                                 <i class="fas fa-ruler-horizontal fa-1x text-secondary mx-1"></i>
-                                                {{ $property->square_meter }} Sqm
+                                                {{ $property->square_meter }} m<sup>2</sup> <span class="mx-1">Plot size</span>
                                             </li>
                                         </ul>
                                     </div>
@@ -114,9 +112,7 @@
                             </div>
                         </div>
                         @endforeach
-
                     </div>
-
                 </div>
             </div>
         </div>
@@ -218,9 +214,14 @@
         btnHTML: '<div class="d-flex justify-content-center" data-aos="fade-down" data-aos-duration="1000"><a href="#" class="btn btn-primary bg-warning">Load More</a></div>'
     });
 
-    $('.bedroom').on('select2:select', function(e){
+    $('.bedroom').on('select2:select', function(e) {
         var link = e.params.data.id;
         window.location = link;
+    })
+
+    $('.range').on('select2:select', function(e) {
+        var form = $('#sort_form')[0];
+        form.submit();
     })
 </script>
 @endsection

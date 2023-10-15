@@ -153,7 +153,7 @@
                                         </li>
                                         <li>
                                             <i class="fas fa-ruler-horizontal fa-1x text-secondary mx-1"></i>
-                                            {{ $property->square_meter }} Sqrm
+                                            {{ $property->square_meter }} m<sup>2</sup> <span class="mx-1">Plot size</span>
                                         </li>
                                     </ul>
                                 </div>
@@ -211,13 +211,13 @@
 
         var isValid = $('#checkout-form').valid({
             highlight: function (input) {
-                $(input).parents(".form-line").addClass("error text-danger");
+                $(input).parents(".review-form").addClass("error text-danger");
             },
             unhighlight: function (input) {
-                $(input).parents(".form-line").removeClass("error");
+                $(input).parents(".review-form").removeClass("error");
             },
             errorPlacement: function (error, element) {
-                $(element).parents(".form-group").append(error);
+                $(element).parents(".review-form").append(error);
             },
             rules: {
                 confirm: {

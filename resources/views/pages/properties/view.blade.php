@@ -4,6 +4,7 @@
 @section('styles')
 <link rel="stylesheet" href="{{ asset('assets/plugins/fancybox/jquery.fancybox.min.css')}}">
 <link rel="stylesheet" href="{{ asset('assets/plugins/intl-tel-input/css/intlTelInput.css')}}">
+<link rel="stylesheet" href="{{ asset('assets/plugins/magnific-popup/magnific-popup.css') }}">
 @endsection
 
 @section('content')
@@ -48,14 +49,14 @@
 
                 <div class="buy-details-col">
                     <div class="rental-card">
-                        <div class="slider rental-slider">
+                        <div class="slider rental-slider popup-gallery">
                             @forelse($photos as $photo)
                             <div class="product-img">
-                                <img src="{{ $photo->photo_path }}" alt="Slider">
+                                <a href="{{ $photo->photo_path }}" class="property-img"><img src="{{ $photo->photo_path }}" alt="Slider"></a>
                             </div>
                             @empty
                             <div class="product-img" style="display: contents !important;">
-                                <img src="{{ $property->thumbnail }}" alt="Slider">
+                                <a href="{{ $property->thumbnail }}" class="property-img"><img src="{{ $property->thumbnail }}" alt="Slider"></a>
                             </div>
                             @endforelse
                         </div>
@@ -90,7 +91,7 @@
                             </li>
                             <li>
                                 <img src="{{ asset('assets/img/plot.png')}}" width="40" alt="Image">
-                                <p>{{ $property->square_meter }} Sq meter</p>
+                                <p>{{ $property->square_meter }} m<sup>2</sup> <span class="mx-1">Plot size</span></p>
                             </li>
                         </ul>
                     </div>
@@ -114,7 +115,9 @@
                     <div id="video" class="card-collapse collapse show">
                         <div class="sample-video collapse-view">
                             @if($property->hasUserSubscribed)
-                            <img src="{{ $property->premium_image }}" alt="Image">
+                            @foreach($premium_floors as $floor)
+                            <img src="{{ $floor->photo_path }}" alt="Image">
+                            @endforeach
                             @else
                             <img src="{{ $property->floor_image }}" alt="Image">
 
@@ -515,6 +518,7 @@
 @endsection
 
 @section('scripts')
+<script src="{{ asset('assets/plugins/magnific-popup/jquery.magnific-popup.min.js') }}"></script>
 <script src="{{ asset('assets/plugins/theia-sticky-sidebar/ResizeSensor.js') }}"></script>
 <script src="{{ asset('assets/plugins/theia-sticky-sidebar/theia-sticky-sidebar.js')}}"></script>
 <script src="{{ asset('assets/plugins/fancybox/jquery.fancybox.min.js')}}"></script>
@@ -528,6 +532,18 @@
 
     $(document).ready(function() {
         $('.customize-block').css('display', 'none');
+    });
+
+    $('div.product-img').magnificPopup({
+        delegate: 'a.property-img',
+        type: 'image',
+        tLoading: 'Loading image #%curr%...',
+        mainClass: 'mfp-img-mobile',
+        gallery: {
+            enabled: true,
+            navigateByImgClick: true,
+            preload: [0, 1] // Will preload 0 - before current, and 1 after the current image
+        }
     });
 
     $('input:radio[name=service]').on('change', function() {

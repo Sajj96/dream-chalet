@@ -69,35 +69,7 @@ $(function () {
             $('a[href="#finish"]').text('Please wait...').css('pointer-events', 'none');
 
             var myform = $("#wizard_with_validation")[0];
-            var formData = new FormData(myform);
-            formData.append(
-                "main_image",
-                $('input[name="main_image"]')[0].files[0]
-            );
-            formData.append(
-                "floor_image",
-                $('input[name="floor_image"]')[0].files[0]
-            );
-            formData.append("_token", token);
-
-            if (myDropzone.getQueuedFiles().length > 0) {
-                myDropzone.processQueue();
-            } else {
-                $.ajax({
-                    type: "POST",
-                    url: addUrl,
-                    contentType: false,
-                    processData: false,
-                    data: formData,
-                    dataType: "json",
-                    success: function (response) {
-                        window.location = propertyUrl;
-                    },
-                    error: function (response) {
-                        window.location = propertyUrl;
-                    },
-                });
-            }
+            myform.submit();
         },
     });
 
@@ -132,93 +104,41 @@ $(function () {
         success_callback: null, // Default: null
     });
 
-    $.uploadPreview({
-        input_field: "#image-upload-floor", // Default: .image-upload
-        preview_box: "#image-preview-floor", // Default: .image-preview
-        label_field: "#image-label-floor", // Default: .image-label
-        label_default: "Choose Floor Image", // Default: Choose File
-        label_selected: "Change Floor Image", // Default: Change File
-        no_label: false, // Default: false
-        success_callback: null, // Default: null
-    });
-
     // DropzoneJS
-    var myDropzone = new Dropzone("#mydropzone", {
-        url: addUrl,
-        autoProcessQueue: false,
-        uploadMultiple: true,
-        parallelUploads: 20,
-        paramName: "attachments",
-        maxFiles: 20,
-        timeout: 120000,
-        addRemoveLinks: true,
-        maxFilesize: 500,
-        dictDefaultMessage: "Drop your files here!",
-    });
+    $("#file-1").fileinput({
+        theme: 'fas',
+        uploadUrl: "#",
+        showRemove: true,
+        showUpload: false,
+        dropZoneTitle: '<p>Please upload your property\'s other photos below. Accepted image file formats are <b>JPG</b>, <b>GIF</b> and <b>PNG</b></p> <b>Drag & drop file here...</b>',
+        allowedFileExtensions: ['jpg', 'png', 'gif'],
+        overwriteInitial: false,
+        maxFileSize: 5120,
+        maxFilesNum: 30,
+        // autoReplace: true
+        // browseLabel: "",
+        // browseIcon: "<i class='fa fa-plus'></i>",
+        initialPreviewAsData: true,
+        fileActionSettings: {
+            showUpload: false,
+        }
+    })
 
-    myDropzone.on("sendingmultiple", function (file, xhr, formData) {
-        formData.append("_token", token);
-        formData.append(
-            "main_image",
-            $('input[name="main_image"]')[0].files[0]
-        );
-        formData.append(
-            "floor_image",
-            $('input[name="floor_image"]')[0].files[0]
-        );
-
-        var formValues = $("#wizard_with_validation").serializeArray();
-        $(formValues).each(function (key, obj) {
-            formData.append(obj.name, obj.value);
-        });
-    });
-
-    myDropzone.on("successmultiple", function (response) {
-        window.location = propertyUrl;
-    });
-
-    myDropzone.on("errormultiple", function (file, errorMessage, xhr) {
-        var arr = [];
-        $.each(errorMessage, function (key, value) {
-            arr += value + "\n";
-        });
-    });
-
-    var floorDropzone = new Dropzone("#floordropzone", {
-        url: addUrl,
-        autoProcessQueue: false,
-        uploadMultiple: true,
-        parallelUploads: 20,
-        paramName: "floors",
-        maxFiles: 20,
-        addRemoveLinks: true,
-        maxFilesize: 250,
-        dictDefaultMessage: "Drop your files here!",
-    });
-
-    floorDropzone.on("sendingmultiple", function (file, xhr, formData) {
-        formData.append("_token", token);
-        formData.append(
-            "main_image",
-            $('input[name="main_image"]')[0].files[0]
-        );
-
-        var formValues = $("#wizard_with_validation").serializeArray();
-        $(formValues).each(function (key, obj) {
-            formData.append(obj.name, obj.value);
-        });
-    });
-
-    floorDropzone.on("successmultiple", function (response) {
-        window.location = propertyUrl;
-    });
-
-    floorDropzone.on("errormultiple", function (file, errorMessage, xhr) {
-        var arr = [];
-        $.each(errorMessage, function (key, value) {
-            arr += value + "\n";
-        });
-    });
+    $("#file-2").fileinput({
+        theme: 'fas',
+        uploadUrl: "#",
+        showRemove: true,
+        showUpload: false,
+        dropZoneTitle: '<p>Please upload your floor plans photos here.</p> <b>Drag & drop file here...</b>',
+        allowedFileExtensions: ['jpg', 'png', 'gif'],
+        overwriteInitial: false,
+        maxFileSize: 5120,
+        maxFilesNum: 10,
+        initialPreviewAsData: true,
+        fileActionSettings: {
+            showUpload: false,
+        }
+    })
 });
 
 function setButtonWavesEffect(event) {

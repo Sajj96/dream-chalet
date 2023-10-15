@@ -184,7 +184,7 @@ class TransactionController extends Controller
 
             $order = (object) array(
                 "name" => $property->title,
-                "price" => (float) 2,
+                "price" => (float) $request->amount,
                 "user" => $user
             );
 
@@ -196,6 +196,10 @@ class TransactionController extends Controller
 
             $transaction->payment_reference = $order_id;
 
+            $transaction->update([
+                'payment_reference' => $order_id
+            ]);
+
             if ($response->getStatusCode() == 200 && $response->statusText() == "OK") {
                 return $redirect_url;
             }
@@ -204,13 +208,14 @@ class TransactionController extends Controller
 
             // return redirect()->route('property.show',[strtolower(preg_replace('/[ ,]+/', '-',$property->title.' '.$property->houseType->name.' '.$property->id))])->withSuccess('Billing information have been submitted successfully!');
         } catch (\Exception $exception) {
-            return response()->json(['error' => $exception->getMessage()]);
+            return response()->json(['error' => 'An error occured failed to add new transaction']);
         }
     }
 
     public function callback(Request $request)
     {
         try {
+
 
             $transaction = Transaction::where('reference_no', $request->get("OrderMerchantReference"))->first();
 
@@ -227,6 +232,8 @@ class TransactionController extends Controller
                 $transaction->message = $response->description;
                 if ($response->status_code == 1) {
                     $transaction->status = Transaction::STATUS_PAID;
+                    $transaction->update();
+
                     if ($transaction->type == "Inquiry") {
                         $inquiry = Inquiry::where('property_id', $property->id)->where('user_id', $user->id)->where('status', Inquiry::STATUS_PROCESSING)->first();
                         $inquiry->status = Inquiry::STATUS_COMPLETED;
@@ -260,16 +267,18 @@ class TransactionController extends Controller
                     }
                 } else if ($response->status_code == 2) {
                     $transaction->status = Transaction::STATUS_FAILED;
+                    $transaction->update();
                     return redirect()->route('property.show',[strtolower(preg_replace('/[ ,]+/', '-',$property->title.' '.$property->houseType->name.' '.$property->id))])->withErrors('An error occured payment failed!');
 
                 } else {
                     $transaction->status = Transaction::STATUS_NOTPAID;
+                    $transaction->update();
                     return redirect()->route('property.show',[strtolower(preg_replace('/[ ,]+/', '-',$property->title.' '.$property->houseType->name.' '.$property->id))])->withErrors('An error occured payment not received!');
                 } 
 
             }
         } catch (\Exception $e) {
-            return back()->with('error', $e->getMessage());
+            return back()->with('error', 'An error occured failed to complete payment request!');
         }
     }
 

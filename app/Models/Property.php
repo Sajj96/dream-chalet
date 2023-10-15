@@ -27,7 +27,6 @@ class Property extends Model
         'square_meter',
         'thumbnail',
         'floor_image',
-        'premium_image',
         'details',
         'clicks'
     ];
@@ -50,6 +49,11 @@ class Property extends Model
     public function photos()
     {
         return $this->hasMany(PropertyPhoto::class);
+    }
+
+    public function floorImages()
+    {
+        return $this->hasMany(PropertyFloor::class);
     }
 
     public function inquiries(): HasMany
@@ -87,8 +91,7 @@ class Property extends Model
             foreach($this->subscriptions as $subscription) {
                 $end_date = Carbon::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s', strtotime($subscription->pivot->ends_on)));
     
-                if($this->id == $subscription->pivot->property_id 
-                && Auth::user()->id == $subscription->pivot->user_id
+                if(Auth::user()->id == $subscription->pivot->user_id
                 && $end_date->gt(Carbon::now()->format('Y-m-d H:i:s'))) {
                     return true;
                 }
