@@ -132,7 +132,6 @@
                                 <table class="table table-stripped">
                                     <thead class="bg-primary-dark">
                                         <tr>
-                                            <th class="text-white">Property</th>
                                             <th class="text-white">Type</th>
                                             <th class="text-white">Period</th>
                                             <th class="text-white">Start Date</th>
@@ -142,11 +141,10 @@
                                     <tbody>
                                         @foreach($subscriptions as $subscription)
                                         <tr>
-                                            <td><a href="{{ route('property.show',[strtolower(preg_replace('/[ ,]+/', '-',$subscription->title.' '.$subscription->houseTypeName.' '.$subscription->id))]) }}">{{ $subscription->title }}</a></td>
                                             <td>{{ $subscription->planType }}</td>
                                             <td>{{ $subscription->planPeriod }}</td>
-                                            <td>{{ date('d M Y', strtotime($subscription->pivot->updated_at)) }}</td>
-                                            <td>{{ date('d M Y', strtotime($subscription->pivot->ends_on)) }}</td>
+                                            <td>{{ date('d M Y', strtotime($subscription->updated_at)) }}</td>
+                                            <td>{{ date('d M Y', strtotime($subscription->ends_on)) }}</td>
                                         </tr>
                                         @endforeach
                                     </tbody>

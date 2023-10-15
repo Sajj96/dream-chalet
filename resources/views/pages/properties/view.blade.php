@@ -114,7 +114,7 @@
                     </h4>
                     <div id="video" class="card-collapse collapse show">
                         <div class="sample-video collapse-view">
-                            @if($property->hasUserSubscribed)
+                            @if(auth()->check() && auth()->user()->hasSubscribed)
                             @foreach($premium_floors as $floor)
                             <img src="{{ $floor->photo_path }}" alt="Image">
                             @endforeach
@@ -273,7 +273,7 @@
                     </div>
                     <ul class="list-details">
                         @foreach($stages as $stage)
-                        <li>{{ $stage->name }} <span>{{ ($property->hasUserSubscribed) ? '$'.number_format($stage->stagePrice) : 'Subscribers only' }}</span></li>
+                        <li>{{ $stage->name }} <span>{{ (auth()->check() && auth()->user()->hasSubscribed) ? '$'.number_format($stage->stagePrice) : 'Subscribers only' }}</span></li>
                         @endforeach
                     </ul>
                 </div>
@@ -302,7 +302,7 @@
 
                 <div class="collapse-card sidebar-card">
                     <h4 class="card-title">
-                        <a class="collapsed" data-bs-toggle="collapse" href="#review" aria-expanded="false">Reviews (0)</a>
+                        <a class="collapsed" data-bs-toggle="collapse" href="#review" aria-expanded="false">Reviews ({{ count($reviews) }})</a>
                     </h4>
                     <div id="review" class="card-collapse collapse show  collapse-view">
                         <div class="review-card">
@@ -318,18 +318,18 @@
                                     </div>
                                     <div class="rating">
                                         <span class="rating-count">
+                                            @for($i = 0; $i < intval($review->star_rating); $i++)
                                             <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star checked"></i>
-                                            <i class="fa-solid fa-star"></i>
+                                            @endfor
                                         </span>
                                         <p class="rating-review"><span>{{ $review->star_rating }}</span></p>
                                     </div>
                                 </div>
+                                @if($review->comments != "")
                                 <div class="review-para">
                                     <p>{{ $review->comments }}</p>
                                 </div>
+                                @endif
                             </div>
                             @endforeach
                             <div class="property-review">

@@ -15,10 +15,10 @@ class Property extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'title', 
-        'price', 
-        'house_type_id', 
-        'currency', 
+        'title',
+        'price',
+        'house_type_id',
+        'currency',
         'bedrooms',
         'bathrooms',
         'roofs',
@@ -43,7 +43,7 @@ class Property extends Model
 
     public function stages()
     {
-        return $this->belongsToMany(Stage::class, 'property_stages')->withPivot(['id','price']);
+        return $this->belongsToMany(Stage::class, 'property_stages')->withPivot(['id', 'price']);
     }
 
     public function photos()
@@ -73,7 +73,7 @@ class Property extends Model
 
     public function getHouseTypeNameAttribute()
     {
-        if($this->houseType){
+        if ($this->houseType) {
             return $this->houseType->name;
         } else {
             return "Unknown";
@@ -85,50 +85,40 @@ class Property extends Model
         return $this->belongsToMany(User::class, 'subscriptions')->withPivot(['id', 'plan_id', 'ends_on']);
     }
 
-    public function getHasUserSubscribedAttribute()
-    {
-        if($this->subscriptions && Auth::check()) {
-            foreach($this->subscriptions as $subscription) {
-                $end_date = Carbon::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s', strtotime($subscription->pivot->ends_on)));
-    
-                if(Auth::user()->id == $subscription->pivot->user_id
-                && $end_date->gt(Carbon::now()->format('Y-m-d H:i:s'))) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
     public function getPlanTypeAttribute()
     {
-        foreach($this->subscriptions as $subscript) {
+        foreach ($this->subscriptions as $subscript) {
             $plan = Plan::find($subscript->pivot->plan_id);
 
-            if($plan->id == $subscript->pivot->plan_id) {
+            if ($plan->id == $subscript->pivot->plan_id) {
                 return $plan->type;
             } else {
                 return "Unknown";
             }
-        } 
+        }
     }
 
     public function getPlanPeriodAttribute()
     {
-        foreach($this->subscriptions as $subscript) {
+        foreach ($this->subscriptions as $subscript) {
             $plan = Plan::find($subscript->pivot->plan_id);
 
-            if($plan->id == $subscript->pivot->plan_id) {
+            if ($plan->id == $subscript->pivot->plan_id) {
                 return $plan->period;
             } else {
                 return "Unknown";
             }
-        } 
+        }
     }
 
     public function getReviewAttribute()
     {
-        $reviews_count = array(); $ones = array(); $twos = array(); $three = array(); $four = array(); $five = array();
+        $reviews_count = array();
+        $ones = array();
+        $twos = array();
+        $three = array();
+        $four = array();
+        $five = array();
         $average = 0;
         $rate = 0;
 
@@ -155,7 +145,7 @@ class Property extends Model
             }
         }
 
-        $rate = ($average > 0) ? $rate/$average : 0;
+        $rate = ($average > 0) ? $rate / $average : 0;
 
         return (object) array(
             'rate' => $rate,
