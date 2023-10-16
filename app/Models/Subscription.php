@@ -20,4 +20,27 @@ class Subscription extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function plan()
+    {
+        return $this->belongsTo(Plan::class);
+    }
+
+    public function getPlanTypeAttribute()
+    {
+        if ($this->plan) {
+            return $this->plan->type;
+        } else {
+            return "Unknown";
+        }
+    }
+
+    public function getPlanPeriodAttribute()
+    {
+        if ($this->plan) {
+            return $this->plan->period;
+        } else {
+            return "Unknown";
+        }
+    }
 }

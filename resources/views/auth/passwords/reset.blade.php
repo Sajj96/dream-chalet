@@ -1,6 +1,57 @@
-@extends('layouts.app')
+@extends('layouts.blank', ['title' => 'Reset Password'])
 
 @section('content')
+<div class="login-wrapper">
+    <div class="loginbox">
+        <div class="login-auth">
+            <div class="login-auth-wrap">
+                <h1>{{ __('Reset Password') }}</h1>
+                @if ($message = Session::get('success'))
+                <div class="alert alert-success">
+                    <p>{{ $message }}</p>
+                </div>
+                @endif
+                @if ($message = Session::get('error'))
+                <div class="alert alert-danger">
+                    <strong>{{ $message }}</strong>
+                </div>
+                @endif
+                <form method="POST" action="{{ route('reset.password.post') }}">
+                    @csrf
+                    <input type="hidden" name="token" value="{{ $token }}">
+                    <div class="form-group">
+                        <label class="form-label">{{ __('Email Address') }} <span>*</span></label>
+                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="Enter Email" required autofocus>
+                        @error('email')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">{{ __('Password') }} <span>*</span></label>
+                        <div class="pass-group">
+                            <input id="password" type="password" class="form-control pass-input @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="Enter Password">
+                            <span class="fas fa-eye toggle-password"></span>
+                            @error('password')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">{{ __('Confirm Password') }} <span>*</span></label>
+                        <div class="pass-group">
+                            <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password" placeholder="Enter Confirm Password">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-outline-light w-100 btn-size">{{ __('Reset Password') }}</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">

@@ -24,8 +24,8 @@ class TransactionsDataTable extends DataTable
         return (new EloquentDataTable($query))
         ->addIndexColumn()
         ->addColumn('property', function ($row) {
-            $prop = strtolower(preg_replace('/[ ,]+/', '-',$row->property->title.' '.$row->property->houseTypeName.' '.$row->property->id));
-            return '<a href="'.route('property.show', $prop).'">'.$row->property->title.'</a>';
+            $prop = strtolower(preg_replace('/[ ,]+/', '-',$row->propertyTitle.' '.$row->propertyHouseType.' '.$row->propertyNumber));
+            return '<a href="'.route('property.show', $prop).'">'.$row->propertyTitle.'</a>';
         })
         ->addColumn('user', function ($row) {
             return $row->userName;

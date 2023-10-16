@@ -78,4 +78,28 @@ class Transaction extends Model
         }
         return "Unknown";
     }
+
+    public function getPropertyTitleAttribute()
+    {
+        if($this->property) {
+            return $this->property->title;
+        }
+        return "Unknown";
+    }
+
+    public function getPropertyHouseTypeAttribute()
+    {
+        if($this->property) {
+            return $this->property->houseTypeName;
+        }
+        return "Unknown";
+    }
+
+    public function getPropertyNumberAttribute()
+    {
+        if($this->property) {
+            return $this->property->id;
+        }
+        return "Unknown";
+    }
 }

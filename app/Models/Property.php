@@ -85,32 +85,6 @@ class Property extends Model
         return $this->belongsToMany(User::class, 'subscriptions')->withPivot(['id', 'plan_id', 'ends_on']);
     }
 
-    public function getPlanTypeAttribute()
-    {
-        foreach ($this->subscriptions as $subscript) {
-            $plan = Plan::find($subscript->pivot->plan_id);
-
-            if ($plan->id == $subscript->pivot->plan_id) {
-                return $plan->type;
-            } else {
-                return "Unknown";
-            }
-        }
-    }
-
-    public function getPlanPeriodAttribute()
-    {
-        foreach ($this->subscriptions as $subscript) {
-            $plan = Plan::find($subscript->pivot->plan_id);
-
-            if ($plan->id == $subscript->pivot->plan_id) {
-                return $plan->period;
-            } else {
-                return "Unknown";
-            }
-        }
-    }
-
     public function getReviewAttribute()
     {
         $reviews_count = array();

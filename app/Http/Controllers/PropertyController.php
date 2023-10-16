@@ -130,7 +130,7 @@ class PropertyController extends Controller
 
                 $thumbnail = sprintf("%s_%s_THUMBNAIL.%s", uniqid(),date("YmdHis"), $thumbnailExtension);
                 $thumbnailImg = Image::make($request->file('main_image')->getRealPath());
-                $thumbnailImg->insert(public_path('assets/img/dce_1.png'), 'center', 10, 10);
+                $thumbnailImg->insert('https://dreamchaletengineering.com/assets/img/dce_1.png', 'center', 10, 10);
                 $thumbnailImg->resize(817, 446);
 
                 $thumbnailImg->save(storage_path('/app/public/properties/thumbnails/' . $thumbnail),90);
@@ -173,7 +173,7 @@ class PropertyController extends Controller
                     $floorImg->filter(new ImageFilter(25))->blur(20);
     
                     $premiumImg = Image::make($floor_image->getRealPath());
-                    $premiumImg->insert(public_path('assets/img/dce_1.png'), 'center', 10, 10);
+                    $premiumImg->insert('https://dreamchaletengineering.com/assets/img/dce_1.png', 'center', 10, 10);
                     $premiumImg->resize(670, 595);
     
                     $floorImg->save(storage_path('/app/public/properties/floors/' . $floor),90);
@@ -212,7 +212,7 @@ class PropertyController extends Controller
 
                     if(in_array($extension,['png','jpg','jpeg'])) {
                         $img = Image::make($attachment->getRealPath());
-                        $img->insert(public_path('assets/img/dce_1.png'), 'center', 10, 10);
+                        $img->insert('https://dreamchaletengineering.com/assets/img/dce_1.png', 'center', 10, 10);
                         $img->resize(817, 446);
                         $img->text($request->title, 0, 0, function($font){
                             $font->color([0, 0, 0, 0.5]);
@@ -334,7 +334,7 @@ class PropertyController extends Controller
 
                 $thumbnail = sprintf("%s_%s_THUMBNAIL.%s", uniqid(),date("YmdHis"), $thumbnailExtension);
                 $thumbnailImg = Image::make($request->file('main_image')->getRealPath());
-                $thumbnailImg->insert(public_path('assets/img/dce_1.png'), 'center', 10, 10);
+                $thumbnailImg->insert('https://dreamchaletengineering.com/assets/img/dce_1.png', 'center', 10, 10);
                 $thumbnailImg->resize(817, 446);
 
                 $thumbnailImg->save(storage_path('/app/public/properties/thumbnails/' . $thumbnail),90);
@@ -377,7 +377,7 @@ class PropertyController extends Controller
                     $floorImg->filter(new ImageFilter(25))->blur(20);
     
                     $premiumImg = Image::make($floor_image->getRealPath());
-                    $premiumImg->insert(public_path('assets/img/dce_1.png'), 'center', 10, 10);
+                    $premiumImg->insert('https://dreamchaletengineering.com/assets/img/dce_1.png', 'center', 10, 10);
                     $premiumImg->resize(670, 595);
     
                     $floorImg->save(storage_path('/app/public/properties/floors/' . $floor),90);
@@ -416,7 +416,7 @@ class PropertyController extends Controller
 
                     if(in_array($extension,['png','jpg','jpeg'])) {
                         $img = Image::make($attachment->getRealPath());
-                        $img->insert(public_path('assets/img/dce_1.png'), 'center', 10, 10);
+                        $img->insert('https://dreamchaletengineering.com/assets/img/dce_1.png', 'center', 10, 10);
                         $img->resize(817, 446);
                         $img->text($request->title, 0, 0, function($font){
                             $font->color([0, 0, 0, 0.5]);
