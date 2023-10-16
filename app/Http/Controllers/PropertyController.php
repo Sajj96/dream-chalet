@@ -513,6 +513,8 @@ class PropertyController extends Controller
         $property->clicks = $property->clicks + 1;
         $property->save();
 
+        $trending_property = Property::where('deleted_at', NULL)->orderBy('clicks', 'DESC')->first();
+
         return view('pages.properties.view', [
             'property' => $property,
             'amenities' => $amenities,
@@ -521,7 +523,8 @@ class PropertyController extends Controller
             'plans' => $plans,
             'similar_properties' => $similar_properties,
             'reviews' => $reviews,
-            'premium_floors' => $premium_floors
+            'premium_floors' => $premium_floors,
+            'trending_property' => $trending_property
         ]);
     }
 

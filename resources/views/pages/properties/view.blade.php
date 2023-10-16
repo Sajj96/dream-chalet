@@ -319,8 +319,8 @@
                                     <div class="rating">
                                         <span class="rating-count">
                                             @for($i = 0; $i < intval($review->star_rating); $i++)
-                                            <i class="fa-solid fa-star checked"></i>
-                                            @endfor
+                                                <i class="fa-solid fa-star checked"></i>
+                                                @endfor
                                         </span>
                                         <p class="rating-review"><span>{{ $review->star_rating }}</span></p>
                                     </div>
@@ -390,18 +390,11 @@
                     <div class="sidebar-img-slider owl-carousel">
                         <div class="slide-img-card">
                             <div class="slide-img">
-                                <img src="{{ asset('assets/img/sidebar-slide.jpg')}}" alt="Image">
+                                <img src="{{ $trending_property->thumbnail }}" width="417" height="554" alt="Image">
                             </div>
                             <div class="property-name">
-                                <h3>High-Rise Townhouse</h3>
-                                <span><i class="feather-map-pin"></i>Chicago</span>
-                                <div class="star-rate">
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                </div>
+                                <h3><a class="text-white" href="{{ route('property.show',[strtolower(preg_replace('/[ ,]+/', '-',$trending_property->title.' '.$trending_property->houseType->name.' '.$trending_property->id))])}}">{!! $trending_property->bedrooms .' Bedrooms - '. $trending_property->title !!}</a></h3>
+                                <span class="text-white">${{ $trending_property->price }}</span>
                             </div>
                         </div>
                     </div>
