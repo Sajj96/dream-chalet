@@ -31,8 +31,6 @@
     <!-- Favicon -->
     <link rel="shortcut icon" href="{{ asset('assets/img/favicon.ico')}}" />
 
-    <title>{{ config('app.name', 'DCE') }}</title>
-
     <!-- General CSS Files -->
     <link rel="stylesheet" href="{{ asset('assets/dashboard/css/app.min.css')}}">
     <link rel="stylesheet" href="{{ asset('assets/dashboard/bundles/izitoast/css/iziToast.min.css') }}">

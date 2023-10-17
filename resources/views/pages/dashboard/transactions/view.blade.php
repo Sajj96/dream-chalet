@@ -8,7 +8,7 @@
 <section class="section">
     <div class="section-body">
         <div class="invoice">
-            <div class="invoice-print">
+            <div class="invoice-print" id="invoice-print">
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="invoice-title">
@@ -26,6 +26,12 @@
                                     {{ $transaction->userWard }},<br>
                                     {{ $transaction->userCity }}, {{ $transaction->userCountry }}
                                 </address>
+                                @if($transaction->status == 1)
+                                <address>
+                                    <strong>Payment Method:</strong><br>
+                                    {{ $transaction->payment_method }}<br>
+                                </address>
+                                @endif
                             </div>
                             <div class="col-md-6 text-md-right">
                                 <address>
@@ -86,7 +92,7 @@
             </div>
             <hr>
             <div class="text-md-right">
-                <button class="btn btn-warning btn-icon icon-left"><i class="fas fa-print"></i> Print</button>
+                <button onclick="printPage()" class="btn btn-warning btn-icon icon-left"><i class="fas fa-print"></i> Print</button>
             </div>
         </div>
     </div>
@@ -95,4 +101,16 @@
 
 @section('scripts')
 <script src="{{ asset('assets/dashboard/bundles/datatables/datatables.min.js')}}"></script>
+<script>
+    function printPage() {
+        var printContents = document.getElementById('invoice-print').innerHTML;
+        var originalContents = document.body.innerHTML;
+
+        document.body.innerHTML = printContents;
+
+        window.print();
+
+        document.body.innerHTML = originalContents;
+    }
+</script>
 @endsection

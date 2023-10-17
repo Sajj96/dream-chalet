@@ -70,6 +70,9 @@
                                 <a class="nav-link active" id="home-tab2" data-toggle="tab" href="#about" role="tab" aria-selected="true">About</a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link" id="home-tab4" data-toggle="tab" href="#subscription" role="tab" aria-selected="false">Subscriptions</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" id="home-tab3" data-toggle="tab" href="#order" role="tab" aria-selected="false">Orders</a>
                             </li>
                         </ul>
@@ -98,9 +101,45 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="order" role="tabpanel" aria-labelledby="home-tab3">
+                            <div class="tab-pane fade" id="subscription" role="tabpanel" aria-labelledby="home-tab4">
                                 <div class="table-responsive">
                                     <table class="table table-striped" id="table-1">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center">
+                                                    #
+                                                </th>
+                                                <th>{{ __('Type')}}</th>
+                                                <th>{{ __('Period')}}</th>
+                                                <th>{{ __('Start Date')}}</th>
+                                                <th>{{ __('End Date')}}</th>
+                                                <th>{{ __('Status')}}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach($subscriptions as $subscription)
+                                            <tr>
+                                                <td>{{ $loop->iteration }}</td>
+                                                <td>{{ $subscription->planType }}</td>
+                                                <td>{{ $subscription->planPeriod }}</td>
+                                                <td>{{ date('d M Y', strtotime($subscription->updated_at)) }}</td>
+                                                <td>{{ date('d M Y', strtotime($subscription->ends_on)) }}</td>
+                                                <td>
+                                                    @if(date('Y-m-d H:i:s',strtotime($subscription->ends_on)) < date('Y-m-d H:i:s'))
+                                                    <div class="badge badge-danger badge-shadow">Expired</div>
+                                                    @else
+                                                    <div class="badge badge-success badge-shadow">Active</div>
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="order" role="tabpanel" aria-labelledby="home-tab3">
+                                <div class="table-responsive">
+                                    <table class="table table-striped" id="table-2">
                                         <thead>
                                             <tr>
                                                 <th class="text-center">
@@ -147,4 +186,10 @@
 
 @section('scripts')
 <script src="{{ asset('assets/dashboard/bundles/datatables/datatables.min.js')}}"></script>
+<script>
+    $(document).ready(function() {
+        $("#table-1").dataTable();
+        $("#table-2").dataTable();
+    });
+</script>
 @endsection

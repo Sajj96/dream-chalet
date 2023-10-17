@@ -248,6 +248,7 @@
                                     </li>
                                 </ul>
                             </div>
+                            <div class="custom-note success-div my-1"><strong>Important Note:</strong><span>You will be charged 50% of ${{ number_format($property->price) }} as initial charge for customization. The other 50% will be charged later.</span></div>
                             <h5>Total Amount: $<span class="text-success total">{{ number_format($property->price) }}</span></h5>
                             <input type="hidden" value="{{ number_format($property->price) }}" name="amount" id="amount">
                             <div class="review-form submit-btn">
@@ -525,6 +526,7 @@
 
     $(document).ready(function() {
         $('.customize-block').css('display', 'none');
+        $('.custom-note').css('display', 'none');
     });
 
     $('div.product-img').magnificPopup({
@@ -551,9 +553,11 @@
 
             $('.purchase-block').css('display', 'none');
             $('.customize-block').css('display', 'block');
+            $('.custom-note').css('display', 'block');
         }
 
         $('.total').text(price);
+        $('#amount').val(price);
     });
 
     var amount = 0;

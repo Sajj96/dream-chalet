@@ -23,10 +23,12 @@ class UserController extends Controller
         }
 
         $orders = $user->inquiries;
+        $subscriptions = $user->subscriptions;
 
         return view('pages.dashboard.users.view', [
             'user' => $user,
-            'orders' => $orders
+            'orders' => $orders,
+            'subscriptions' => $subscriptions
         ]);
     }
 
