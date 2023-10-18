@@ -7,16 +7,15 @@
         <div class="swiper-wrapper">
             <!-- start swiper-slide -->
             <div class="swiper-slide">
-                <div class="slide-inner slide-bg-image" data-background="{{ asset('assets/img/02.jpg') }}">
+                <div class="slide-inner slide-bg-image" data-background="{{ asset('assets/img/banner1.png') }}">
                     <div class="container">
                         <div class="banner-content">
-                            <h4 class="text-uppercase mb-1" data-swiper-parallax="300">We are here to</h4>
-                            <h1 class="font-weight-bold mb-3" data-swiper-parallax="350">Planning Business</h1>
-                            <p class="text-dark mb-50" data-swiper-parallax="400">Lorem
-                                ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                                <br> incididunt ut labore et dolore magna aliqua.
+                            <h4 class="text-uppercase text-white mb-1" data-swiper-parallax="300">We are here to</h4>
+                            <h1 class="font-weight-bold text-white mb-3" data-swiper-parallax="350">{{ __('To give you the Best Designs')}}</h1>
+                            <p class="text-white mb-50" data-swiper-parallax="400">
+                                We have stipulated contents of our designs in each property and good enough you can view any plan before purchasing it.
                             </p>
-                            <a href="about.html" class="btn btn-primary text-uppercase" data-swiper-parallax="450">more details</a>
+                            <a href="{{ route('property') }}" class="btn btn-primary text-uppercase" data-swiper-parallax="450">explore properties</a>
                         </div>
                     </div>
                 </div>
@@ -24,16 +23,14 @@
             <!-- end swiper-slide -->
             <!-- start swiper-slide -->
             <div class="swiper-slide">
-                <div class="slide-inner slide-bg-image" data-background="{{ asset('assets/img/03.jpg') }}">
+                <div class="slide-inner slide-bg-image" data-background="{{ asset('assets/img/banner5.png') }}">
                     <div class="container">
                         <div class="banner-content" data-aos="fade-down">
-                            <h4 class="text-uppercase mb-1" data-swiper-parallax="300">We are here to</h4>
-                            <h1 class="font-weight-bold mb-3" data-swiper-parallax="350">Planning Business</h1>
-                            <p class="text-dark mb-50" data-swiper-parallax="400">Lorem
-                                ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                                <br> incididunt ut labore et dolore magna aliqua.
+                            <h4 class="text-uppercase text-white mb-1" data-swiper-parallax="300">We offer Quick service</h4>
+                            <h1 class="font-weight-bold text-white mb-3" data-swiper-parallax="350">{{ __('Flexible to clients\' requirements')}}</h1>
+                            <p class="text-white mb-50" data-swiper-parallax="400">We are consistently meet customers’ expectations as our service is quick, easy, personalized, and empathetic. 
                             </p>
-                            <a href="about.html" class="btn btn-primary text-uppercase" data-swiper-parallax="450">more details</a>
+                            <a href="{{ route('about') }}" class="btn btn-primary text-uppercase" data-swiper-parallax="450">more about us</a>
                         </div>
                     </div>
                 </div>
@@ -41,16 +38,14 @@
             <!-- end swiper-slide -->
             <!-- start swiper-slide -->
             <div class="swiper-slide">
-                <div class="slide-inner slide-bg-image" data-background="{{ asset('assets/img/banner.jpg') }}">
+                <div class="slide-inner slide-bg-image" data-background="{{ asset('assets/img/banner3.png') }}">
                     <div class="container">
                         <div class="banner-content" data-aos="fade-down">
-                            <h4 class="text-uppercase mb-1" data-swiper-parallax="300">Start your</h4>
-                            <h1 class="font-weight-bold mb-3" data-swiper-parallax="350">Future Plan</h1>
-                            <p class="text-dark mb-50" data-swiper-parallax="400">Lorem
-                                ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                                <br> incididunt ut labore et dolore magna aliqua.
+                            <h4 class="text-uppercase text-white mb-1" data-swiper-parallax="300">Start your</h4>
+                            <h1 class="font-weight-bold text-white mb-3" data-swiper-parallax="350">{{ __('Future Plan')}}</h1>
+                            <p class="text-white mb-50" data-swiper-parallax="400">Explore to our website to get your house plan instantly. 
                             </p>
-                            <a href="about.html" class="btn btn-primary text-uppercase" data-swiper-parallax="450">more details</a>
+                            <a href="{{ route('property') }}" class="btn btn-primary text-uppercase" data-swiper-parallax="450">explore properties</a>
                         </div>
                     </div>
                 </div>
@@ -58,16 +53,12 @@
             <!-- end swiper-slide -->
             <!-- start swiper-slide -->
             <div class="swiper-slide">
-                <div class="slide-inner slide-bg-image" data-background="{{ asset('assets/img/banner.jpg') }}">
+                <div class="slide-inner slide-bg-image" data-background="{{ asset('assets/img/banner4.png') }}">
                     <div class="container">
                         <div class="banner-content" data-aos="fade-down">
-                            <h4 class="text-uppercase mb-1" data-swiper-parallax="300">We are always</h4>
-                            <h1 class="font-weight-bold mb-3" data-swiper-parallax="350">Be Inspired By Best</h1>
-                            <p class="text-dark mb-50" data-swiper-parallax="400">Lorem
-                                ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                                <br> incididunt ut labore et dolore magna aliqua.
-                            </p>
-                            <a href="about.html" class="btn btn-outline text-uppercase" data-swiper-parallax="450">more details</a>
+                            <h4 class="text-uppercase text-white mb-1" data-swiper-parallax="300">We are always</h4>
+                            <h1 class="font-weight-bold text-white mb-3" data-swiper-parallax="350">{{ __('Be Inspired By Best')}}</h1>
+                            <p class="text-white mb-50" data-swiper-parallax="400">As we developing and converting client ideas into reality, we take client idea we improve it and make it happen into reality.</p>
                         </div>
                     </div>
                 </div>

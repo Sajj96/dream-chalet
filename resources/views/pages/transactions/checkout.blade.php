@@ -145,11 +145,11 @@
                                         </li>
                                         <li>
                                             <i class="fas fa-trowel-bricks fa-1x text-secondary mx-1"></i>
-                                            {{ $property->bathrooms ?? 0 }} Blocks
+                                            {{ $property->blocks ?? 0 }} Blocks
                                         </li>
                                         <li>
                                             <i class="fas fa-sheet-plastic fa-1x text-secondary mx-1"></i>
-                                            {{ $property->floors }} Roofing Sheets
+                                            {{ $property->roofs }} Roofing Sheets
                                         </li>
                                         <li>
                                             <i class="fas fa-ruler-horizontal fa-1x text-secondary mx-1"></i>
