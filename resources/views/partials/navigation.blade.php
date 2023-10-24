@@ -20,6 +20,11 @@ $house_types = HouseType::get();
             <a href="{{ route('home') }}" class="navbar-brand logo">
                 <img src="{{ asset('assets/img/dce_logo.png')}}" width="100" class="img-fluid" alt="Logo">
             </a>
+            <div class="searchbar-min mx-auto">
+                <a href="javascript:void(0);">
+                    <img src="{{ asset('assets/img/icons/search-icon.svg')}}" alt="img" width="30">
+                </a>
+            </div>
         </div>
         <div class="main-menu-wrapper">
             <div class="menu-header">

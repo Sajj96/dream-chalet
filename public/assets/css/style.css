@@ -122,6 +122,11 @@
 .arrival-div .files li{
   width: 100%;
 }
+@media (min-width: 1199.98px) {
+  .searchbar-min {
+    display: none !important;
+  }
+}
 @media(max-width:1199.98px){
   .premium{
     width: 450px;

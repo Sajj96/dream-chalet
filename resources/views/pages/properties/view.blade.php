@@ -127,7 +127,7 @@
                                 </div>
                                 <div class="price-title">
                                     <h3>Upgrade To Premium</h3>
-                                    <p>Subscribe to see clear floor plan before purchasing this drawings.</p>
+                                    <p>Subscribe to see clear floor plan (interior floor layout).</p>
                                 </div>
                                 <form action="{{ url('/transactions/checkout') }}" method="get">
                                     <input type="hidden" name="property" value="{{ $property->id }}">
